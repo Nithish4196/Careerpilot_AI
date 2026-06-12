@@ -1,0 +1,49 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+
+NEXT_PUBLIC_FIREBASE_API_KEY="AIzaSyDfRP7dBlhH6ZWw9jhmela9vecVjeIubYI"
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="careerpilot-ai-4d24e.firebaseapp.com",
+NEXT_PUBLIC_FIREBASE_PROJECT_ID="careerpilot-ai-4d24e"
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="careerpilot-ai-4d24e.firebasestorage.app"
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="539569793560"
+NEXT_PUBLIC_FIREBASE_APP_ID="1:539569793560:web:90a9b414a12110c419f16d"

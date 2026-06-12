@@ -1,0 +1,11 @@
+{
+  "name": "careerpilot-ai-root",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev"
+  },
+  "dependencies": {
+    "firebase": "^12.14.0"
+  }
+}
