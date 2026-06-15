@@ -16,6 +16,11 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api', apiRoutes);
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.send('Welcome to the Careerpilot AI Backend API!');
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', message: 'Careerpilot AI Backend is running' });
