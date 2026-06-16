@@ -52,26 +52,46 @@ export async function GET(request: Request) {
       })
     );
 
-    // Deduplicate and filter (newer than 48 hours)
-    const fortyEightHoursAgo = new Date(Date.now() - 48 * 60 * 60 * 1000);
+    // Deduplicate and filter (newer than 14 days for slower categories)
+    const timeWindowLimit = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
+    const getCategory = (text: string) => {
+      const lower = text.toLowerCase();
+      if (lower.includes('layoff') || lower.includes('cut') || lower.includes('fire') || lower.includes('downsize')) return "Layoffs";
+      if (lower.includes('hire') || lower.includes('hiring') || lower.includes('recruit') || lower.includes('job')) return "Hiring";
+      if (lower.includes('fund') || lower.includes('raise') || lower.includes('seed') || lower.includes('series a') || lower.includes('series b')) return "Funding";
+      if (lower.includes('ceo') || lower.includes('executive') || lower.includes('leader') || lower.includes('cfo') || lower.includes('appoint')) return "Leadership";
+      if (lower.includes('salary') || lower.includes('pay') || lower.includes('compensation') || lower.includes('wage')) return "Salary";
+      return "Industry Trend";
+    };
+
     const uniqueLinks = new Set<string>();
-    const filteredItems: typeof allRawItems = [];
+    const categorizedItems: Record<string, typeof allRawItems> = {
+      "Layoffs": [], "Hiring": [], "Funding": [], "Leadership": [], "Salary": [], "Industry Trend": []
+    };
 
     for (const item of allRawItems) {
       if (!item.link || !item.title) continue;
       
       const pubDate = item.pubDate ? new Date(item.pubDate) : new Date();
-      if (pubDate < fortyEightHoursAgo) continue;
+      if (pubDate < timeWindowLimit) continue;
 
       if (!uniqueLinks.has(item.link)) {
         uniqueLinks.add(item.link);
-        filteredItems.push({ ...item, pubDate });
+        const cat = getCategory(item.title + " " + item.snippet);
+        categorizedItems[cat].push({ ...item, pubDate, category: cat });
       }
     }
 
-    // Sort by newest first and cap to top 15 to control token usage
-    filteredItems.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
-    const topItems = filteredItems.slice(0, 15);
+    // Ensure diversity by taking top 4 from each category
+    let diverseItems: any[] = [];
+    for (const cat in categorizedItems) {
+      categorizedItems[cat].sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+      diverseItems = [...diverseItems, ...categorizedItems[cat].slice(0, 4)];
+    }
+
+    // Sort the final combined list by newest first and cap to 20
+    diverseItems.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    const topItems = diverseItems.slice(0, 24);
 
     if (topItems.length === 0) {
       return NextResponse.json({ source: "empty", data: [] });
@@ -103,17 +123,19 @@ export async function GET(request: Request) {
       },
     });
 
+    // We still trim snippets for Gemini
     const articlesJSON = JSON.stringify(topItems.map(i => ({
       title: i.title,
       source: i.source,
       link: i.link,
+      category: i.category, // Pre-categorized hints for Gemini
       publishedAt: i.pubDate.toISOString(),
-      snippet: i.snippet.substring(0, 300) // trim snippet to save tokens
+      snippet: i.snippet.substring(0, 200) 
     })), null, 2);
 
     const prompt = `You are a career advisor for students and early-career job seekers using CareerPilot AI.
 
-For each article below, write ONE short insight (2-3 sentences) explaining why this news matters specifically for students and job seekers — not a general summary of the article, but the career-relevant takeaway. Also assign a category.
+For each article below, write ONE short insight (2-3 sentences) explaining why this news matters specifically for students and job seekers — not a general summary of the article, but the career-relevant takeaway. Maintain the assigned category.
 
 Articles:
 ${articlesJSON}
@@ -135,14 +157,14 @@ Skip any article that has no meaningful career relevance for students or job see
     } catch (geminiError) {
       console.warn("Gemini API failed or key invalid. Falling back to raw RSS data...", geminiError);
       
-      // Fallback: Map the raw RSS data into the expected Insights structure
+      // Fallback: Use the pre-categorized diverse items
       insights = topItems.map((item, index) => ({
         id: index.toString(),
         headline: item.title,
         source: item.source,
         link: item.link,
         publishedAt: item.pubDate.toISOString(),
-        category: "Industry Trend", // Default category
+        category: item.category,
         whyItMatters: item.snippet || "This article highlights recent developments in the tech industry that may affect job market conditions and career strategies."
       }));
     }

@@ -40,6 +40,7 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
   const { user, userProfile, loading, signOut } = useAuth();
   const router = useRouter();
 
@@ -146,7 +147,7 @@ export default function DashboardLayout({
             Settings
           </Link>
           <button
-            onClick={() => signOut()}
+            onClick={() => setIsSignOutModalOpen(true)}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-500 hover:text-red-600 hover:bg-red-500/10 transition-colors"
           >
             <LogOut className="w-5 h-5" />
@@ -202,6 +203,39 @@ export default function DashboardLayout({
       {/* Global AI Chatbot */}
       <ChatBot />
 
+      {/* Sign Out Confirmation Modal */}
+      {isSignOutModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200 p-4">
+          <div className="bg-background border border-muted rounded-xl shadow-xl w-full max-w-sm p-6 animate-in zoom-in-95 duration-200">
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center mb-4 text-red-500">
+                <LogOut className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-foreground">Sign Out</h3>
+              <p className="text-muted-foreground text-sm mb-6">
+                Are you sure you want to sign out of CareerPilot AI?
+              </p>
+              <div className="flex w-full gap-3">
+                <button
+                  onClick={() => setIsSignOutModalOpen(false)}
+                  className="flex-1 py-2.5 px-4 rounded-lg border border-muted font-medium text-sm hover:bg-muted transition-colors text-foreground"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    setIsSignOutModalOpen(false);
+                    signOut();
+                  }}
+                  className="flex-1 py-2.5 px-4 rounded-lg bg-red-500 hover:bg-red-600 font-medium text-sm text-white transition-colors"
+                >
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
