@@ -1,8 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from"react";
 
-type Theme = "light" | "dark" | "system";
+type Theme ="light" |"dark" |"system";
 
 interface ThemeContextType {
   theme: Theme;
@@ -10,7 +10,7 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: "dark",
+  theme:"dark",
   setTheme: () => {},
 });
 
@@ -21,14 +21,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const applyTheme = (currentTheme: Theme) => {
     const root = document.documentElement;
-    if (currentTheme === "system") {
+    if (currentTheme ==="system") {
       const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       if (systemPrefersDark) {
         root.classList.add("dark");
       } else {
         root.classList.remove("dark");
       }
-    } else if (currentTheme === "dark") {
+    } else if (currentTheme ==="dark") {
       root.classList.add("dark");
     } else {
       root.classList.remove("dark");
@@ -37,18 +37,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("careerpilot_theme") as Theme;
-    if (savedTheme === "light" || savedTheme === "dark" || savedTheme === "system") {
+    if (savedTheme ==="light" || savedTheme ==="dark" || savedTheme ==="system") {
       setThemeState(savedTheme);
       applyTheme(savedTheme);
     } else {
       setThemeState("dark");
       applyTheme("dark");
-      localStorage.setItem("careerpilot_theme", "dark");
+      localStorage.setItem("careerpilot_theme","dark");
     }
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = () => {
-      if (theme === "system") {
+      if (theme ==="system") {
         applyTheme("system");
       }
     };

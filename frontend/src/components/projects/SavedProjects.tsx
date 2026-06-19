@@ -13,15 +13,15 @@ export default function SavedProjects({ savedBlueprints, onView, onDelete, onBac
   
   if (savedBlueprints.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-[60vh] animate-in fade-in duration-500">
+      <div className="flex flex-col items-center justify-center h-[60vh]">
         <Folder className="w-16 h-16 text-muted-foreground mb-4" />
         <h2 className="text-2xl font-bold mb-2">No saved projects yet</h2>
         <p className="text-muted-foreground mb-8 text-center max-w-sm">
-          Generate a new project blueprint and click the "Save" button to access it here later.
+          Generate a new project blueprint and click the"Save" button to access it here later.
         </p>
         <button 
           onClick={onBack}
-          className="px-6 py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-all"
+          className="px-6 py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out "
         >
           Create New Project
         </button>
@@ -30,7 +30,7 @@ export default function SavedProjects({ savedBlueprints, onView, onDelete, onBac
   }
 
   return (
-    <div className="max-w-6xl mx-auto py-8 animate-in fade-in duration-500">
+    <div className="max-w-6xl mx-auto py-8">
       
       <div className="flex items-center justify-between mb-8 border-b border-muted pb-8">
         <div>
@@ -82,13 +82,13 @@ export default function SavedProjects({ savedBlueprints, onView, onDelete, onBac
             <div className="flex items-center gap-2 mt-auto">
               <button 
                 onClick={() => onView(bp)}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors text-sm"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors text-sm"
               >
                 View Blueprint <ArrowRight className="w-4 h-4" />
               </button>
               <button 
                 onClick={() => onDelete(bp.id)}
-                className="p-2.5 border border-red-500/20 text-red-500 hover:bg-red-500/10 rounded-xl transition-colors shrink-0"
+                className="p-2.5 border border-red-500/20 text-red-500 hover:bg-red-500/10 transition-colors duration-150 ease-out rounded-xl transition-colors shrink-0"
                 title="Delete Project"
               >
                 <Trash2 className="w-4 h-4" />

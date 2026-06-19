@@ -46,7 +46,7 @@ export default function SessionShell({
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-8rem)] animate-in fade-in duration-500">
+    <div className="flex flex-col h-[calc(100vh-8rem)]">
       
       {/* Top Bar */}
       <div className="bg-background border border-muted rounded-2xl p-4 mb-4 flex items-center justify-between shadow-sm shrink-0">
@@ -69,7 +69,7 @@ export default function SessionShell({
 
         <button 
           onClick={onEndInterview}
-          className="px-4 py-2 border border-red-500/20 text-red-500 hover:bg-red-500/10 rounded-xl text-sm font-bold transition-colors"
+          className="px-4 py-2 border border-red-500/20 text-red-500 hover:bg-red-500/10 transition-colors duration-150 ease-out rounded-xl text-sm font-bold transition-colors"
         >
           End Interview
         </button>
@@ -78,7 +78,7 @@ export default function SessionShell({
       {/* Progress Bar */}
       <div className="w-full h-1.5 bg-muted rounded-full mb-6 shrink-0 overflow-hidden">
         <div 
-          className="h-full bg-foreground transition-all duration-500"
+          className="h-full bg-foreground"
           style={{ width: `${(currentRoundNum / totalRounds) * 100}%` }}
         />
       </div>
@@ -90,8 +90,8 @@ export default function SessionShell({
 
       {/* Round Complete Modal */}
       {modalState?.show && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-background border border-muted rounded-2xl p-8 max-w-md w-full shadow-2xl animate-in zoom-in-95">
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/80">
+          <div className="bg-background border border-muted rounded-2xl p-8 max-w-md w-full shadow-2xl animate-payoff-bounce">
             <div className="w-16 h-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
               <span className="text-xl font-extrabold">{modalState.score}%</span>
             </div>
@@ -118,7 +118,7 @@ export default function SessionShell({
 
             <button 
               onClick={onNextRound}
-              className="w-full bg-foreground text-background font-bold py-3.5 rounded-xl hover:bg-foreground/90 transition-all"
+              className="w-full bg-foreground text-background font-bold py-3.5 rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out "
             >
               {currentRoundNum === totalRounds ? 'View Final Report' : 'Next Round →'}
             </button>

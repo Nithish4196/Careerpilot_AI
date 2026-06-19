@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
-  const [state, setState] = useState<"enter-email" | "check-email">("enter-email");
+  const [state, setState] = useState<"enter-email" |"check-email">("enter-email");
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(0);
 
@@ -34,7 +34,7 @@ export default function ForgotPasswordPage() {
       setCountdown(60);
       toast.success("Password reset link sent!");
     } else {
-      toast.error(error || "Failed to send reset link.");
+      toast.error(error ||"Failed to send reset link.");
     }
   };
 
@@ -49,14 +49,14 @@ export default function ForgotPasswordPage() {
       setCountdown(60);
       toast.success("Reset link resent!");
     } else {
-      toast.error(error || "Failed to resend link.");
+      toast.error(error ||"Failed to resend link.");
     }
   };
 
   return (
     <AuthLayout>
       <div className="w-full">
-        {state === "enter-email" ? (
+        {state ==="enter-email" ? (
           <>
             <h2 className="text-2xl font-extrabold mb-2">Reset your password</h2>
             <p className="text-muted-foreground mb-8">Enter the email you signed up with. We'll send you a reset link.</p>
@@ -73,9 +73,9 @@ export default function ForgotPasswordPage() {
 
               <button 
                 type="submit" disabled={isLoading}
-                className="w-full py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-all flex justify-center items-center gap-2 mt-4 disabled:opacity-50"
+                className="w-full py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out flex justify-center items-center gap-2 mt-4 disabled:opacity-50"
               >
-                {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Send Reset Link"}
+                {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> :"Send Reset Link"}
               </button>
             </form>
           </>
@@ -91,9 +91,9 @@ export default function ForgotPasswordPage() {
 
             <button 
               onClick={handleResend} disabled={countdown > 0 || isLoading}
-              className="w-full py-3 bg-muted text-foreground font-bold rounded-xl hover:bg-muted/80 transition-all flex justify-center items-center gap-2 mb-4 disabled:opacity-50"
+              className="w-full py-3 bg-muted text-foreground font-bold rounded-xl hover:bg-muted/80 transition-colors duration-150 ease-out flex justify-center items-center gap-2 mb-4 disabled:opacity-50"
             >
-              {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : countdown > 0 ? `Resend Email in ${countdown}s` : "Resend Email"}
+              {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : countdown > 0 ? `Resend Email in ${countdown}s` :"Resend Email"}
             </button>
           </div>
         )}

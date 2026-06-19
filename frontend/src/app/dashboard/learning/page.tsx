@@ -13,8 +13,8 @@ import {
 
 export default function LearningHubPage() {
   const [selectedPath, setSelectedPath] = useState<CareerPath | null>(null);
-  const [activeTab, setActiveTab] = useState<"courses" | "roadmap" | "videos">("courses");
-  const [courseFilter, setCourseFilter] = useState<"all" | "certification" | "free" | "high">("all");
+  const [activeTab, setActiveTab] = useState<"courses" |"roadmap" |"videos">("courses");
+  const [courseFilter, setCourseFilter] = useState<"all" |"certification" |"free" |"high">("all");
   const [searchQuery, setSearchQuery] = useState("");
 
   const paths = Object.values(COURSE_DATA);
@@ -29,7 +29,7 @@ export default function LearningHubPage() {
   // Home View
   if (!selectedPath) {
     return (
-      <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-10">
+      <div className="space-y-8 pb-10">
         
         {/* Header Section */}
         <div className="space-y-4">
@@ -45,12 +45,12 @@ export default function LearningHubPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search career paths or skills (e.g. Python, React, SQL…)"
-              className="w-full bg-background border border-muted rounded-2xl pl-12 pr-12 py-4 focus:outline-none focus:ring-2 focus:ring-foreground/20 transition-all font-medium"
+              className="w-full bg-background border border-muted rounded-2xl pl-12 pr-12 py-4 focus:outline-none focus:ring-2 focus:ring-foreground/20 font-medium"
             />
             {searchQuery && (
               <button 
                 onClick={() => setSearchQuery("")}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground hover:bg-muted rounded-full transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors duration-150 ease-out rounded-full transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -86,11 +86,11 @@ export default function LearningHubPage() {
         ) : (
           <div className="flex flex-col items-center justify-center py-20 text-center border border-muted border-dashed rounded-2xl bg-muted/10">
             <SearchX className="w-12 h-12 text-muted-foreground mb-4" />
-            <h3 className="text-xl font-bold mb-2">No paths match "{searchQuery}"</h3>
-            <p className="text-muted-foreground">Try a skill like "Python", "React", or "SQL".</p>
+            <h3 className="text-xl font-bold mb-2">No paths match"{searchQuery}"</h3>
+            <p className="text-muted-foreground">Try a skill like"Python","React", or"SQL".</p>
             <button 
               onClick={() => setSearchQuery("")}
-              className="mt-6 px-6 py-2 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors"
+              className="mt-6 px-6 py-2 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors"
             >
               Clear Search
             </button>
@@ -105,15 +105,15 @@ export default function LearningHubPage() {
   
   // Filter courses for the selected path
   const filteredCourses = selectedPath.courses.filter(course => {
-    if (courseFilter === "all") return true;
-    if (courseFilter === "certification") return course.type === "certification";
-    if (courseFilter === "free") return course.free;
-    if (courseFilter === "high") return course.demand === "high";
+    if (courseFilter ==="all") return true;
+    if (courseFilter ==="certification") return course.type ==="certification";
+    if (courseFilter ==="free") return course.free;
+    if (courseFilter ==="high") return course.demand ==="high";
     return true;
   });
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-right duration-300 pb-10">
+    <div className="space-y-8 pb-10">
       
       {/* Detail Header */}
       <div className="border-b border-muted pb-8 space-y-6">
@@ -139,10 +139,10 @@ export default function LearningHubPage() {
         <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none pt-2">
           <button 
             onClick={() => setActiveTab("courses")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all border ${
-              activeTab === "courses" 
-                ? "bg-foreground text-background border-foreground" 
-                : "bg-background text-muted-foreground border-muted hover:border-foreground/50 hover:text-foreground"
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold border ${
+              activeTab ==="courses" 
+                ?"bg-foreground text-background border-foreground" 
+                :"bg-background text-muted-foreground border-muted hover:border-foreground/50 hover:text-foreground"
             }`}
           >
             <BookOpen className="w-4 h-4" />
@@ -150,10 +150,10 @@ export default function LearningHubPage() {
           </button>
           <button 
             onClick={() => setActiveTab("roadmap")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all border ${
-              activeTab === "roadmap" 
-                ? "bg-foreground text-background border-foreground" 
-                : "bg-background text-muted-foreground border-muted hover:border-foreground/50 hover:text-foreground"
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold border ${
+              activeTab ==="roadmap" 
+                ?"bg-foreground text-background border-foreground" 
+                :"bg-background text-muted-foreground border-muted hover:border-foreground/50 hover:text-foreground"
             }`}
           >
             <MapIcon className="w-4 h-4" />
@@ -161,10 +161,10 @@ export default function LearningHubPage() {
           </button>
           <button 
             onClick={() => setActiveTab("videos")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all border ${
-              activeTab === "videos" 
-                ? "bg-foreground text-background border-foreground" 
-                : "bg-background text-muted-foreground border-muted hover:border-foreground/50 hover:text-foreground"
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold border ${
+              activeTab ==="videos" 
+                ?"bg-foreground text-background border-foreground" 
+                :"bg-background text-muted-foreground border-muted hover:border-foreground/50 hover:text-foreground"
             }`}
           >
             <PlayCircle className="w-4 h-4" />
@@ -177,24 +177,24 @@ export default function LearningHubPage() {
       <div className="pt-2">
         
         {/* COURSES TAB */}
-        {activeTab === "courses" && (
-          <div className="space-y-6 animate-in fade-in duration-300">
+        {activeTab ==="courses" && (
+          <div className="space-y-6">
             {/* Course Filter Bar */}
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-sm font-bold text-muted-foreground mr-2">Filter:</span>
               {[
-                { id: "all", label: "All Courses" },
-                { id: "certification", label: "Certifications" },
-                { id: "free", label: "Free Courses" },
-                { id: "high", label: "High Demand" }
+                { id:"all", label:"All Courses" },
+                { id:"certification", label:"Certifications" },
+                { id:"free", label:"Free Courses" },
+                { id:"high", label:"High Demand" }
               ].map(f => (
                 <button
                   key={f.id}
                   onClick={() => setCourseFilter(f.id as any)}
                   className={`px-4 py-1.5 rounded-full text-xs font-bold transition-colors border ${
                     courseFilter === f.id
-                      ? "bg-foreground text-background border-foreground"
-                      : "bg-background text-muted-foreground border-muted hover:text-foreground hover:border-foreground/30"
+                      ?"bg-foreground text-background border-foreground"
+                      :"bg-background text-muted-foreground border-muted hover:text-foreground hover:border-foreground/30"
                   }`}
                 >
                   {f.label}
@@ -217,8 +217,8 @@ export default function LearningHubPage() {
         )}
 
         {/* ROADMAP TAB */}
-        {activeTab === "roadmap" && (
-          <div className="animate-in fade-in duration-300 bg-muted/10 border border-muted rounded-3xl p-4 sm:p-8">
+        {activeTab ==="roadmap" && (
+          <div className="bg-muted/10 border border-muted rounded-3xl p-4 sm:p-8">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold mb-2">Step-by-Step Curriculum</h2>
               <p className="text-muted-foreground">Follow this roadmap to master the {selectedPath.title} role.</p>
@@ -228,8 +228,8 @@ export default function LearningHubPage() {
         )}
 
         {/* VIDEOS TAB */}
-        {activeTab === "videos" && (
-          <div className="space-y-6 animate-in fade-in duration-300">
+        {activeTab ==="videos" && (
+          <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {selectedPath.videos.map(video => (
                 <VideoCard key={video.id} video={video} />

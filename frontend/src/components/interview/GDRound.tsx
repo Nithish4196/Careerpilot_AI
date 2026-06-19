@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GD_TOPICS } from '@/types/interview';
 import { Send, Clock } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import UserAvatar from '@/components/ui/UserAvatar';
 
 interface GDRoundProps {
   onFinish: (score: number, feedback: string[]) => void;
@@ -21,17 +23,7 @@ const AI_PARTICIPANTS = [
   { name: 'Vikram', color: 'bg-emerald-500' }
 ];
 
-const AI_RESPONSES = [
-  "I completely agree with that point.",
-  "That's a valid perspective, however, we must also consider the alternatives.",
-  "Adding to what was just said, the long-term impact is significant.",
-  "I disagree slightly. In my experience, the data shows otherwise.",
-  "Can we look at this from an economic standpoint?",
-  "That is a great example. Furthermore, we see this pattern globally.",
-  "To summarize the current thoughts, it seems we have two main camps here.",
-  "What about the ethical implications of that approach?",
-  "Let's not forget the human element in this equation.",
-  "If we implement that, the short-term costs might be too high."
+const AI_RESPONSES = ["I completely agree with that point.","That's a valid perspective, however, we must also consider the alternatives.","Adding to what was just said, the long-term impact is significant.","I disagree slightly. In my experience, the data shows otherwise.","Can we look at this from an economic standpoint?","That is a great example. Furthermore, we see this pattern globally.","To summarize the current thoughts, it seems we have two main camps here.","What about the ethical implications of that approach?","Let's not forget the human element in this equation.","If we implement that, the short-term costs might be too high."
 ];
 
 export default function GDRound({ onFinish, triggerEnd }: GDRoundProps) {
@@ -41,6 +33,8 @@ export default function GDRound({ onFinish, triggerEnd }: GDRoundProps) {
   const [userMsgCount, setUserMsgCount] = useState(0);
   const [isReading, setIsReading] = useState(true);
   const [readTime, setReadTime] = useState(15); // Shortened reading time for UX
+  
+  const { userProfile, user } = useAuth();
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -58,7 +52,7 @@ export default function GDRound({ onFinish, triggerEnd }: GDRoundProps) {
           sender: AI_PARTICIPANTS[0].name,
           color: AI_PARTICIPANTS[0].color,
           isUser: false,
-          text: `I'd like to start. Regarding "${topic}", I believe it's one of the most pressing issues today.`
+          text: `I'd like to start. Regarding"${topic}", I believe it's one of the most pressing issues today.`
         }]);
       }, 1000);
     }
@@ -105,8 +99,8 @@ export default function GDRound({ onFinish, triggerEnd }: GDRoundProps) {
 
     setMessages(prev => [...prev, {
       id: `u_${Date.now()}`,
-      sender: "You",
-      color: "bg-foreground",
+      sender:"You",
+      color:"bg-foreground",
       isUser: true,
       text: inputText
     }]);
@@ -132,7 +126,7 @@ export default function GDRound({ onFinish, triggerEnd }: GDRoundProps) {
 
   if (isReading) {
     return (
-      <div className="flex flex-col items-center justify-center h-full p-8 text-center animate-in zoom-in-95 duration-500">
+      <div className="flex flex-col items-center justify-center h-full p-8 text-center">
         <div className="bg-background border border-muted rounded-2xl p-12 max-w-2xl shadow-lg relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-1 bg-foreground animate-pulse" />
           <h2 className="text-xl font-bold text-muted-foreground uppercase tracking-widest mb-4">Group Discussion Topic</h2>
@@ -177,9 +171,13 @@ export default function GDRound({ onFinish, triggerEnd }: GDRoundProps) {
 
         {messages.map((msg) => (
           <div key={msg.id} className={`flex gap-3 max-w-2xl ${msg.isUser ? 'ml-auto flex-row-reverse' : ''}`}>
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 font-bold text-white text-sm ${msg.color}`}>
-              {msg.sender.charAt(0)}
-            </div>
+            {msg.isUser ? (
+              <UserAvatar profile={userProfile} user={user} className="w-10 h-10 text-sm" />
+            ) : (
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 font-bold text-white text-sm ${msg.color}`}>
+                {msg.sender.charAt(0)}
+              </div>
+            )}
             <div className={`flex flex-col ${msg.isUser ? 'items-end' : 'items-start'}`}>
               <span className="text-xs font-bold text-muted-foreground mb-1 ml-1">{msg.sender}</span>
               <div className={`p-4 rounded-2xl ${
@@ -212,7 +210,7 @@ export default function GDRound({ onFinish, triggerEnd }: GDRoundProps) {
           <button 
             onClick={handleSend}
             disabled={!inputText.trim()}
-            className="p-4 bg-foreground text-background rounded-xl hover:bg-foreground/90 transition-colors disabled:opacity-50 h-[60px] w-[60px] flex items-center justify-center shrink-0"
+            className="p-4 bg-foreground text-background rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors disabled:opacity-50 h-[60px] w-[60px] flex items-center justify-center shrink-0"
           >
             <Send className="w-5 h-5" />
           </button>

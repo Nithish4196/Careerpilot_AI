@@ -49,7 +49,7 @@ export default function MockInterviewsPage() {
 
   const handleRoundFinish = (score: number, feedback: string[]) => {
     if (user) {
-      logActivity(user.uid, "mockInterviews");
+      logActivity(user.uid,"mockInterviews");
     }
     setModalState({ show: true, score, feedback });
   };
@@ -58,7 +58,7 @@ export default function MockInterviewsPage() {
     setModalState({ 
       show: true, 
       score: 30, 
-      feedback: ["Time ran out before you could finish.", "Work on time management for this section."] 
+      feedback: ["Time ran out before you could finish.","Work on time management for this section."] 
     });
   };
 
@@ -92,15 +92,15 @@ export default function MockInterviewsPage() {
   };
 
   // Rendering logic
-  if (appState === "landing") {
+  if (appState ==="landing") {
     return <LandingPage onStartQuick={handleStartQuick} onStartCustom={handleStartCustom} />;
   }
 
-  if (appState === "setup") {
+  if (appState ==="setup") {
     return <SetupFlow onComplete={handleSetupComplete} />;
   }
 
-  if (appState === "report" && config) {
+  if (appState ==="report" && config) {
     return (
       <FinalReport 
         config={config} 
@@ -111,20 +111,20 @@ export default function MockInterviewsPage() {
     );
   }
 
-  if (appState === "session" && config) {
+  if (appState ==="session" && config) {
     const currentRoundType = config.rounds[currentRoundIndex];
 
     const renderRoundComponent = () => {
       switch (currentRoundType) {
-        case "Aptitude":
+        case"Aptitude":
           return <AptitudeRound onFinish={handleRoundFinish} />;
-        case "HR":
+        case"HR":
           return <HRRound onFinish={handleRoundFinish} />;
-        case "Technical":
+        case"Technical":
           return <TechnicalRound role={config.role} onFinish={handleRoundFinish} />;
-        case "Coding":
+        case"Coding":
           return <CodingRound difficulty={config.difficulty} onFinish={handleRoundFinish} />;
-        case "Group Discussion":
+        case"Group Discussion":
           return <GDRound onFinish={handleRoundFinish} triggerEnd={modalState?.show} />;
         default:
           return <div>Unknown Round Type</div>;

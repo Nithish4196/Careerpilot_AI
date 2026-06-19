@@ -46,7 +46,7 @@ export default function VerifyEmailPage() {
     if (user.emailVerified) {
       router.replace("/onboarding");
     } else {
-      toast("Email not verified yet. Please check your inbox.", { icon: "⏳" });
+      toast("Email not verified yet. Please check your inbox.", { icon:"⏳" });
     }
   };
 
@@ -57,7 +57,7 @@ export default function VerifyEmailPage() {
       setCountdown(60);
       toast.success("Verification email resent!");
     } else {
-      toast.error(error || "Failed to resend email.");
+      toast.error(error ||"Failed to resend email.");
     }
   };
 
@@ -71,7 +71,7 @@ export default function VerifyEmailPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <div className="max-w-md w-full bg-background border border-muted rounded-3xl p-8 shadow-xl text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="max-w-md w-full bg-background border border-muted rounded-3xl p-8 shadow-xl text-center">
         
         <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 relative">
           <Mail className="w-10 h-10 text-primary animate-pulse" />
@@ -86,16 +86,16 @@ export default function VerifyEmailPage() {
         <div className="space-y-4">
           <button 
             onClick={handleManualCheck} disabled={isChecking}
-            className="w-full py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-all flex justify-center items-center gap-2 disabled:opacity-50"
+            className="w-full py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out flex justify-center items-center gap-2 disabled:opacity-50"
           >
-            {isChecking ? <Loader2 className="w-5 h-5 animate-spin" /> : "I've verified my email"}
+            {isChecking ? <Loader2 className="w-5 h-5 animate-spin" /> :"I've verified my email"}
           </button>
 
           <button 
             onClick={handleResend} disabled={countdown > 0}
-            className="w-full py-3 bg-muted text-foreground font-bold rounded-xl hover:bg-muted/80 transition-all disabled:opacity-50"
+            className="w-full py-3 bg-muted text-foreground font-bold rounded-xl hover:bg-muted/80 transition-colors duration-150 ease-out disabled:opacity-50"
           >
-            {countdown > 0 ? `Resend Email in ${countdown}s` : "Resend Email"}
+            {countdown > 0 ? `Resend Email in ${countdown}s` :"Resend Email"}
           </button>
         </div>
 

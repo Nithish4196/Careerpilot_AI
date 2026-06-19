@@ -8,13 +8,13 @@ import {
   updateProfile, 
   signOut,
   User
-} from "firebase/auth";
-import { doc, setDoc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { auth, db } from "./firebase";
+} from"firebase/auth";
+import { doc, setDoc, getDoc, updateDoc, serverTimestamp } from"firebase/firestore";
+import { auth, db } from"./firebase";
 
 export interface UserSettings {
   appearance: {
-    fontSize: "Small" | "Default" | "Large" | "Extra Large";
+    fontSize:"Small" |"Default" |"Large" |"Extra Large";
     compactMode: boolean;
   };
   notifications: {
@@ -26,8 +26,8 @@ export interface UserSettings {
     productUpdates: boolean;
   };
   aiPreferences: {
-    tone: "Professional" | "Friendly" | "Direct" | "Motivational";
-    responseLength: "Concise" | "Balanced" | "Detailed";
+    tone:"Professional" |"Friendly" |"Direct" |"Motivational";
+    responseLength:"Concise" |"Balanced" |"Detailed";
     useProfileData: boolean;
   };
   privacy: {
@@ -54,11 +54,13 @@ export interface UserProfile {
   settings?: UserSettings;
   createdAt: any;
   lastLoginAt: any;
+  avatarType?: "uploaded" | "preset" | "initials";
+  avatarValue?: string;
 }
 
 export const DEFAULT_SETTINGS: UserSettings = {
   appearance: {
-    fontSize: "Default",
+    fontSize:"Default",
     compactMode: false,
   },
   notifications: {
@@ -70,8 +72,8 @@ export const DEFAULT_SETTINGS: UserSettings = {
     productUpdates: false,
   },
   aiPreferences: {
-    tone: "Professional",
-    responseLength: "Balanced",
+    tone:"Professional",
+    responseLength:"Balanced",
     useProfileData: true,
   },
   privacy: {
@@ -82,21 +84,9 @@ export const DEFAULT_SETTINGS: UserSettings = {
 };
 
 export function getAuthErrorMessage(code: string): string {
-  const messages: Record<string, string> = {
-    "auth/email-already-in-use": "An account with this email already exists.",
-    "auth/invalid-email": "Please enter a valid email address.",
-    "auth/weak-password": "Password must be at least 6 characters.",
-    "auth/user-not-found": "No account found with this email.",
-    "auth/wrong-password": "Incorrect password. Try again.",
-    "auth/too-many-requests": "Too many attempts. Please wait a few minutes.",
-    "auth/network-request-failed": "Network error. Check your connection.",
-    "auth/popup-closed-by-user": "Sign in was cancelled.",
-    "auth/account-exists-with-different-credential": "An account already exists with this email using a different sign-in method.",
-    "auth/invalid-credential": "Invalid credentials. Please try again.",
-    "auth/user-disabled": "This account has been disabled. Contact support.",
-    "auth/requires-recent-login": "Please sign in again to complete this action.",
+  const messages: Record<string, string> = {"auth/email-already-in-use":"An account with this email already exists.","auth/invalid-email":"Please enter a valid email address.","auth/weak-password":"Password must be at least 6 characters.","auth/user-not-found":"No account found with this email.","auth/wrong-password":"Incorrect password. Try again.","auth/too-many-requests":"Too many attempts. Please wait a few minutes.","auth/network-request-failed":"Network error. Check your connection.","auth/popup-closed-by-user":"Sign in was cancelled.","auth/account-exists-with-different-credential":"An account already exists with this email using a different sign-in method.","auth/invalid-credential":"Invalid credentials. Please try again.","auth/user-disabled":"This account has been disabled. Contact support.","auth/requires-recent-login":"Please sign in again to complete this action.",
   };
-  return messages[code] || "Something went wrong. Please try again.";
+  return messages[code] ||"Something went wrong. Please try again.";
 }
 
 export async function signUpWithEmail(email: string, password: string, fullName: string) {
@@ -108,7 +98,7 @@ export async function signUpWithEmail(email: string, password: string, fullName:
     await sendEmailVerification(user);
 
     // Create user document in Firestore
-    const userDocRef = doc(db, "users", user.uid);
+    const userDocRef = doc(db,"users", user.uid);
     await setDoc(userDocRef, {
       uid: user.uid,
       email: user.email,
@@ -132,11 +122,11 @@ export async function signInWithEmail(email: string, password: string) {
 
     if (!user.emailVerified) {
       await signOut(auth);
-      return { success: false, error: "Please verify your email before signing in." };
+      return { success: false, error:"Please verify your email before signing in." };
     }
 
     // Update last login
-    const userDocRef = doc(db, "users", user.uid);
+    const userDocRef = doc(db,"users", user.uid);
     await updateDoc(userDocRef, {
       lastLoginAt: serverTimestamp(),
     });
@@ -153,20 +143,27 @@ export async function signInWithGoogle() {
     const userCredential = await signInWithPopup(auth, provider);
     const user = userCredential.user;
 
-    const userDocRef = doc(db, "users", user.uid);
+    const userDocRef = doc(db,"users", user.uid);
     const userSnap = await getDoc(userDocRef);
 
     if (!userSnap.exists()) {
       // First time login
-      await setDoc(userDocRef, {
+      const initialData: any = {
         uid: user.uid,
         email: user.email,
-        fullName: user.displayName || "",
+        fullName: user.displayName ||"",
         onboardingCompleted: false,
         settings: DEFAULT_SETTINGS,
         createdAt: serverTimestamp(),
         lastLoginAt: serverTimestamp(),
-      });
+      };
+
+      if (user.photoURL) {
+        initialData.avatarType = "uploaded";
+        initialData.avatarValue = user.photoURL;
+      }
+
+      await setDoc(userDocRef, initialData);
     } else {
       // Returning user
       await updateDoc(userDocRef, {
@@ -204,10 +201,10 @@ export async function resendVerificationEmail() {
       await sendEmailVerification(auth.currentUser);
       return { success: true };
     }
-    return { success: false, error: "No user found." };
+    return { success: false, error:"No user found." };
   } catch (error: any) {
     if (error.code === 'auth/too-many-requests') {
-      return { success: false, error: "Too many requests. Please wait before resending." };
+      return { success: false, error:"Too many requests. Please wait before resending." };
     }
     return { success: false, error: getAuthErrorMessage(error.code) };
   }

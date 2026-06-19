@@ -1,16 +1,18 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { useTheme } from "@/context/ThemeContext";
-import { doc, updateDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import toast from "react-hot-toast";
+import React, { useState, useEffect } from"react";
+import { useAuth } from"@/context/AuthContext";
+import { useTheme } from"@/context/ThemeContext";
+import { doc, updateDoc, collection, getDocs, deleteDoc } from"firebase/firestore";
+import { db } from"@/lib/firebase";
+import toast from"react-hot-toast";
 import { 
   User, Mail, Calendar, LogOut, Trash2, Save, Download, RotateCcw,
   Moon, Sun, Monitor, Type, Layout, Bell, Briefcase, Zap, Eye, BarChart, X
-} from "lucide-react";
-import { DEFAULT_SETTINGS, UserSettings } from "@/lib/auth";
+} from"lucide-react";
+import { DEFAULT_SETTINGS, UserSettings } from"@/lib/auth";
+import UserAvatar from"@/components/ui/UserAvatar";
+import AvatarSelector from"@/components/ui/AvatarSelector";
 
 // Reusable Settings Card Wrapper
 const SettingsCard = ({ title, description, children, icon: Icon }: any) => (
@@ -64,8 +66,10 @@ export default function AppSettingsPage() {
   const { theme, setTheme } = useTheme();
 
   // Local state for forms
-  const [accountDraft, setAccountDraft] = useState({ fullName: "", phoneNumber: "", location: "" });
-  const [careerDraft, setCareerDraft] = useState({ role: "", targetRole: "", experience: "", skills: [] as string[] });
+  const [accountDraft, setAccountDraft] = useState({ fullName:"", phoneNumber:"", location:"" });
+  const [careerDraft, setCareerDraft] = useState({ role:"", targetRole:"", experience:"", skills: [] as string[] });
+  
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
   
   // Save button states
   const [isSavingAccount, setIsSavingAccount] = useState(false);
@@ -77,14 +81,14 @@ export default function AppSettingsPage() {
   useEffect(() => {
     if (userProfile) {
       setAccountDraft({
-        fullName: userProfile.fullName || "",
-        phoneNumber: userProfile.phoneNumber || "",
-        location: userProfile.location || "",
+        fullName: userProfile.fullName ||"",
+        phoneNumber: userProfile.phoneNumber ||"",
+        location: userProfile.location ||"",
       });
       setCareerDraft({
-        role: userProfile.role || "",
-        targetRole: userProfile.targetRole || "",
-        experience: userProfile.experience || "",
+        role: userProfile.role ||"",
+        targetRole: userProfile.targetRole ||"",
+        experience: userProfile.experience ||"",
         skills: userProfile.skills || [],
       });
     }
@@ -93,14 +97,14 @@ export default function AppSettingsPage() {
   // Handle Unsaved Changes warning (simple version for now)
   const hasUnsavedAccount = userProfile && (
     accountDraft.fullName !== userProfile.fullName ||
-    accountDraft.phoneNumber !== (userProfile.phoneNumber || "") ||
-    accountDraft.location !== (userProfile.location || "")
+    accountDraft.phoneNumber !== (userProfile.phoneNumber ||"") ||
+    accountDraft.location !== (userProfile.location ||"")
   );
 
   const hasUnsavedCareer = userProfile && (
-    careerDraft.role !== (userProfile.role || "") ||
-    careerDraft.targetRole !== (userProfile.targetRole || "") ||
-    careerDraft.experience !== (userProfile.experience || "") ||
+    careerDraft.role !== (userProfile.role ||"") ||
+    careerDraft.targetRole !== (userProfile.targetRole ||"") ||
+    careerDraft.experience !== (userProfile.experience ||"") ||
     JSON.stringify(careerDraft.skills) !== JSON.stringify(userProfile.skills || [])
   );
 
@@ -125,7 +129,7 @@ export default function AppSettingsPage() {
   const handleSaveAccount = async () => {
     setIsSavingAccount(true);
     try {
-      await updateDoc(doc(db, "users", user.uid), {
+      await updateDoc(doc(db,"users", user.uid), {
         fullName: accountDraft.fullName,
         phoneNumber: accountDraft.phoneNumber,
         location: accountDraft.location
@@ -138,10 +142,22 @@ export default function AppSettingsPage() {
     setIsSavingAccount(false);
   };
 
+  const handleRemoveAvatar = async () => {
+    try {
+      await updateDoc(doc(db,"users", user.uid), {
+        avatarType: "initials",
+        avatarValue: ""
+      });
+      toast.success("Avatar removed.");
+    } catch (err) {
+      toast.error("Failed to remove avatar.");
+    }
+  };
+
   const handleSaveCareer = async () => {
     setIsSavingCareer(true);
     try {
-      await updateDoc(doc(db, "users", user.uid), {
+      await updateDoc(doc(db,"users", user.uid), {
         role: careerDraft.role,
         targetRole: careerDraft.targetRole,
         experience: careerDraft.experience,
@@ -162,7 +178,7 @@ export default function AppSettingsPage() {
       // @ts-ignore - dynamic indexing
       newSettings[category] = { ...newSettings[category], [key]: value };
       
-      await updateDoc(doc(db, "users", user.uid), {
+      await updateDoc(doc(db,"users", user.uid), {
         settings: newSettings
       });
       toast.success("Preference saved", { duration: 2000, position: 'bottom-right' });
@@ -188,11 +204,11 @@ export default function AppSettingsPage() {
   };
 
   const handleDeleteAccount = async () => {
-    const confirmation = prompt('To permanently delete your account, type "DELETE" below:');
-    if (confirmation === "DELETE") {
+    const confirmation = prompt('To permanently delete your account, type"DELETE" below:');
+    if (confirmation ==="DELETE") {
       try {
         // First delete from Firestore
-        await deleteDoc(doc(db, "users", user.uid));
+        await deleteDoc(doc(db,"users", user.uid));
         // Then delete Auth user (this requires recent login)
         await user.delete();
         toast.success("Account deleted permanently.");
@@ -201,14 +217,14 @@ export default function AppSettingsPage() {
         if (error.code === 'auth/requires-recent-login') {
           toast.error("Please sign out and sign in again to delete your account.");
         } else {
-          toast.error("Failed to delete account: " + error.message);
+          toast.error("Failed to delete account:" + error.message);
         }
       }
     }
   };
 
   // Helper for date
-  let createdDateStr = "Unknown";
+  let createdDateStr ="Unknown";
   if (userProfile.createdAt) {
     const d = typeof userProfile.createdAt === 'object' && 'seconds' in userProfile.createdAt 
       ? new Date(userProfile.createdAt.seconds * 1000)
@@ -217,7 +233,7 @@ export default function AppSettingsPage() {
   }
 
   // Common styles
-  const inputClass = "w-full bg-background border border-muted rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary";
+  const inputClass ="w-full bg-background border border-muted rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary";
 
   return (
     <div className="max-w-4xl mx-auto pb-12">
@@ -234,13 +250,32 @@ export default function AppSettingsPage() {
       >
         <div className="flex flex-col md:flex-row gap-8 mb-8">
           {/* Read Only Info */}
-          <div className="flex items-center gap-4">
-            <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-2xl shadow-lg">
-              {userProfile.fullName.charAt(0).toUpperCase()}
+          <div className="flex items-center gap-6">
+            <div className="relative group cursor-pointer" onClick={() => setIsAvatarModalOpen(true)}>
+              <UserAvatar profile={userProfile} user={user} className="w-24 h-24 text-3xl shadow-lg ring-4 ring-background" />
+              <div className="absolute inset-0 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                <span className="text-white text-xs font-bold">Change</span>
+              </div>
             </div>
             <div>
-              <div className="font-bold text-lg">{userProfile.fullName}</div>
-              <div className="text-muted-foreground flex items-center gap-1.5 mt-1 text-sm">
+              <div className="font-bold text-lg mb-2">{userProfile.fullName}</div>
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => setIsAvatarModalOpen(true)}
+                  className="text-xs font-bold bg-muted hover:bg-muted/80 px-3 py-1.5 rounded-full transition-colors"
+                >
+                  Change Photo
+                </button>
+                {(userProfile.avatarType && userProfile.avatarType !== "initials") && (
+                  <button 
+                    onClick={handleRemoveAvatar}
+                    className="text-xs font-bold text-red-500 hover:bg-red-500/10 px-3 py-1.5 rounded-full transition-colors"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+              <div className="text-muted-foreground flex items-center gap-1.5 mt-3 text-sm">
                 <Mail className="w-4 h-4" /> {user.email}
               </div>
               <div className="text-muted-foreground flex items-center gap-1.5 mt-1 text-sm">
@@ -289,7 +324,7 @@ export default function AppSettingsPage() {
             className={`flex items-center gap-2 px-6 py-2.5 font-medium rounded-lg transition-colors ${
               isSavedAccount 
                 ? 'bg-green-500 text-white' 
-                : 'bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed'
+                : 'bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-150 ease-out disabled:opacity-50 disabled:cursor-not-allowed'
             }`}
           >
             {isSavedAccount ? (
@@ -370,7 +405,7 @@ export default function AppSettingsPage() {
             className={`flex items-center gap-2 px-6 py-2.5 font-medium rounded-lg transition-colors ${
               isSavedCareer 
                 ? 'bg-green-500 text-white' 
-                : 'bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed'
+                : 'bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-150 ease-out disabled:opacity-50 disabled:cursor-not-allowed'
             }`}
           >
             {isSavedCareer ? (
@@ -396,21 +431,21 @@ export default function AppSettingsPage() {
             <div className="flex gap-4">
               <button 
                 onClick={() => setTheme('light')}
-                className={`flex-1 flex flex-col items-center justify-center gap-3 p-4 rounded-xl border-2 transition-all ${theme === 'light' ? 'border-primary bg-primary/5' : 'border-muted hover:border-primary/30'}`}
+                className={`flex-1 flex flex-col items-center justify-center gap-3 p-4 rounded-xl border-2 ${theme === 'light' ? 'border-primary bg-primary/5' : 'border-muted hover:border-primary/30'}`}
               >
                 <Sun className="w-8 h-8 text-amber-500" />
                 <span className="font-medium">Light</span>
               </button>
               <button 
                 onClick={() => setTheme('dark')}
-                className={`flex-1 flex flex-col items-center justify-center gap-3 p-4 rounded-xl border-2 transition-all ${theme === 'dark' ? 'border-primary bg-primary/5' : 'border-muted hover:border-primary/30'}`}
+                className={`flex-1 flex flex-col items-center justify-center gap-3 p-4 rounded-xl border-2 ${theme === 'dark' ? 'border-primary bg-primary/5' : 'border-muted hover:border-primary/30'}`}
               >
                 <Moon className="w-8 h-8 text-blue-400" />
                 <span className="font-medium">Dark</span>
               </button>
               <button 
                 onClick={() => setTheme('system')}
-                className={`flex-1 flex flex-col items-center justify-center gap-3 p-4 rounded-xl border-2 transition-all ${theme === 'system' ? 'border-primary bg-primary/5' : 'border-muted hover:border-primary/30'}`}
+                className={`flex-1 flex flex-col items-center justify-center gap-3 p-4 rounded-xl border-2 ${theme === 'system' ? 'border-primary bg-primary/5' : 'border-muted hover:border-primary/30'}`}
               >
                 <Monitor className="w-8 h-8 text-slate-400" />
                 <span className="font-medium">System</span>
@@ -573,7 +608,7 @@ export default function AppSettingsPage() {
             </div>
             <button 
               onClick={handleResetHeatmap}
-              className="mt-3 sm:mt-0 px-4 py-2 bg-background border border-muted hover:bg-muted text-foreground font-medium rounded-lg transition-colors flex items-center gap-2 whitespace-nowrap"
+              className="mt-3 sm:mt-0 px-4 py-2 bg-background border border-muted hover:bg-muted transition-colors duration-150 ease-out text-foreground font-medium rounded-lg transition-colors flex items-center gap-2 whitespace-nowrap"
             >
               <RotateCcw className="w-4 h-4" /> Reset Heatmap
             </button>
@@ -586,7 +621,7 @@ export default function AppSettingsPage() {
             </div>
             <button 
               onClick={() => toast.success("We'll email you a copy of your data within 24 hours.")}
-              className="mt-3 sm:mt-0 px-4 py-2 bg-background border border-muted hover:bg-muted text-foreground font-medium rounded-lg transition-colors flex items-center gap-2 whitespace-nowrap"
+              className="mt-3 sm:mt-0 px-4 py-2 bg-background border border-muted hover:bg-muted transition-colors duration-150 ease-out text-foreground font-medium rounded-lg transition-colors flex items-center gap-2 whitespace-nowrap"
             >
               <Download className="w-4 h-4" /> Download Data
             </button>
@@ -595,19 +630,50 @@ export default function AppSettingsPage() {
           <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-muted">
             <button 
               onClick={signOut}
-              className="flex-1 px-4 py-2.5 border border-muted hover:bg-muted text-foreground font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-2.5 border border-muted hover:bg-muted transition-colors duration-150 ease-out text-foreground font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
             >
               <LogOut className="w-4 h-4" /> Sign Out
             </button>
             <button 
               onClick={handleDeleteAccount}
-              className="flex-1 px-4 py-2.5 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-2.5 bg-red-500 hover:bg-red-600 transition-colors duration-150 ease-out text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
             >
               <Trash2 className="w-4 h-4" /> Delete Account
             </button>
           </div>
         </div>
       </SettingsCard>
+
+      {/* Avatar Modal */}
+      {isAvatarModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4">
+          <div className="bg-background border border-muted rounded-2xl shadow-xl w-full max-w-lg p-6 relative">
+            <button 
+              onClick={() => setIsAvatarModalOpen(false)}
+              className="absolute top-4 right-4 p-2 text-muted-foreground hover:bg-muted rounded-full"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="text-xl font-bold mb-6">Change Avatar</h3>
+            <AvatarSelector 
+              currentType={userProfile.avatarType} 
+              currentValue={userProfile.avatarValue} 
+              onSelect={async (type, val) => {
+                try {
+                  await updateDoc(doc(db,"users", user.uid), {
+                    avatarType: type,
+                    avatarValue: val
+                  });
+                  toast.success("Avatar updated successfully!");
+                  setIsAvatarModalOpen(false);
+                } catch (err) {
+                  toast.error("Failed to update avatar");
+                }
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

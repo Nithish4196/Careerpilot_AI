@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { Activity } from "lucide-react";
-import StatCardWrapper from "./StatCardWrapper";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from"react";
+import { useAuth } from"@/context/AuthContext";
+import { collection, onSnapshot } from"firebase/firestore";
+import { db } from"@/lib/firebase";
+import { Activity } from"lucide-react";
+import StatCardWrapper from"./StatCardWrapper";
+import { useRouter } from"next/navigation";
 
 export default function WeeklyActivityStatCard() {
   const { user } = useAuth();
@@ -59,8 +59,8 @@ export default function WeeklyActivityStatCard() {
   return (
     <StatCardWrapper
       title="Weekly Activity"
-      value={hasLogs ? `${data.thisWeekCount} Actions` : "0 Actions"}
-      subtext={hasLogs ? `${diffText}` : "Log your first action →"}
+      value={hasLogs ? `${data.thisWeekCount} Actions` :"0 Actions"}
+      subtext={hasLogs ? `${diffText}` :"Log your first action →"}
       icon={Activity}
       colorClass="bg-muted text-foreground"
       link="#"

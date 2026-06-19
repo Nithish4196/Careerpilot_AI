@@ -10,21 +10,16 @@ interface LandingFormProps {
   hasSaved: boolean;
 }
 
-const TARGET_ROLE_SUGGESTIONS = [
-  "Data Analyst", "Data Scientist", "AI Engineer", "ML Engineer",
-  "Full Stack Developer", "Frontend Developer", "Backend Developer",
-  "DevOps Engineer", "Cloud Engineer", "Product Manager",
-  "Cybersecurity Analyst", "Mobile Developer", "Data Engineer",
-  "Solution Architect", "Blockchain Developer"
+const TARGET_ROLE_SUGGESTIONS = ["Data Analyst","Data Scientist","AI Engineer","ML Engineer","Full Stack Developer","Frontend Developer","Backend Developer","DevOps Engineer","Cloud Engineer","Product Manager","Cybersecurity Analyst","Mobile Developer","Data Engineer","Solution Architect","Blockchain Developer"
 ];
 
 const PREFILL_CHIPS = [
-  { label: "Zero to Data Analyst", target: "Data Analyst", current: "Beginner / Zero Experience" },
-  { label: "CS Student to SDE at FAANG", target: "Software Development Engineer", current: "Final Year CS Student" },
-  { label: "Manual Tester to SDET", target: "Software Development Engineer in Test", current: "Manual Tester" },
-  { label: "Commerce Graduate to Full Stack Dev", target: "Full Stack Developer", current: "Commerce Graduate" },
-  { label: "Python Dev to AI Engineer", target: "AI Engineer", current: "Python Developer" },
-  { label: "Fresher to DevOps Engineer", target: "DevOps Engineer", current: "Fresher" }
+  { label:"Zero to Data Analyst", target:"Data Analyst", current:"Beginner / Zero Experience" },
+  { label:"CS Student to SDE at FAANG", target:"Software Development Engineer", current:"Final Year CS Student" },
+  { label:"Manual Tester to SDET", target:"Software Development Engineer in Test", current:"Manual Tester" },
+  { label:"Commerce Graduate to Full Stack Dev", target:"Full Stack Developer", current:"Commerce Graduate" },
+  { label:"Python Dev to AI Engineer", target:"AI Engineer", current:"Python Developer" },
+  { label:"Fresher to DevOps Engineer", target:"DevOps Engineer", current:"Fresher" }
 ];
 
 export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: LandingFormProps) {
@@ -78,7 +73,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 animate-in fade-in duration-500">
+    <div className="max-w-4xl mx-auto py-8">
       
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-4">
         <div>
@@ -93,7 +88,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
         {hasSaved && (
           <button 
             onClick={onViewSaved}
-            className="flex items-center gap-2 px-4 py-2.5 bg-muted/50 border border-muted text-foreground font-semibold rounded-xl hover:bg-muted transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-muted/50 border border-muted text-foreground font-semibold rounded-xl hover:bg-muted transition-colors duration-150 ease-out transition-colors"
           >
             <FolderOpen className="w-4 h-4" /> Saved Roadmaps
           </button>
@@ -112,7 +107,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
               type="text"
               value={currentRole}
               onChange={e => setCurrentRole(e.target.value)}
-              placeholder='e.g. "Final year CS student" or "2 years manual tester"'
+              placeholder='e.g."Final year CS student" or"2 years manual tester"'
               className="w-full bg-muted/30 border border-muted rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary/50 transition-colors"
             />
           </div>
@@ -130,7 +125,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
                 setTargetRole(e.target.value);
                 setShowRoleSuggestions(true);
               }}
-              placeholder='e.g. "Data Analyst" or "ML Engineer"'
+              placeholder='e.g."Data Analyst" or"ML Engineer"'
               className="w-full bg-muted/30 border border-muted rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary/50 transition-colors"
             />
             {showRoleSuggestions && (
@@ -144,7 +139,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
                       setTargetRole(suggestion);
                       setShowRoleSuggestions(false);
                     }}
-                    className="px-3 py-1.5 bg-muted/50 text-xs font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors"
+                    className="px-3 py-1.5 bg-muted/50 text-xs font-semibold rounded-lg hover:bg-primary transition-colors duration-150 ease-out hover:text-white transition-colors"
                   >
                     {suggestion}
                   </button>
@@ -171,7 +166,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
               value={currentSkillInput}
               onChange={e => setCurrentSkillInput(e.target.value)}
               onKeyDown={handleAddSkill}
-              placeholder={currentSkills.length === 0 ? "Type a skill and press Enter (e.g. Python, SQL)" : ""}
+              placeholder={currentSkills.length === 0 ?"Type a skill and press Enter (e.g. Python, SQL)" :""}
               className="flex-1 min-w-[200px] bg-transparent outline-none px-2 py-1 text-sm"
             />
           </div>
@@ -186,7 +181,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
               {['Student', 'Fresher (0–1 yr)', 'Junior (1–3 yrs)', 'Mid-level (3–5 yrs)', 'Senior (5+ yrs)'].map(opt => (
                 <button
                   key={opt} type="button" onClick={() => setExperienceLevel(opt)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${experienceLevel === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold border ${experienceLevel === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
                 >
                   {opt}
                 </button>
@@ -200,7 +195,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
               {['5 hrs/week', '10 hrs/week', '20 hrs/week', '40 hrs/week (Full-time)'].map(opt => (
                 <button
                   key={opt} type="button" onClick={() => setTimePerWeek(opt)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${timePerWeek === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold border ${timePerWeek === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
                 >
                   {opt}
                 </button>
@@ -214,7 +209,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
               {['Video Courses', 'Reading / Docs', 'Project-based', 'Mixed'].map(opt => (
                 <button
                   key={opt} type="button" onClick={() => setLearningStyle(opt)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${learningStyle === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold border ${learningStyle === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
                 >
                   {opt}
                 </button>
@@ -228,7 +223,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
               {['Get First Job', 'Switch Careers', 'Get Promoted', 'Freelancing', 'Upskill Only'].map(opt => (
                 <button
                   key={opt} type="button" onClick={() => setPrimaryGoal(opt)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${primaryGoal === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold border ${primaryGoal === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
                 >
                   {opt}
                 </button>
@@ -245,7 +240,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
             type="text"
             value={targetTimeline}
             onChange={e => setTargetTimeline(e.target.value)}
-            placeholder='e.g. "6 months" or "by December 2025"'
+            placeholder='e.g."6 months" or"by December 2025"'
             className="w-full md:w-1/2 bg-muted/30 border border-muted rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary/50 transition-colors"
           />
         </div>
@@ -268,7 +263,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
             <button
               key={chip.label}
               onClick={() => handlePrefill(chip)}
-              className="px-4 py-2 bg-muted/30 border border-muted rounded-xl text-sm font-medium hover:border-foreground/30 hover:bg-muted/50 transition-colors"
+              className="px-4 py-2 bg-muted/30 border border-muted rounded-xl text-sm font-medium hover:border-foreground/30 hover:bg-muted/50 transition-colors duration-150 ease-out transition-colors"
             >
               {chip.label}
             </button>

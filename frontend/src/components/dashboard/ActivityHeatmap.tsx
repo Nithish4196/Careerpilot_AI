@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { ActivityCategory } from "@/lib/activity";
-import { Loader2 } from "lucide-react";
+import React, { useState, useEffect } from"react";
+import { useAuth } from"@/context/AuthContext";
+import { collection, query, where, onSnapshot } from"firebase/firestore";
+import { db } from"@/lib/firebase";
+import { ActivityCategory } from"@/lib/activity";
+import { Loader2 } from"lucide-react";
 
 interface ActivityDay {
   date: string; // YYYY-MM-DD
@@ -56,23 +56,23 @@ const getMonthsArray = (startDate: Date, endDate: Date) => {
 
 // Helper to get color based on actions
 const getColorClass = (actions: number) => {
-  if (actions === 0) return "bg-[#161b22] dark:bg-[#161b22] bg-muted hover:opacity-80";
-  if (actions <= 2) return "bg-[#0e4429] hover:opacity-80";
-  if (actions <= 5) return "bg-[#006d32] hover:opacity-80";
-  if (actions <= 10) return "bg-[#26a641] hover:opacity-80";
-  return "bg-[#39d353] hover:opacity-80";
+  if (actions === 0) return"bg-[#161b22] dark:bg-[#161b22] bg-muted hover:opacity-80";
+  if (actions <= 2) return"bg-[#0e4429] hover:opacity-80";
+  if (actions <= 5) return"bg-[#006d32] hover:opacity-80";
+  if (actions <= 10) return"bg-[#26a641] hover:opacity-80";
+  return"bg-[#39d353] hover:opacity-80";
 };
 
 // Format category names for tooltip
 const formatCategory = (cat: string) => {
   const map: Record<string, string> = {
-    resumeEdits: "resume edits",
-    jobsApplied: "jobs applied",
-    coursesStudied: "courses studied",
-    mockInterviews: "mock interviews",
-    projectsWorked: "projects worked",
-    aiChatMessages: "AI chat messages",
-    roadmapTasksCompleted: "roadmap tasks",
+    resumeEdits:"resume edits",
+    jobsApplied:"jobs applied",
+    coursesStudied:"courses studied",
+    mockInterviews:"mock interviews",
+    projectsWorked:"projects worked",
+    aiChatMessages:"AI chat messages",
+    roadmapTasksCompleted:"roadmap tasks",
   };
   return map[cat] || cat;
 };
@@ -104,7 +104,7 @@ export default function ActivityHeatmap() {
     currentStart.setMonth(today.getMonth() - 5);
     currentStart.setDate(1); // align to start of month
     periods.push({
-      label: "Current",
+      label:"Current",
       startDate: currentStart,
       endDate: today
     });
@@ -146,9 +146,9 @@ export default function ActivityHeatmap() {
       const fallbackStart = new Date(today);
       fallbackStart.setMonth(today.getMonth() - 5);
       fallbackStart.setDate(1);
-      if (!periods.find(p => p.label === "Current")) {
+      if (!periods.find(p => p.label ==="Current")) {
         periods.push({
-          label: "Current",
+          label:"Current",
           startDate: fallbackStart,
           endDate: today
         });
@@ -172,8 +172,8 @@ export default function ActivityHeatmap() {
 
     const q = query(
       collection(db, `users/${user.uid}/activityLog`),
-      where("date", ">=", startStr),
-      where("date", "<=", localTodayStr)
+      where("date",">=", startStr),
+      where("date","<=", localTodayStr)
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -277,7 +277,7 @@ export default function ActivityHeatmap() {
         <div className="flex items-center gap-4">
           <h3 className="text-lg font-bold">Activity Heatmap</h3>
           <select 
-            className="bg-muted/50 border border-muted text-foreground text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:border-foreground/30 font-semibold cursor-pointer hover:bg-muted transition-colors"
+            className="bg-muted/50 border border-muted text-foreground text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:border-foreground/30 font-semibold cursor-pointer hover:bg-muted transition-colors duration-150 ease-out transition-colors"
             value={selectedPeriod.label}
             onChange={(e) => {
               const p = availablePeriods.find(p => p.label === e.target.value);
@@ -321,7 +321,8 @@ export default function ActivityHeatmap() {
                         return (
                           <div 
                             key={`${wIndex}-${dIndex}`}
-                            className={`w-4 h-4 rounded-sm border border-transparent transition-all cursor-pointer ${getColorClass(actions)}`}
+                            className={`w-4 h-4 rounded-sm border border-transparent cursor-pointer ${getColorClass(actions)} animate-heatmap`}
+                            style={{ animationDelay: `${Math.random() * 0.5}s` }}
                             onMouseEnter={(e) => handleMouseEnter(e, day)}
                             onMouseLeave={() => setHoverInfo(null)}
                           />
@@ -352,7 +353,7 @@ export default function ActivityHeatmap() {
       {/* Tooltip Portal */}
       {hoverInfo && (
         <div 
-          className="fixed bg-foreground text-background text-xs px-3 py-2 rounded shadow-xl pointer-events-none z-50 animate-in fade-in zoom-in duration-100"
+          className="fixed bg-foreground text-background text-xs px-3 py-2 rounded shadow-xl pointer-events-none z-50"
           style={{ 
             left: hoverInfo.x, 
             top: hoverInfo.y - 10,

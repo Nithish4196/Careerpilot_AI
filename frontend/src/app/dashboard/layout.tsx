@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
+import React, { useState, useEffect } from"react";
+import Link from"next/link";
+import { useRouter, usePathname } from"next/navigation";
+import { useAuth } from"@/context/AuthContext";
 import { 
   LayoutDashboard, 
   FileText, 
@@ -19,18 +19,18 @@ import {
   LogOut,
   Bell,
   Loader2
-} from "lucide-react";
-import ChatBot from "@/components/dashboard/ChatBot";
-import ProfileDropdown from "@/components/dashboard/ProfileDropdown";
+} from"lucide-react";
+import ChatBot from"@/components/dashboard/ChatBot";
+import ProfileDropdown from"@/components/dashboard/ProfileDropdown";
 
 const sidebarLinks = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Resume Builder", href: "/dashboard/resume", icon: FileText },
-  { name: "Job Finder", href: "/dashboard/jobs", icon: Briefcase },
-  { name: "Learning Hub", href: "/dashboard/learning", icon: GraduationCap },
-  { name: "Mock Interviews", href: "/dashboard/interviews", icon: Video },
-  { name: "Project Builder", href: "/dashboard/projects", icon: Code },
-  { name: "Career Roadmaps", href: "/dashboard/roadmaps", icon: MapIcon },
+  { name:"Dashboard", href:"/dashboard", icon: LayoutDashboard },
+  { name:"Resume Builder", href:"/dashboard/resume", icon: FileText },
+  { name:"Job Finder", href:"/dashboard/jobs", icon: Briefcase },
+  { name:"Learning Hub", href:"/dashboard/learning", icon: GraduationCap },
+  { name:"Mock Interviews", href:"/dashboard/interviews", icon: Video },
+  { name:"Project Builder", href:"/dashboard/projects", icon: Code },
+  { name:"Career Roadmaps", href:"/dashboard/roadmaps", icon: MapIcon },
 ];
 
 export default function DashboardLayout({
@@ -62,16 +62,8 @@ export default function DashboardLayout({
     );
   }
 
-  const initial = userProfile?.fullName ? userProfile.fullName.charAt(0).toUpperCase() : user?.email?.charAt(0).toUpperCase() || 'U';
 
-  const isFullScreenRoute = [
-    "/dashboard/resume/score", 
-    "/dashboard/jobs/tracker", 
-    "/dashboard/trending-jobs", 
-    "/dashboard/learning/active", 
-    "/dashboard/activity", 
-    "/dashboard/interviews/history", 
-    "/dashboard/insights"
+  const isFullScreenRoute = ["/dashboard/resume/score","/dashboard/jobs/tracker","/dashboard/trending-jobs","/dashboard/learning/active","/dashboard/activity","/dashboard/interviews/history","/dashboard/insights"
   ].includes(pathname) || pathname.startsWith("/dashboard/interviews/history/");
 
   if (isFullScreenRoute) {
@@ -91,8 +83,8 @@ export default function DashboardLayout({
 
       {/* Sidebar */}
       <aside 
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-background border-r border-muted transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col ${
-          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-background border-r border-muted transform transition-transform ease-in-out md:relative md:translate-x-0 flex flex-col ${
+          isMobileMenuOpen ?"translate-x-0" :"-translate-x-full"
         }`}
       >
         {/* Brand */}
@@ -119,14 +111,14 @@ export default function DashboardLayout({
               <Link
                 key={link.name}
                 href={link.href}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${
                   isActive 
-                    ? "bg-primary text-primary-foreground shadow-md shadow-primary/20" 
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    ?"bg-primary text-primary-foreground shadow-md shadow-primary/20" 
+                    :"text-muted-foreground hover:text-foreground hover:bg-muted transition-colors duration-150 ease-out "
                 }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                <link.icon className={`w-5 h-5 ${isActive ? "text-primary-foreground" : "text-muted-foreground"}`} />
+                <link.icon className={`w-5 h-5 ${isActive ?"text-primary-foreground" :"text-muted-foreground"}`} />
                 {link.name}
               </Link>
             );
@@ -138,17 +130,17 @@ export default function DashboardLayout({
           <Link
             href="/dashboard/settings"
             className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-              pathname === "/dashboard/settings"
-                ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted"
+              pathname ==="/dashboard/settings"
+                ?"bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                :"text-muted-foreground hover:text-foreground hover:bg-muted transition-colors duration-150 ease-out "
             }`}
           >
-            <Settings className={`w-5 h-5 ${pathname === "/dashboard/settings" ? "text-primary-foreground" : "text-muted-foreground"}`} />
+            <Settings className={`w-5 h-5 ${pathname ==="/dashboard/settings" ?"text-primary-foreground" :"text-muted-foreground"}`} />
             Settings
           </Link>
           <button
             onClick={() => setIsSignOutModalOpen(true)}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-500 hover:text-red-600 hover:bg-red-500/10 transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-500 hover:text-red-600 hover:bg-red-500/10 transition-colors duration-150 ease-out transition-colors"
           >
             <LogOut className="w-5 h-5" />
             Sign Out
@@ -176,7 +168,7 @@ export default function DashboardLayout({
           <div className="flex items-center gap-4 ml-auto">
             {/* Mobile Menu Toggle */}
             <button 
-              className="p-2 rounded-md text-muted-foreground hover:bg-muted md:hidden"
+              className="p-2 rounded-md text-muted-foreground hover:bg-muted transition-colors duration-150 ease-out md:hidden"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <Menu className="w-5 h-5" />
@@ -205,8 +197,8 @@ export default function DashboardLayout({
 
       {/* Sign Out Confirmation Modal */}
       {isSignOutModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200 p-4">
-          <div className="bg-background border border-muted rounded-xl shadow-xl w-full max-w-sm p-6 animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4">
+          <div className="bg-background border border-muted rounded-xl shadow-xl w-full max-w-sm p-6">
             <div className="flex flex-col items-center text-center">
               <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center mb-4 text-red-500">
                 <LogOut className="w-6 h-6" />
@@ -218,7 +210,7 @@ export default function DashboardLayout({
               <div className="flex w-full gap-3">
                 <button
                   onClick={() => setIsSignOutModalOpen(false)}
-                  className="flex-1 py-2.5 px-4 rounded-lg border border-muted font-medium text-sm hover:bg-muted transition-colors text-foreground"
+                  className="flex-1 py-2.5 px-4 rounded-lg border border-muted font-medium text-sm hover:bg-muted transition-colors duration-150 ease-out transition-colors text-foreground"
                 >
                   Cancel
                 </button>
@@ -227,7 +219,7 @@ export default function DashboardLayout({
                     setIsSignOutModalOpen(false);
                     signOut();
                   }}
-                  className="flex-1 py-2.5 px-4 rounded-lg bg-red-500 hover:bg-red-600 font-medium text-sm text-white transition-colors"
+                  className="flex-1 py-2.5 px-4 rounded-lg bg-red-500 hover:bg-red-600 transition-colors duration-150 ease-out font-medium text-sm text-white transition-colors"
                 >
                   Sign Out
                 </button>

@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { GraduationCap, ExternalLink, Award, PlayCircle, Clock } from "lucide-react";
-import Link from "next/link";
-import BackButton from "@/components/dashboard/BackButton";
+import React, { useEffect, useState } from"react";
+import { useAuth } from"@/context/AuthContext";
+import { collection, onSnapshot, query, orderBy } from"firebase/firestore";
+import { db } from"@/lib/firebase";
+import { GraduationCap, ExternalLink, Award, PlayCircle, Clock } from"lucide-react";
+import Link from"next/link";
+import BackButton from"@/components/dashboard/BackButton";
 
 interface CourseProgress {
   id: string;
@@ -15,7 +15,7 @@ interface CourseProgress {
   platform: string;
   totalModules: number;
   completedModules: number;
-  status: "in_progress" | "completed";
+  status:"in_progress" |"completed";
   lastAccessed: any;
   completedAt?: any;
   certificateUrl?: string;
@@ -25,13 +25,13 @@ export default function ActiveLearningPage() {
   const { user } = useAuth();
   const [courses, setCourses] = useState<CourseProgress[]>([]);
   const [loading, setLoading] = useState(true);
-  const [view, setView] = useState<"in_progress" | "completed">("in_progress");
+  const [view, setView] = useState<"in_progress" |"completed">("in_progress");
 
   useEffect(() => {
     if (!user) return;
 
     const coursesRef = collection(db, `users/${user.uid}/courseProgress`);
-    const q = query(coursesRef, orderBy("lastAccessed", "desc"));
+    const q = query(coursesRef, orderBy("lastAccessed","desc"));
     
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as CourseProgress[];
@@ -42,17 +42,17 @@ export default function ActiveLearningPage() {
     return () => unsubscribe();
   }, [user]);
 
-  const activeCourses = courses.filter(c => c.status === "in_progress");
-  const completedCourses = courses.filter(c => c.status === "completed").sort((a, b) => b.completedAt?.toDate().getTime() - a.completedAt?.toDate().getTime());
+  const activeCourses = courses.filter(c => c.status ==="in_progress");
+  const completedCourses = courses.filter(c => c.status ==="completed").sort((a, b) => b.completedAt?.toDate().getTime() - a.completedAt?.toDate().getTime());
 
   const formatDate = (date: any) => {
-    if (!date) return "N/A";
+    if (!date) return"N/A";
     const d = date.toDate ? date.toDate() : new Date(date);
-    return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    return d.toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" });
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="max-w-4xl mx-auto p-4 md:p-8">
       <BackButton />
       
       <div className="mb-8">
@@ -66,13 +66,13 @@ export default function ActiveLearningPage() {
       <div className="flex gap-4 mb-6 border-b border-muted pb-2 overflow-x-auto hide-scrollbar">
         <button 
           onClick={() => setView("in_progress")}
-          className={`pb-2 px-1 text-sm font-bold whitespace-nowrap transition-colors border-b-2 ${view === "in_progress" ? "border-foreground text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}
+          className={`pb-2 px-1 text-sm font-bold whitespace-nowrap transition-colors border-b-2 ${view ==="in_progress" ?"border-foreground text-foreground" :"border-transparent text-muted-foreground hover:text-foreground"}`}
         >
           In Progress ({activeCourses.length})
         </button>
         <button 
           onClick={() => setView("completed")}
-          className={`pb-2 px-1 text-sm font-bold whitespace-nowrap transition-colors border-b-2 ${view === "completed" ? "border-foreground text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}
+          className={`pb-2 px-1 text-sm font-bold whitespace-nowrap transition-colors border-b-2 ${view ==="completed" ?"border-foreground text-foreground" :"border-transparent text-muted-foreground hover:text-foreground"}`}
         >
           Completed ({completedCourses.length})
         </button>
@@ -82,7 +82,7 @@ export default function ActiveLearningPage() {
         <div className="flex justify-center py-20">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-foreground"></div>
         </div>
-      ) : view === "in_progress" ? (
+      ) : view ==="in_progress" ? (
         activeCourses.length === 0 ? (
           <div className="py-20 text-center bg-background border border-muted rounded-xl shadow-sm">
             <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
@@ -94,7 +94,7 @@ export default function ActiveLearningPage() {
             </p>
             <Link 
               href="/dashboard/learning" 
-              className="inline-block px-6 py-3 bg-foreground text-background font-medium rounded-lg hover:bg-foreground/90 transition-colors"
+              className="inline-block px-6 py-3 bg-foreground text-background font-medium rounded-lg hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors"
             >
               Explore Learning Hub →
             </Link>
@@ -104,7 +104,7 @@ export default function ActiveLearningPage() {
             {activeCourses.map(course => {
               const progress = Math.round((course.completedModules / course.totalModules) * 100);
               return (
-                <div key={course.id} className="bg-background border border-muted hover:border-foreground/30 rounded-xl p-5 md:p-6 transition-all shadow-sm">
+                <div key={course.id} className="bg-background border border-muted hover:border-foreground/30 rounded-xl p-5 md:p-6 shadow-sm">
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div className="flex-1 w-full">
                       <div className="flex items-center gap-2 mb-1">
@@ -125,7 +125,7 @@ export default function ActiveLearningPage() {
                         </div>
                         <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
                           <div 
-                            className="h-full bg-foreground rounded-full transition-all duration-500 ease-out"
+                            className="h-full bg-foreground rounded-full ease-out"
                             style={{ width: `${progress}%` }}
                           />
                         </div>
@@ -134,7 +134,7 @@ export default function ActiveLearningPage() {
                     
                     <Link 
                       href={`/dashboard/learning?course=${course.courseId}`}
-                      className="shrink-0 w-full md:w-auto text-center px-6 py-2.5 bg-foreground text-background font-medium text-sm rounded-lg hover:bg-foreground/90 transition-colors"
+                      className="shrink-0 w-full md:w-auto text-center px-6 py-2.5 bg-foreground text-background font-medium text-sm rounded-lg hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors"
                     >
                       Resume Learning
                     </Link>

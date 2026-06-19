@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Video, ExternalLink, Target, CheckCircle, XCircle } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import Link from "next/link";
-import BackButton from "@/components/dashboard/BackButton";
+import React, { useEffect, useState } from"react";
+import { Video, ExternalLink, Target, CheckCircle, XCircle } from"lucide-react";
+import { useAuth } from"@/context/AuthContext";
+import { collection, onSnapshot, query, orderBy } from"firebase/firestore";
+import { db } from"@/lib/firebase";
+import Link from"next/link";
+import BackButton from"@/components/dashboard/BackButton";
 
 interface MockInterviewSession {
   id: string;
@@ -28,7 +28,7 @@ export default function MockInterviewHistoryPage() {
     if (!user) return;
 
     const sessionsRef = collection(db, `users/${user.uid}/mockInterviews`);
-    const q = query(sessionsRef, orderBy("date", "desc"));
+    const q = query(sessionsRef, orderBy("date","desc"));
     
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as MockInterviewSession[];
@@ -40,19 +40,19 @@ export default function MockInterviewHistoryPage() {
   }, [user]);
 
   const formatDate = (date: any) => {
-    if (!date) return "N/A";
+    if (!date) return"N/A";
     const d = date.toDate ? date.toDate() : new Date(date);
-    return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    return d.toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" });
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return "text-emerald-500 bg-emerald-500/10 border-emerald-500/20";
-    if (score >= 60) return "text-amber-500 bg-amber-500/10 border-amber-500/20";
-    return "text-red-500 bg-red-500/10 border-red-500/20";
+    if (score >= 80) return"text-emerald-500 bg-emerald-500/10 border-emerald-500/20";
+    if (score >= 60) return"text-amber-500 bg-amber-500/10 border-amber-500/20";
+    return"text-red-500 bg-red-500/10 border-red-500/20";
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="max-w-4xl mx-auto p-4 md:p-8">
       <BackButton />
 
       <div className="mb-8">
@@ -78,14 +78,14 @@ export default function MockInterviewHistoryPage() {
           </p>
           <Link 
             href="/dashboard/interviews" 
-            className="inline-block px-6 py-3 bg-foreground text-background font-medium rounded-lg hover:bg-foreground/90 transition-colors"
+            className="inline-block px-6 py-3 bg-foreground text-background font-medium rounded-lg hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors"
           >
             Take Your First Interview →
           </Link>
         </div>
       ) : selectedSession ? (
         /* Detailed Report View */
-        <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
+        <div className="space-y-8">
           <button 
             onClick={() => setSelectedSession(null)}
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
@@ -160,7 +160,7 @@ export default function MockInterviewHistoryPage() {
         /* History List */
         <div className="space-y-4">
           {sessions.map(session => (
-            <div key={session.id} className="bg-background border border-muted hover:border-foreground/30 rounded-xl p-5 transition-all shadow-sm">
+            <div key={session.id} className="bg-background border border-muted hover:border-foreground/30 rounded-xl p-5 shadow-sm">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                   <h3 className="font-bold text-lg">{session.roleTarget}</h3>
@@ -183,7 +183,7 @@ export default function MockInterviewHistoryPage() {
                   </div>
                   <button 
                     onClick={() => setSelectedSession(session)}
-                    className="px-4 py-2 border border-muted hover:bg-muted font-medium text-sm rounded-lg transition-colors flex items-center gap-2"
+                    className="px-4 py-2 border border-muted hover:bg-muted transition-colors duration-150 ease-out font-medium text-sm rounded-lg transition-colors flex items-center gap-2"
                   >
                     View Report <ExternalLink className="w-3.5 h-3.5" />
                   </button>

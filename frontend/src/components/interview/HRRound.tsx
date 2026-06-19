@@ -21,7 +21,7 @@ export default function HRRound({ onFinish }: HRRoundProps) {
   // Initial Question
   useEffect(() => {
     setMessages([{
-      id: "ai_init",
+      id:"ai_init",
       sender: 'ai',
       text: HR_QUESTIONS[0]
     }]);
@@ -44,7 +44,7 @@ export default function HRRound({ onFinish }: HRRoundProps) {
       const nextQIndex = currentQIndex + 1;
       if (nextQIndex < HR_QUESTIONS.length) {
         // Acknowledge and ask next
-        const acks = ["That's interesting. ", "Got it. ", "I see. ", "Thank you for sharing that. ", "Makes sense. "];
+        const acks = ["That's interesting.","Got it.","I see.","Thank you for sharing that.","Makes sense."];
         const randomAck = acks[Math.floor(Math.random() * acks.length)];
         
         setMessages(prev => [...prev, {
@@ -56,10 +56,7 @@ export default function HRRound({ onFinish }: HRRoundProps) {
       } else {
         // Finish round
         const score = Math.floor(Math.random() * (95 - 70) + 70); // Mock score 70-95
-        onFinish(score, [
-          "Clear communication overall.",
-          "Good use of professional examples.",
-          "Consider elaborating more on measurable impact."
+        onFinish(score, ["Clear communication overall.","Good use of professional examples.","Consider elaborating more on measurable impact."
         ]);
       }
     }, 1500);
@@ -107,7 +104,7 @@ export default function HRRound({ onFinish }: HRRoundProps) {
           <button 
             onClick={handleSend}
             disabled={!inputText.trim()}
-            className="absolute right-3 bottom-3 p-2 bg-foreground text-background rounded-xl hover:bg-foreground/90 transition-colors disabled:opacity-50"
+            className="absolute right-3 bottom-3 p-2 bg-foreground text-background rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors disabled:opacity-50"
           >
             <Send className="w-4 h-4" />
           </button>

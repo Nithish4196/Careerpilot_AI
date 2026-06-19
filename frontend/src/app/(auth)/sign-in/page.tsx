@@ -33,8 +33,8 @@ export default function SignInPage() {
       toast.success("Welcome back!");
       router.push("/dashboard");
     } else {
-      setErrorMsg(error || "Invalid email or password.");
-      if (error === "Please verify your email before signing in.") {
+      setErrorMsg(error ||"Invalid email or password.");
+      if (error ==="Please verify your email before signing in.") {
         setShowResend(true);
       }
     }
@@ -46,7 +46,7 @@ export default function SignInPage() {
       toast.success("Verification email resent. Please check your inbox.");
       setShowResend(false);
     } else {
-      toast.error(error || "Failed to resend email.");
+      toast.error(error ||"Failed to resend email.");
     }
   };
 
@@ -72,7 +72,7 @@ export default function SignInPage() {
             <label className="block text-sm font-bold mb-1">Password</label>
             <div className="relative">
               <input 
-                required type={showPassword ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)}
+                required type={showPassword ?"text" :"password"} value={password} onChange={e => setPassword(e.target.value)}
                 className="w-full bg-muted/30 border border-muted rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary/50 transition-colors pr-10"
                 placeholder="Enter your password"
               />
@@ -108,9 +108,9 @@ export default function SignInPage() {
 
           <button 
             type="submit" disabled={isLoading}
-            className="w-full py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-all flex justify-center items-center gap-2 mt-4 disabled:opacity-50"
+            className="w-full py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out flex justify-center items-center gap-2 mt-4 disabled:opacity-50"
           >
-            {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Sign In"}
+            {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> :"Sign In"}
           </button>
 
         </form>

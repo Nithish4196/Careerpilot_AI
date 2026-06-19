@@ -12,7 +12,7 @@ export default function CourseCard({ course }: CourseCardProps) {
       href={course.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="bg-background border border-muted rounded-2xl p-5 hover:shadow-lg hover:border-foreground/20 transition-all cursor-pointer group flex flex-col h-full"
+      className="bg-background border border-muted rounded-2xl p-5 hover:border-foreground/20 cursor-pointer group flex flex-col h-full"
     >
       <div className="flex flex-wrap gap-2 mb-4">
         {/* Platform Badge - Monochromatic */}

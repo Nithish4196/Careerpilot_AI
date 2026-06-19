@@ -11,34 +11,26 @@ interface LandingFormProps {
 }
 
 const PROJECT_TYPES = [
-  { id: "Full Stack Web", icon: Globe },
-  { id: "Frontend", icon: Layout },
-  { id: "Backend", icon: Terminal },
-  { id: "AI / ML", icon: Sparkles },
-  { id: "DSA / Algorithms", icon: Blocks },
-  { id: "Data Analytics", icon: Database },
-  { id: "Mobile App", icon: Smartphone },
-  { id: "DevOps / Cloud", icon: Cloud },
-  { id: "Cybersecurity", icon: Lock },
-  { id: "Open Source", icon: Code }
+  { id:"Full Stack Web", icon: Globe },
+  { id:"Frontend", icon: Layout },
+  { id:"Backend", icon: Terminal },
+  { id:"AI / ML", icon: Sparkles },
+  { id:"DSA / Algorithms", icon: Blocks },
+  { id:"Data Analytics", icon: Database },
+  { id:"Mobile App", icon: Smartphone },
+  { id:"DevOps / Cloud", icon: Cloud },
+  { id:"Cybersecurity", icon: Lock },
+  { id:"Open Source", icon: Code }
 ];
 
-const PROMPT_CHIPS = [
-  "Real-time collaborative whiteboard",
-  "AI resume analyzer using LLMs",
-  "DSA visualizer for sorting algorithms",
-  "Full stack e-commerce with payments",
-  "Sentiment analysis dashboard",
-  "Expense tracker mobile app",
-  "Kubernetes deployment pipeline",
-  "Vulnerability scanner tool"
+const PROMPT_CHIPS = ["Real-time collaborative whiteboard","AI resume analyzer using LLMs","DSA visualizer for sorting algorithms","Full stack e-commerce with payments","Sentiment analysis dashboard","Expense tracker mobile app","Kubernetes deployment pipeline","Vulnerability scanner tool"
 ];
 
 export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: LandingFormProps) {
   const [type, setType] = useState("Full Stack Web");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [level, setLevel] = useState<"Beginner" | "Intermediate" | "Advanced">("Intermediate");
+  const [level, setLevel] = useState<"Beginner" |"Intermediate" |"Advanced">("Intermediate");
   const [tech, setTech] = useState("");
   const [goal, setGoal] = useState("Build Portfolio");
 
@@ -49,14 +41,14 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
     if (!title) return;
     
     if (user) {
-      logActivity(user.uid, "projectsWorked");
+      logActivity(user.uid,"projectsWorked");
     }
     
     onSubmit({ type, title, description, level, tech, goal });
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 animate-in fade-in duration-500 pb-20">
+    <div className="max-w-4xl mx-auto py-8 pb-20">
       
       <div className="flex items-center justify-between mb-8">
         <div>
@@ -68,7 +60,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
         {hasSaved && (
           <button 
             onClick={onViewSaved}
-            className="px-5 py-2.5 bg-muted text-foreground font-bold rounded-xl hover:bg-muted-foreground/20 transition-colors"
+            className="px-5 py-2.5 bg-muted text-foreground font-bold rounded-xl hover:bg-muted-foreground/20 transition-colors duration-150 ease-out transition-colors"
           >
             Saved Blueprints
           </button>
@@ -88,10 +80,10 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
                   key={pt.id}
                   type="button"
                   onClick={() => setType(pt.id)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all border ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold border ${
                     type === pt.id 
-                      ? "bg-foreground text-background border-foreground shadow-md" 
-                      : "bg-background text-muted-foreground border-muted hover:border-foreground/30 hover:text-foreground"
+                      ?"bg-foreground text-background border-foreground shadow-md" 
+                      :"bg-background text-muted-foreground border-muted hover:border-foreground/30 hover:text-foreground"
                   }`}
                 >
                   <Icon className="w-4 h-4" /> {pt.id}
@@ -131,13 +123,13 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
           <div>
             <label className="text-sm font-bold mb-3 block">Your Skill Level</label>
             <div className="flex bg-muted/30 p-1.5 rounded-xl border border-muted">
-              {(["Beginner", "Intermediate", "Advanced"] as const).map(lvl => (
+              {(["Beginner","Intermediate","Advanced"] as const).map(lvl => (
                 <button
                   key={lvl}
                   type="button"
                   onClick={() => setLevel(lvl)}
-                  className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all ${
-                    level === lvl ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                  className={`flex-1 py-2 text-sm font-bold rounded-lg ${
+                    level === lvl ?"bg-background text-foreground shadow-sm" :"text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {lvl}
@@ -161,15 +153,15 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
         <div>
           <label className="text-sm font-bold mb-3 block">Primary Goal</label>
           <div className="flex flex-wrap gap-2">
-            {["Learn Concepts", "Build Portfolio", "Contribute to Open Source", "Freelance / Client Work", "Startup / Product"].map(g => (
+            {["Learn Concepts","Build Portfolio","Contribute to Open Source","Freelance / Client Work","Startup / Product"].map(g => (
               <button
                 key={g}
                 type="button"
                 onClick={() => setGoal(g)}
                 className={`px-4 py-2 rounded-full text-sm font-bold border transition-colors ${
                   goal === g 
-                    ? "bg-foreground text-background border-foreground" 
-                    : "bg-background text-muted-foreground border-muted hover:border-foreground/30 hover:text-foreground"
+                    ?"bg-foreground text-background border-foreground" 
+                    :"bg-background text-muted-foreground border-muted hover:border-foreground/30 hover:text-foreground"
                 }`}
               >
                 {g}
@@ -181,7 +173,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
         <button 
           type="submit"
           disabled={!title}
-          className="w-full bg-foreground text-background font-extrabold py-4 rounded-2xl text-lg hover:bg-foreground/90 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+          className="w-full bg-foreground text-background font-extrabold py-4 rounded-2xl text-lg hover:bg-foreground/90 transition-colors duration-150 ease-out shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
         >
           Generate Project Blueprint →
         </button>
@@ -195,7 +187,7 @@ export default function LandingForm({ onSubmit, onViewSaved, hasSaved }: Landing
             <button
               key={idx}
               onClick={() => setTitle(chip)}
-              className="px-3 py-1.5 bg-muted/50 border border-muted rounded-lg text-xs font-semibold text-foreground hover:bg-muted transition-colors"
+              className="px-3 py-1.5 bg-muted/50 border border-muted rounded-lg text-xs font-semibold text-foreground hover:bg-muted transition-colors duration-150 ease-out transition-colors"
             >
               {chip}
             </button>

@@ -1,6 +1,6 @@
-import React from "react";
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import React from"react";
+import Link from"next/link";
+import { ArrowUpRight } from"lucide-react";
 
 interface StatCardWrapperProps {
   title: string;
@@ -24,7 +24,7 @@ export default function StatCardWrapper({
   onClick
 }: StatCardWrapperProps) {
   const content = (
-    <div className="bg-background rounded-xl p-6 border border-muted shadow-sm hover:shadow-md hover:border-primary/30 transition-all group h-full flex flex-col justify-between">
+    <div className="bg-background rounded-xl p-6 border border-muted shadow-sm hover:shadow-md hover:border-primary/30 group h-full flex flex-col justify-between cursor-pointer">
       <div>
         <div className="flex justify-between items-start mb-4">
           {isLoading ? (

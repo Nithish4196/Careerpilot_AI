@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { FileText } from "lucide-react";
-import StatCardWrapper from "./StatCardWrapper";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from"react";
+import { useAuth } from"@/context/AuthContext";
+import { collection, query, orderBy, onSnapshot } from"firebase/firestore";
+import { db } from"@/lib/firebase";
+import { FileText } from"lucide-react";
+import StatCardWrapper from"./StatCardWrapper";
+import { useRouter } from"next/navigation";
 
 export default function ResumeStatCard() {
   const { user } = useAuth();
@@ -22,7 +22,7 @@ export default function ResumeStatCard() {
     if (!user) return;
 
     const resumesRef = collection(db, `users/${user.uid}/resumes`);
-    const q = query(resumesRef, orderBy("updatedAt", "desc")); 
+    const q = query(resumesRef, orderBy("updatedAt","desc")); 
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       if (snapshot.empty) {
@@ -54,30 +54,25 @@ export default function ResumeStatCard() {
   
   const valueDisplay = hasResume ? (
     <div className="flex items-center gap-2">
-      {resumeData.score !== null ? `${resumeData.score}/100` : "0/100"}
+      {resumeData.score !== null ? `${resumeData.score}/100` :"0/100"}
       {resumeData.total > 1 && (
         <span className="text-xs font-normal text-muted-foreground bg-muted px-2 py-0.5 rounded-full" title={`Best of ${resumeData.total} resumes`}>
           Best of {resumeData.total}
         </span>
       )}
     </div>
-  ) : (
-    "0%"
+  ) : ("0%"
   );
 
   const handleClick = () => {
-    if (hasResume) {
-      router.push("/dashboard/resume/editor"); 
-    } else {
-      router.push("/dashboard/resume/score");
-    }
+    router.push("/dashboard/resume/score");
   };
 
   return (
     <StatCardWrapper
       title="Resume Score"
       value={valueDisplay}
-      subtext={hasResume ? (resumeData.score ? "Based on ATS checks" : "Edit to calculate score") : "Upload your resume to see your score"}
+      subtext={hasResume ? (resumeData.score ?"Based on ATS checks" :"Edit to calculate score") :"Upload your resume to see your score"}
       icon={FileText}
       colorClass="bg-muted text-foreground"
       link="#"

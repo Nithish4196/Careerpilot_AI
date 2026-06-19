@@ -30,7 +30,7 @@ export default function RoadmapTimeline({ roadmap }: RoadmapTimelineProps) {
               </div>
 
               {/* Content Card */}
-              <div className="flex-1 bg-background border border-muted rounded-2xl p-6 group-hover:border-foreground/20 transition-all">
+              <div className="flex-1 bg-background border border-muted rounded-2xl p-6 group-hover:border-foreground/20">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                   <h3 className="text-xl font-bold">{phase.phase}</h3>
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-muted rounded-full text-xs font-bold tracking-wide">

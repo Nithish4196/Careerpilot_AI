@@ -3,13 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, Map } from 'lucide-react';
 
-const MESSAGES = [
-  "Analyzing your current skills…",
-  "Identifying skill gaps…",
-  "Building your personalized roadmap…",
-  "Curating the best learning resources…",
-  "Calculating your timeline…",
-  "Finalizing your weekly plan…"
+const MESSAGES = ["Analyzing your current skills…","Identifying skill gaps…","Building your personalized roadmap…","Curating the best learning resources…","Calculating your timeline…","Finalizing your weekly plan…"
 ];
 
 export default function GeneratingScreen() {
@@ -23,7 +17,7 @@ export default function GeneratingScreen() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh] animate-in fade-in duration-500">
+    <div className="flex flex-col items-center justify-center min-h-[70vh]">
       
       <div className="relative mb-8">
         <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full animate-pulse" />
@@ -39,7 +33,7 @@ export default function GeneratingScreen() {
         {MESSAGES.map((msg, idx) => (
           <p
             key={msg}
-            className={`absolute text-center text-muted-foreground font-medium transition-all duration-500 w-full ${
+            className={`absolute text-center text-muted-foreground font-medium w-full ${
               idx === messageIndex 
                 ? 'opacity-100 translate-y-0' 
                 : idx < messageIndex 

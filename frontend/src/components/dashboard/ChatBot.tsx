@@ -7,7 +7,7 @@ import { logActivity } from '@/lib/activity';
 
 interface Message {
   id: string;
-  sender: "user" | "ai";
+  sender:"user" |"ai";
   text: string;
 }
 
@@ -15,7 +15,7 @@ export default function ChatBot() {
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { id: "1", sender: "ai", text: "Hi! I'm your CareerPilot AI Assistant. How can I help you today?" }
+    { id:"1", sender:"ai", text:"Hi! I'm your CareerPilot AI Assistant. How can I help you today?" }
   ]);
   const [inputText, setInputText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -23,56 +23,56 @@ export default function ChatBot() {
 
   useEffect(() => {
     if (isOpen) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current?.scrollIntoView({ behavior:"smooth" });
     }
   }, [messages, isOpen]);
 
   const generateResponse = (input: string) => {
     const lower = input.toLowerCase();
     if (lower.match(/trending|2026|future|jobs/)) {
-      return "For 2026, the most trending roles are: AI Engineers, Prompt Engineers, Cloud Architects, Data Scientists, and Cybersecurity Experts. I recommend checking out our Job Finder module for specific remote listings!";
+      return"For 2026, the most trending roles are: AI Engineers, Prompt Engineers, Cloud Architects, Data Scientists, and Cybersecurity Experts. I recommend checking out our Job Finder module for specific remote listings!";
     }
     if (lower.match(/resume|cv/)) {
-      return "I can help with your resume! Try our ATS-optimized Resume Builder from the sidebar. You can choose between Casual and Professional templates, and I can even help write your bullet points.";
+      return"I can help with your resume! Try our ATS-optimized Resume Builder from the sidebar. You can choose between Casual and Professional templates, and I can even help write your bullet points.";
     }
     if (lower.match(/interview|mock|prepare/)) {
-      return "Our Mock Interview module is perfect for preparation. You can practice HR, Technical, Coding, and even Group Discussions with an AI evaluator that gives instant feedback.";
+      return"Our Mock Interview module is perfect for preparation. You can practice HR, Technical, Coding, and even Group Discussions with an AI evaluator that gives instant feedback.";
     }
     if (lower.match(/project|idea|build/)) {
-      return "Need a project idea? Head over to the Project Builder! Just tell me what tech stack you like (e.g., React, Node, Python), and I'll generate a complete roadmap, folder structure, and architecture for you.";
+      return"Need a project idea? Head over to the Project Builder! Just tell me what tech stack you like (e.g., React, Node, Python), and I'll generate a complete roadmap, folder structure, and architecture for you.";
     }
     if (lower.match(/roadmap|path|career/)) {
-      return "To plan your career path, the Career Roadmaps module provides step-by-step guides for Frontend, Backend, DevOps, Data Science, and more. What specific role are you aiming for?";
+      return"To plan your career path, the Career Roadmaps module provides step-by-step guides for Frontend, Backend, DevOps, Data Science, and more. What specific role are you aiming for?";
     }
     if (lower.match(/learn|course|study|skills|tutorial/)) {
-      return "The Learning Hub has curated courses from top platforms like Coursera and YouTube. What specific skill or framework are you trying to learn today?";
+      return"The Learning Hub has curated courses from top platforms like Coursera and YouTube. What specific skill or framework are you trying to learn today?";
     }
     if (lower.match(/hi|hello|hey|greetings/)) {
-      return "Hello there! I'm your CareerPilot AI. How can I assist you with your career journey today?";
+      return"Hello there! I'm your CareerPilot AI. How can I assist you with your career journey today?";
     }
     if (lower.match(/salary|pay|money|compensation/)) {
-      return "Salary expectations vary greatly by location and experience. You can use our Job Finder to see real-time salary ranges (normalized in INR) for the roles you're interested in.";
+      return"Salary expectations vary greatly by location and experience. You can use our Job Finder to see real-time salary ranges (normalized in INR) for the roles you're interested in.";
     }
-    return "That's a great question! I am your CareerPilot AI. I can help you optimize your resume, find remote jobs, prepare for interviews, or build project blueprints. What would you like to focus on first?";
+    return"That's a great question! I am your CareerPilot AI. I can help you optimize your resume, find remote jobs, prepare for interviews, or build project blueprints. What would you like to focus on first?";
   };
 
   const handleSend = () => {
     if (!inputText.trim()) return;
 
-    const newMsg: Message = { id: Date.now().toString(), sender: "user", text: inputText };
+    const newMsg: Message = { id: Date.now().toString(), sender:"user", text: inputText };
     setMessages(prev => [...prev, newMsg]);
     setInputText("");
     setIsTyping(true);
     
     if (user) {
-      logActivity(user.uid, "aiChatMessages");
+      logActivity(user.uid,"aiChatMessages");
     }
 
     // Simulate AI response
     setTimeout(() => {
       setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
-        sender: "ai",
+        sender:"ai",
         text: generateResponse(newMsg.text)
       }]);
       setIsTyping(false);
@@ -84,7 +84,7 @@ export default function ChatBot() {
       
       {/* Chat Window */}
       {isOpen && (
-        <div className="bg-background border border-muted shadow-2xl rounded-2xl w-80 sm:w-96 h-[500px] max-h-[calc(100vh-6rem)] flex flex-col mb-4 overflow-hidden animate-in slide-in-from-bottom-5 fade-in duration-300">
+        <div className="bg-background border border-muted shadow-2xl rounded-2xl w-80 sm:w-96 h-[500px] max-h-[calc(100vh-6rem)] flex flex-col mb-4 overflow-hidden">
           
           {/* Header */}
           <div className="bg-foreground text-background px-4 py-3 flex items-center justify-between shrink-0">
@@ -101,7 +101,7 @@ export default function ChatBot() {
             </div>
             <button 
               onClick={() => setIsOpen(false)}
-              className="p-1.5 hover:bg-background/20 rounded-md transition-colors"
+              className="p-1.5 hover:bg-background/20 transition-colors duration-150 ease-out rounded-md transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -150,7 +150,7 @@ export default function ChatBot() {
             <button 
               onClick={handleSend}
               disabled={!inputText.trim() || isTyping}
-              className="w-11 h-11 bg-foreground text-background rounded-xl flex items-center justify-center shrink-0 hover:bg-foreground/90 transition-colors disabled:opacity-50"
+              className="w-11 h-11 bg-foreground text-background rounded-xl flex items-center justify-center shrink-0 hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors disabled:opacity-50"
             >
               <Send className="w-4 h-4 ml-0.5" />
             </button>

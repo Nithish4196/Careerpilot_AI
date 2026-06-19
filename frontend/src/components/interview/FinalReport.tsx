@@ -10,16 +10,36 @@ interface FinalReportProps {
 }
 
 export default function FinalReport({ config, results, onRetake, onGoToLearning }: FinalReportProps) {
-  const averageScore = Math.round(results.reduce((acc, curr) => acc + curr.score, 0) / results.length);
+  const targetScore = Math.round(results.reduce((acc, curr) => acc + curr.score, 0) / results.length);
+  const [displayScore, setDisplayScore] = React.useState(0);
+
+  React.useEffect(() => {
+    const duration = 1500;
+    const startTime = performance.now();
+    
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      
+      setDisplayScore(Math.round(easeProgress * targetScore));
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  }, [targetScore]);
   
   const getScoreColor = (score: number) => {
-    if (score >= 80) return "text-green-600";
-    if (score >= 60) return "text-amber-600";
-    return "text-red-600";
+    if (score >= 80) return"text-green-600";
+    if (score >= 60) return"text-amber-600";
+    return"text-red-600";
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 animate-in fade-in duration-500 pb-20">
+    <div className="max-w-4xl mx-auto py-8 pb-20">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-extrabold tracking-tight mb-2">Interview Complete</h1>
         <p className="text-muted-foreground text-lg">
@@ -36,19 +56,18 @@ export default function FinalReport({ config, results, onRetake, onGoToLearning 
               <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="8" className="text-muted/30" />
               <circle 
                 cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="8" 
-                className={getScoreColor(averageScore)}
-                strokeDasharray={`${(averageScore / 100) * 283} 283`}
+                className={getScoreColor(targetScore)}
+                strokeDasharray={`${(displayScore / 100) * 283} 283`}
                 strokeLinecap="round"
               />
             </svg>
             <div className="absolute flex flex-col items-center">
-              <span className="text-4xl font-extrabold">{averageScore}%</span>
+              <span className="text-4xl font-extrabold">{displayScore}%</span>
             </div>
           </div>
           <p className="font-medium text-muted-foreground">
-            {averageScore >= 80 ? "Excellent performance! You're interview ready." : 
-             averageScore >= 60 ? "Good effort, but there's room for improvement." : 
-             "Keep practicing. Focus on your core fundamentals."}
+            {targetScore >= 80 ?"Excellent performance! You're interview ready." : 
+             targetScore >= 60 ?"Good effort, but there's room for improvement." :"Keep practicing. Focus on your core fundamentals."}
           </p>
         </div>
 
@@ -115,7 +134,7 @@ export default function FinalReport({ config, results, onRetake, onGoToLearning 
                   </div>
                   <div className="h-2 bg-muted rounded-full overflow-hidden">
                     <div 
-                      className="h-full bg-foreground rounded-full transition-all duration-1000"
+                      className="h-full bg-foreground rounded-full duration-1000"
                       style={{ width: `${result.score}%` }}
                     />
                   </div>
@@ -141,19 +160,19 @@ export default function FinalReport({ config, results, onRetake, onGoToLearning 
       <div className="flex flex-col sm:flex-row justify-center gap-4">
         <button 
           onClick={onRetake}
-          className="flex items-center justify-center gap-2 px-8 py-3.5 bg-background border border-muted rounded-xl font-bold hover:bg-muted transition-colors"
+          className="flex items-center justify-center gap-2 px-8 py-3.5 bg-background border border-muted rounded-xl font-bold hover:bg-muted transition-colors duration-150 ease-out transition-colors"
         >
           <RefreshCcw className="w-5 h-5" /> Retake Interview
         </button>
         <button 
           onClick={onGoToLearning}
-          className="flex items-center justify-center gap-2 px-8 py-3.5 bg-background border border-muted rounded-xl font-bold hover:bg-muted transition-colors"
+          className="flex items-center justify-center gap-2 px-8 py-3.5 bg-background border border-muted rounded-xl font-bold hover:bg-muted transition-colors duration-150 ease-out transition-colors"
         >
           <BookOpen className="w-5 h-5" /> View Learning Resources
         </button>
         <button 
           onClick={() => window.print()}
-          className="flex items-center justify-center gap-2 px-8 py-3.5 bg-foreground text-background rounded-xl font-bold hover:bg-foreground/90 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+          className="flex items-center justify-center gap-2 px-8 py-3.5 bg-foreground text-background rounded-xl font-bold hover:bg-foreground/90 transition-colors duration-150 ease-out shadow-lg"
         >
           <Download className="w-5 h-5" /> Download Report
         </button>

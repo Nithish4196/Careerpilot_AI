@@ -7,13 +7,9 @@ import { db } from '@/lib/firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import { Loader2, ArrowRight, ArrowLeft, X } from 'lucide-react';
 import toast from 'react-hot-toast';
+import AvatarSelector from '@/components/ui/AvatarSelector';
 
-const TARGET_ROLES = [
-  "Data Analyst", "Data Scientist", "AI Engineer", "ML Engineer",
-  "Full Stack Developer", "Frontend Developer", "Backend Developer",
-  "DevOps Engineer", "Cloud Engineer", "Product Manager",
-  "Cybersecurity Analyst", "Mobile Developer", "Data Engineer",
-  "Solution Architect", "Blockchain Developer"
+const TARGET_ROLES = ["Data Analyst","Data Scientist","AI Engineer","ML Engineer","Full Stack Developer","Frontend Developer","Backend Developer","DevOps Engineer","Cloud Engineer","Product Manager","Cybersecurity Analyst","Mobile Developer","Data Engineer","Solution Architect","Blockchain Developer"
 ];
 
 export default function OnboardingPage() {
@@ -23,18 +19,29 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(1);
   const [isSaving, setIsSaving] = useState(false);
 
-  // Step 1
+  // Step 1 - Avatar
+  const [avatarType, setAvatarType] = useState<"uploaded" | "preset" | "initials" | undefined>();
+  const [avatarValue, setAvatarValue] = useState<string | undefined>();
+
+  useEffect(() => {
+    if (userProfile && !avatarType) {
+      setAvatarType(userProfile.avatarType);
+      setAvatarValue(userProfile.avatarValue);
+    }
+  }, [userProfile]);
+
+  // Step 2
   const [currentRole, setCurrentRole] = useState("");
   const [experience, setExperience] = useState("");
   const [location, setLocation] = useState("");
 
-  // Step 2
+  // Step 3
   const [targetRole, setTargetRole] = useState("");
   const [primaryGoal, setPrimaryGoal] = useState("");
   const [timePerWeek, setTimePerWeek] = useState("");
   const [showRoleSuggestions, setShowRoleSuggestions] = useState(false);
 
-  // Step 3
+  // Step 4
   const [skillInput, setSkillInput] = useState("");
   const [skills, setSkills] = useState<string[]>([]);
 
@@ -62,6 +69,8 @@ export default function OnboardingPage() {
     try {
       const data = isSkip ? { onboardingCompleted: true } : {
         onboardingCompleted: true,
+        avatarType: avatarType || "initials",
+        avatarValue: avatarValue || "",
         currentRole,
         experience,
         location,
@@ -71,7 +80,7 @@ export default function OnboardingPage() {
         skills
       };
 
-      await updateDoc(doc(db, "users", user.uid), data);
+      await updateDoc(doc(db,"users", user.uid), data);
       toast.success(`Welcome to CareerPilot AI, ${userProfile?.fullName || 'Explorer'}! 🎉`);
       router.push("/dashboard");
     } catch (error) {
@@ -97,22 +106,40 @@ export default function OnboardingPage() {
         <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-[100px]"></div>
       </div>
 
-      <div className="w-full max-w-2xl bg-background border border-muted rounded-3xl p-8 md:p-12 shadow-2xl animate-in fade-in slide-in-from-bottom-8 duration-500">
+      <div className="w-full max-w-2xl bg-background border border-muted rounded-3xl p-8 md:p-12 shadow-2xl">
         
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-black">Profile Setup</h1>
           <div className="text-sm font-bold text-muted-foreground uppercase tracking-widest">
-            Step {step} of 3
+            Step {step} of 4
           </div>
         </div>
 
         <div className="w-full bg-muted rounded-full h-2 mb-10">
-          <div className="bg-primary h-2 rounded-full transition-all duration-500" style={{ width: `${(step / 3) * 100}%` }}></div>
+          <div className="bg-primary h-2 rounded-full transition-all duration-300" style={{ width: `${(step / 4) * 100}%` }}></div>
         </div>
 
-        {/* STEP 1 */}
+        {/* STEP 1: Avatar */}
         {step === 1 && (
-          <div className="space-y-6 animate-in slide-in-from-right fade-in duration-300">
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-xl font-bold mb-1">Choose your avatar</h2>
+              <p className="text-sm text-muted-foreground mb-4">Pick a professional avatar, or upload your own photo.</p>
+            </div>
+            <AvatarSelector 
+              currentType={avatarType} 
+              currentValue={avatarValue} 
+              onSelect={(type, val) => {
+                setAvatarType(type);
+                setAvatarValue(val);
+              }}
+            />
+          </div>
+        )}
+
+        {/* STEP 2 */}
+        {step === 2 && (
+          <div className="space-y-6">
             <h2 className="text-xl font-bold mb-4">Tell us about yourself</h2>
             
             <div>
@@ -130,7 +157,7 @@ export default function OnboardingPage() {
                 {['Student', 'Fresher', 'Junior', 'Mid', 'Senior'].map(opt => (
                   <button
                     key={opt} onClick={() => setExperience(opt)}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${experience === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold border ${experience === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
                   >
                     {opt}
                   </button>
@@ -149,9 +176,9 @@ export default function OnboardingPage() {
           </div>
         )}
 
-        {/* STEP 2 */}
-        {step === 2 && (
-          <div className="space-y-6 animate-in slide-in-from-right fade-in duration-300">
+        {/* STEP 3 */}
+        {step === 3 && (
+          <div className="space-y-6">
             <h2 className="text-xl font-bold mb-4">Your career goals</h2>
             
             <div className="relative">
@@ -168,7 +195,7 @@ export default function OnboardingPage() {
                 <div className="absolute top-full left-0 right-0 mt-2 bg-background border border-muted rounded-xl shadow-xl z-20 max-h-48 overflow-y-auto p-2 flex flex-wrap gap-2">
                   {TARGET_ROLES.filter(s => s.toLowerCase().includes(targetRole.toLowerCase())).map(s => (
                     <button key={s} onMouseDown={(e) => { e.preventDefault(); setTargetRole(s); setShowRoleSuggestions(false); }}
-                      className="px-3 py-1.5 bg-muted/50 text-xs font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors"
+                      className="px-3 py-1.5 bg-muted/50 text-xs font-semibold rounded-lg hover:bg-primary transition-colors duration-150 ease-out hover:text-white transition-colors"
                     >
                       {s}
                     </button>
@@ -183,7 +210,7 @@ export default function OnboardingPage() {
                 {['Get First Job', 'Switch Careers', 'Get Promoted', 'Freelancing', 'Upskill Only'].map(opt => (
                   <button
                     key={opt} onClick={() => setPrimaryGoal(opt)}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${primaryGoal === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold border ${primaryGoal === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
                   >
                     {opt}
                   </button>
@@ -197,7 +224,7 @@ export default function OnboardingPage() {
                 {['5 hrs', '10 hrs', '20 hrs', '40 hrs'].map(opt => (
                   <button
                     key={opt} onClick={() => setTimePerWeek(opt)}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${timePerWeek === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold border ${timePerWeek === opt ? 'bg-foreground text-background border-foreground' : 'bg-background border-muted text-muted-foreground hover:border-foreground/30'}`}
                   >
                     {opt}
                   </button>
@@ -207,9 +234,9 @@ export default function OnboardingPage() {
           </div>
         )}
 
-        {/* STEP 3 */}
-        {step === 3 && (
-          <div className="space-y-6 animate-in slide-in-from-right fade-in duration-300">
+        {/* STEP 4 */}
+        {step === 4 && (
+          <div className="space-y-6">
             <h2 className="text-xl font-bold mb-4">Your current skills</h2>
             
             <div>
@@ -226,7 +253,7 @@ export default function OnboardingPage() {
                 <input 
                   type="text" value={skillInput} onChange={e => setSkillInput(e.target.value)} onKeyDown={handleAddSkill}
                   className="flex-1 min-w-[200px] bg-transparent outline-none px-2 py-1 text-sm h-8"
-                  placeholder={skills.length === 0 ? "Type a skill e.g. Python, React..." : ""}
+                  placeholder={skills.length === 0 ?"Type a skill e.g. Python, React..." :""}
                 />
               </div>
             </div>
@@ -241,15 +268,15 @@ export default function OnboardingPage() {
             </button>
           ) : <div></div>}
 
-          {step < 3 ? (
-            <button onClick={() => setStep(step + 1)} className="flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-xl font-bold hover:bg-foreground/90 transition-colors">
+          {step < 4 ? (
+            <button onClick={() => setStep(step + 1)} className="flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-xl font-bold hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors">
               Next <ArrowRight className="w-4 h-4" />
             </button>
           ) : (
             <button 
               onClick={() => handleFinish(false)} 
               disabled={isSaving || skills.length === 0}
-              className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-bold hover:bg-primary/90 transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-bold hover:bg-primary/90 transition-colors duration-150 ease-out transition-colors disabled:opacity-50"
             >
               {isSaving ? <Loader2 className="w-5 h-5 animate-spin" /> : <>Finish Setup <ArrowRight className="w-4 h-4" /></>}
             </button>

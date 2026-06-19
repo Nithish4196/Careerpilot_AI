@@ -1,4 +1,4 @@
-import { BookOpen, Briefcase, Award, Mic, Code, Bot } from "lucide-react";
+import { BookOpen, Briefcase, Award, Mic, Code, Bot } from"lucide-react";
 
 export default function FeaturesPage() {
   return (
@@ -11,12 +11,12 @@ export default function FeaturesPage() {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            { icon: BookOpen, title: "AI Resume Builder", desc: "Drag-and-drop builder with ATS templates and AI content optimization." },
-            { icon: Briefcase, title: "Smart Job Finder", desc: "Aggregated jobs with AI match scoring and skill gap analysis." },
-            { icon: Award, title: "Learning Hub", desc: "Personalized career roadmaps with daily learning plans and quizzes." },
-            { icon: Mic, title: "Mock Interviews", desc: "AI voice interviewer analyzing communication, confidence, and technical skills." },
-            { icon: Code, title: "Project Builder", desc: "Role-specific project generation with roadmaps and mentor mode." },
-            { icon: Bot, title: "Career Assistant", desc: "24/7 AI chat for career advice, salary negotiation, and resume review." }
+            { icon: BookOpen, title:"AI Resume Builder", desc:"Drag-and-drop builder with ATS templates and AI content optimization." },
+            { icon: Briefcase, title:"Smart Job Finder", desc:"Aggregated jobs with AI match scoring and skill gap analysis." },
+            { icon: Award, title:"Learning Hub", desc:"Personalized career roadmaps with daily learning plans and quizzes." },
+            { icon: Mic, title:"Mock Interviews", desc:"AI voice interviewer analyzing communication, confidence, and technical skills." },
+            { icon: Code, title:"Project Builder", desc:"Role-specific project generation with roadmaps and mentor mode." },
+            { icon: Bot, title:"Career Assistant", desc:"24/7 AI chat for career advice, salary negotiation, and resume review." }
           ].map((feature, idx) => (
             <div key={idx} className="bg-background p-8 rounded-2xl border border-muted hover:border-primary/50 transition-colors shadow-sm hover:shadow-md group">
               <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">

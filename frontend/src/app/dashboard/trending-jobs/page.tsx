@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { TrendingUp, Building2, MapPin, DollarSign, ExternalLink, Briefcase } from "lucide-react";
-import Link from "next/link";
-import BackButton from "@/components/dashboard/BackButton";
+import React, { useEffect, useState } from"react";
+import { collection, onSnapshot, query, orderBy } from"firebase/firestore";
+import { db } from"@/lib/firebase";
+import { TrendingUp, Building2, MapPin, DollarSign, ExternalLink, Briefcase } from"lucide-react";
+import Link from"next/link";
+import BackButton from"@/components/dashboard/BackButton";
 
 interface TrendingJob {
   id: string;
@@ -18,10 +18,10 @@ interface TrendingJob {
 
 const getVacancyColor = (level: string) => {
   switch (level.toLowerCase()) {
-    case "high": return "text-emerald-500 bg-emerald-500/10 border-emerald-500/20";
-    case "medium": return "text-amber-500 bg-amber-500/10 border-amber-500/20";
-    case "low": return "text-red-500 bg-red-500/10 border-red-500/20";
-    default: return "text-muted-foreground bg-muted border-muted";
+    case"high": return"text-emerald-500 bg-emerald-500/10 border-emerald-500/20";
+    case"medium": return"text-amber-500 bg-amber-500/10 border-amber-500/20";
+    case"low": return"text-red-500 bg-red-500/10 border-red-500/20";
+    default: return"text-muted-foreground bg-muted border-muted";
   }
 };
 
@@ -31,8 +31,8 @@ export default function TrendingJobsPage() {
 
   useEffect(() => {
     // In a real app, this might come from a global 'trendingJobs' collection
-    const jobsRef = collection(db, "trendingJobs");
-    const q = query(jobsRef, orderBy("isHot", "desc"));
+    const jobsRef = collection(db,"trendingJobs");
+    const q = query(jobsRef, orderBy("isHot","desc"));
     
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as TrendingJob[];
@@ -40,10 +40,10 @@ export default function TrendingJobsPage() {
       // Fallback data if collection is empty
       if (data.length === 0) {
         setJobs([
-          { id: "1", role: "AI Prompt Engineer", companies: ["OpenAI", "Anthropic", "Google"], salaryRange: "₹15L - ₹30L", vacancyLevel: "High", isHot: true },
-          { id: "2", role: "Frontend Developer (Next.js)", companies: ["Vercel", "Stripe", "Airbnb"], salaryRange: "₹12L - ₹28L", vacancyLevel: "High", isHot: true },
-          { id: "3", role: "Data Engineer", companies: ["Snowflake", "Databricks", "Amazon"], salaryRange: "₹18L - ₹35L", vacancyLevel: "Medium", isHot: false },
-          { id: "4", role: "Cloud Security Architect", companies: ["Microsoft", "CrowdStrike", "Palo Alto"], salaryRange: "₹25L - ₹50L", vacancyLevel: "Low", isHot: false },
+          { id:"1", role:"AI Prompt Engineer", companies: ["OpenAI","Anthropic","Google"], salaryRange:"₹15L - ₹30L", vacancyLevel:"High", isHot: true },
+          { id:"2", role:"Frontend Developer (Next.js)", companies: ["Vercel","Stripe","Airbnb"], salaryRange:"₹12L - ₹28L", vacancyLevel:"High", isHot: true },
+          { id:"3", role:"Data Engineer", companies: ["Snowflake","Databricks","Amazon"], salaryRange:"₹18L - ₹35L", vacancyLevel:"Medium", isHot: false },
+          { id:"4", role:"Cloud Security Architect", companies: ["Microsoft","CrowdStrike","Palo Alto"], salaryRange:"₹25L - ₹50L", vacancyLevel:"Low", isHot: false },
         ]);
       } else {
         setJobs(data);
@@ -55,7 +55,7 @@ export default function TrendingJobsPage() {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="max-w-4xl mx-auto p-4 md:p-8">
       <BackButton />
       
       <div className="mb-8">
@@ -116,7 +116,7 @@ export default function TrendingJobsPage() {
               <div className="mt-6 flex justify-end">
                 <Link 
                   href={`/dashboard/jobs?search=${encodeURIComponent(job.role)}`}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-foreground text-background font-medium text-sm rounded-lg hover:bg-foreground/90 transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-foreground text-background font-medium text-sm rounded-lg hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors"
                 >
                   Find Openings <ExternalLink className="w-4 h-4" />
                 </Link>

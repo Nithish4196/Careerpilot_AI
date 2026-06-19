@@ -13,9 +13,9 @@ export default function PathCard({ path, onClick }: PathCardProps) {
   return (
     <div 
       onClick={() => onClick(path)}
-      className="bg-background border border-muted rounded-2xl p-6 hover:shadow-lg hover:border-foreground/20 hover:-translate-y-1 transition-all cursor-pointer group flex flex-col h-full"
+      className="bg-background border border-muted rounded-2xl p-6 hover:border-foreground/20 cursor-pointer group flex flex-col h-full"
     >
-      <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center shrink-0 mb-4 group-hover:bg-foreground group-hover:text-background transition-colors text-muted-foreground">
+      <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center shrink-0 mb-4 group-hover:bg-foreground transition-colors duration-150 ease-out group-hover:text-background transition-colors text-muted-foreground">
         <Icon className="w-6 h-6" />
       </div>
       <h3 className="font-bold text-lg mb-2 text-foreground">{path.title}</h3>
@@ -23,7 +23,7 @@ export default function PathCard({ path, onClick }: PathCardProps) {
       
       <div className="flex items-center text-sm font-bold text-muted-foreground group-hover:text-foreground transition-colors mt-auto">
         View courses
-        <ArrowRight className="w-4 h-4 ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+        <ArrowRight className="w-4 h-4 ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0" />
       </div>
     </div>
   );

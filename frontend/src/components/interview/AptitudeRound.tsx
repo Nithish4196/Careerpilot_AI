@@ -54,10 +54,10 @@ export default function AptitudeRound({ onFinish }: AptitudeRoundProps) {
               <button
                 key={idx}
                 onClick={() => setSelectedOption(opt)}
-                className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${
+                className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 text-left ${
                   isSelected 
                     ? 'border-foreground bg-foreground/5' 
-                    : 'border-muted bg-background hover:border-foreground/30 hover:bg-muted/50'
+                    : 'border-muted bg-background hover:border-foreground/30 hover:bg-muted/50 transition-colors duration-150 ease-out '
                 }`}
               >
                 <div className={`w-8 h-8 rounded flex items-center justify-center font-bold text-sm ${
@@ -77,7 +77,7 @@ export default function AptitudeRound({ onFinish }: AptitudeRoundProps) {
           <button
             onClick={handleNext}
             disabled={!selectedOption}
-            className="px-8 py-3.5 bg-foreground text-background rounded-xl font-bold hover:bg-foreground/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-8 py-3.5 bg-foreground text-background rounded-xl font-bold hover:bg-foreground/90 transition-colors duration-150 ease-out disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {currentQIndex === APTITUDE_QUESTIONS.length - 1 ? 'Finish Round' : 'Next Question →'}
           </button>

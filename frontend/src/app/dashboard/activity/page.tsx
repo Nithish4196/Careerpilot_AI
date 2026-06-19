@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { collection, getDocs, query, orderBy, where, Timestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { Activity, Flame, TrendingUp, Calendar as CalendarIcon, Briefcase, FileText, Video, GraduationCap, Code } from "lucide-react";
-import BackButton from "@/components/dashboard/BackButton";
+import React, { useEffect, useState } from"react";
+import { useAuth } from"@/context/AuthContext";
+import { collection, getDocs, query, orderBy, where, Timestamp } from"firebase/firestore";
+import { db } from"@/lib/firebase";
+import { Activity, Flame, TrendingUp, Calendar as CalendarIcon, Briefcase, FileText, Video, GraduationCap, Code } from"lucide-react";
+import BackButton from"@/components/dashboard/BackButton";
 
 interface ActivityLog {
   id: string;
@@ -34,8 +34,8 @@ export default function WeeklyActivityPage() {
         const logsRef = collection(db, `users/${user.uid}/activityLog`);
         const q = query(
           logsRef, 
-          where("timestamp", ">=", Timestamp.fromDate(fourteenDaysAgo)),
-          orderBy("timestamp", "desc")
+          where("timestamp",">=", Timestamp.fromDate(fourteenDaysAgo)),
+          orderBy("timestamp","desc")
         );
         
         const snapshot = await getDocs(q);
@@ -59,13 +59,12 @@ export default function WeeklyActivityPage() {
           d.setDate(d.getDate() - i);
           tempDays.push({
             dateStr: d.toDateString(),
-            day: d.toLocaleDateString("en-US", { weekday: "short" }),
+            day: d.toLocaleDateString("en-US", { weekday:"short" }),
             actions: 0
           });
         }
 
-        const mods: Record<string, number> = {
-          "Resume": 0, "Jobs": 0, "Interviews": 0, "Learning": 0, "Projects": 0
+        const mods: Record<string, number> = {"Resume": 0,"Jobs": 0,"Interviews": 0,"Learning": 0,"Projects": 0
         };
 
         currentWeekLogs.forEach(log => {
@@ -101,11 +100,11 @@ export default function WeeklyActivityPage() {
 
   const getModuleIcon = (mod: string) => {
     switch (mod) {
-      case "Jobs": return <Briefcase className="w-4 h-4" />;
-      case "Resume": return <FileText className="w-4 h-4" />;
-      case "Interviews": return <Video className="w-4 h-4" />;
-      case "Learning": return <GraduationCap className="w-4 h-4" />;
-      case "Projects": return <Code className="w-4 h-4" />;
+      case"Jobs": return <Briefcase className="w-4 h-4" />;
+      case"Resume": return <FileText className="w-4 h-4" />;
+      case"Interviews": return <Video className="w-4 h-4" />;
+      case"Learning": return <GraduationCap className="w-4 h-4" />;
+      case"Projects": return <Code className="w-4 h-4" />;
       default: return <Activity className="w-4 h-4" />;
     }
   };
@@ -113,7 +112,7 @@ export default function WeeklyActivityPage() {
   const mostActiveDay = [...chartData].sort((a, b) => b.actions - a.actions)[0];
 
   return (
-    <div className="max-w-5xl mx-auto p-4 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="max-w-5xl mx-auto p-4 md:p-8">
       <BackButton />
 
       <div className="mb-8">
@@ -160,7 +159,7 @@ export default function WeeklyActivityPage() {
                   <h3 className="font-bold text-muted-foreground">Most Active Day</h3>
                 </div>
                 <div className="flex items-end gap-3">
-                  <span className="text-4xl font-extrabold">{mostActiveDay?.actions > 0 ? mostActiveDay.day : "None"}</span>
+                  <span className="text-4xl font-extrabold">{mostActiveDay?.actions > 0 ? mostActiveDay.day :"None"}</span>
                   {mostActiveDay?.actions > 0 && (
                     <span className="text-sm font-medium mb-1 text-muted-foreground">
                       {mostActiveDay.actions} actions
@@ -175,7 +174,7 @@ export default function WeeklyActivityPage() {
               <h3 className="font-bold mb-6">7-Day Volume</h3>
               <div className="h-48 flex items-end justify-between gap-2">
                 {chartData.map((d, i) => {
-                  const height = d.actions === 0 ? "4px" : `${(d.actions / maxActions) * 100}%`;
+                  const height = d.actions === 0 ?"4px" : `${(d.actions / maxActions) * 100}%`;
                   return (
                     <div key={i} className="flex flex-col items-center flex-1 group">
                       <div className="w-full flex justify-center relative h-full items-end pb-2">
@@ -185,7 +184,7 @@ export default function WeeklyActivityPage() {
                         </div>
                         {/* Bar */}
                         <div 
-                          className={`w-full max-w-[40px] rounded-t-md transition-all duration-500 ${d.actions > 0 ? 'bg-foreground hover:bg-foreground/80' : 'bg-muted'}`}
+                          className={`w-full max-w-[40px] rounded-t-md ${d.actions > 0 ? 'bg-foreground hover:bg-foreground/80 transition-colors duration-150 ease-out ' : 'bg-muted'}`}
                           style={{ height }}
                         />
                       </div>

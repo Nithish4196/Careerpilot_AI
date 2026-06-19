@@ -1,36 +1,39 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { useSearchParams } from "next/navigation";
-import { ResumeData, initialResumeData } from "@/types/resume";
-import TemplateProfessional from "@/components/resume/TemplateProfessional";
-import TemplateCasual from "@/components/resume/TemplateCasual";
-import { Settings, User, Briefcase, GraduationCap, ArrowLeft, Download } from "lucide-react";
-import Link from "next/link";
-import { useReactToPrint } from "react-to-print";
+import React, { useState, useEffect, useRef } from"react";
+import { useSearchParams } from"next/navigation";
+import { ResumeData, initialResumeData } from"@/types/resume";
+import TemplateProfessional from"@/components/resume/TemplateProfessional";
+import TemplateCasual from"@/components/resume/TemplateCasual";
+import { Settings, User, Briefcase, GraduationCap, ArrowLeft, Download } from"lucide-react";
+import Link from"next/link";
+import { useReactToPrint } from"react-to-print";
 import { useAuth } from "@/context/AuthContext";
 import { logActivity } from "@/lib/activity";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import toast from "react-hot-toast";
 
 export default function ResumeEditorPage() {
   const { user } = useAuth();
   const searchParams = useSearchParams();
-  const templateParam = searchParams.get("template") || "professional";
+  const templateParam = searchParams.get("template") ||"professional";
   
   const componentRef = useRef<HTMLDivElement>(null);
   const hasLoggedRef = useRef(false);
 
   const logEdit = () => {
     if (!hasLoggedRef.current && user) {
-      logActivity(user.uid, "resumeEdits");
+      logActivity(user.uid,"resumeEdits");
       hasLoggedRef.current = true;
     }
   };
 
   const handlePrint = useReactToPrint({ 
     contentRef: componentRef,
-    documentTitle: "CareerPilot_Resume",
+    documentTitle:"CareerPilot_Resume",
     onBeforePrint: async () => {
-      if (user) logActivity(user.uid, "resumeEdits");
+      if (user) logActivity(user.uid,"resumeEdits");
     }
   });
   
@@ -41,6 +44,35 @@ export default function ResumeEditorPage() {
 
   const [activeTab, setActiveTab] = useState<"content" | "design">("content");
   const [contentSection, setContentSection] = useState<"personal" | "experience" | "education">("personal");
+
+  const resumeId = searchParams.get("resumeId");
+
+  useEffect(() => {
+    if (!user || !resumeId) return;
+
+    const fetchParsedData = async () => {
+      try {
+        const docRef = doc(db, `users/${user.uid}/resumes`, resumeId);
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+          const docData = docSnap.data();
+          if (docData.parsedData) {
+            // Keep the selected template, but overwrite content with parsed data
+            setData(prev => ({
+              ...docData.parsedData,
+              design: prev.design
+            }));
+            toast.success("Resume data loaded successfully!");
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching parsed data:", err);
+      }
+    };
+
+    fetchParsedData();
+  }, [user, resumeId]);
 
   // Handle generic input changes
   const handlePersonalChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -88,9 +120,9 @@ export default function ResumeEditorPage() {
 
   const renderTemplate = () => {
     switch (data.design.template) {
-      case "casual":
+      case"casual":
         return <TemplateCasual data={data} />;
-      case "professional":
+      case"professional":
       default:
         return <TemplateProfessional data={data} />;
     }
@@ -106,7 +138,7 @@ export default function ResumeEditorPage() {
           </Link>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => handlePrint()} className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-1.5 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors">
+          <button onClick={() => handlePrint()} className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-1.5 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors duration-150 ease-out transition-colors">
             <Download className="w-4 h-4" /> Download PDF
           </button>
         </div>
@@ -119,13 +151,13 @@ export default function ResumeEditorPage() {
           {/* Main Tabs */}
           <div className="flex border-b border-muted">
             <button 
-              className={`flex-1 py-3 text-sm font-bold border-b-2 transition-colors ${activeTab === "content" ? "border-foreground text-foreground" : "border-transparent text-muted-foreground"}`}
+              className={`flex-1 py-3 text-sm font-bold border-b-2 transition-colors ${activeTab ==="content" ?"border-foreground text-foreground" :"border-transparent text-muted-foreground"}`}
               onClick={() => setActiveTab("content")}
             >
               Content
             </button>
             <button 
-              className={`flex-1 py-3 text-sm font-bold border-b-2 transition-colors ${activeTab === "design" ? "border-foreground text-foreground" : "border-transparent text-muted-foreground"}`}
+              className={`flex-1 py-3 text-sm font-bold border-b-2 transition-colors ${activeTab ==="design" ?"border-foreground text-foreground" :"border-transparent text-muted-foreground"}`}
               onClick={() => setActiveTab("design")}
             >
               Design
@@ -134,16 +166,16 @@ export default function ResumeEditorPage() {
 
           {/* Tab Content */}
           <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
-            {activeTab === "content" && (
-              <div className="space-y-8 animate-in fade-in duration-300">
+            {activeTab ==="content" && (
+              <div className="space-y-8">
                 {/* Section Navigation */}
                 <div className="flex gap-2">
-                  <button onClick={() => setContentSection("personal")} className={`px-3 py-1.5 rounded-md text-xs font-medium ${contentSection === "personal" ? "bg-foreground text-background" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}><User className="w-3 h-3 inline mr-1"/> Personal</button>
-                  <button onClick={() => setContentSection("experience")} className={`px-3 py-1.5 rounded-md text-xs font-medium ${contentSection === "experience" ? "bg-foreground text-background" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}><Briefcase className="w-3 h-3 inline mr-1"/> Experience</button>
-                  <button onClick={() => setContentSection("education")} className={`px-3 py-1.5 rounded-md text-xs font-medium ${contentSection === "education" ? "bg-foreground text-background" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}><GraduationCap className="w-3 h-3 inline mr-1"/> Education</button>
+                  <button onClick={() => setContentSection("personal")} className={`px-3 py-1.5 rounded-md text-xs font-medium ${contentSection ==="personal" ?"bg-foreground text-background" :"bg-muted text-muted-foreground hover:bg-muted/80 transition-colors duration-150 ease-out "}`}><User className="w-3 h-3 inline mr-1"/> Personal</button>
+                  <button onClick={() => setContentSection("experience")} className={`px-3 py-1.5 rounded-md text-xs font-medium ${contentSection ==="experience" ?"bg-foreground text-background" :"bg-muted text-muted-foreground hover:bg-muted/80 transition-colors duration-150 ease-out "}`}><Briefcase className="w-3 h-3 inline mr-1"/> Experience</button>
+                  <button onClick={() => setContentSection("education")} className={`px-3 py-1.5 rounded-md text-xs font-medium ${contentSection ==="education" ?"bg-foreground text-background" :"bg-muted text-muted-foreground hover:bg-muted/80 transition-colors duration-150 ease-out "}`}><GraduationCap className="w-3 h-3 inline mr-1"/> Education</button>
                 </div>
 
-                {contentSection === "personal" && (
+                {contentSection ==="personal" && (
                   <div className="space-y-4">
                     <h3 className="font-bold text-lg mb-4">Personal Details</h3>
                     <div className="grid grid-cols-2 gap-4">
@@ -175,11 +207,11 @@ export default function ResumeEditorPage() {
                   </div>
                 )}
                 
-                {contentSection === "experience" && (
+                {contentSection ==="experience" && (
                   <div className="space-y-6">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="font-bold text-lg">Experience</h3>
-                      <button onClick={addExperience} className="text-xs font-semibold bg-foreground text-background px-3 py-1.5 rounded-md hover:bg-foreground/90 transition-colors">+ Add Role</button>
+                      <button onClick={addExperience} className="text-xs font-semibold bg-foreground text-background px-3 py-1.5 rounded-md hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors">+ Add Role</button>
                     </div>
                     {data.experience.map((exp) => (
                       <div key={exp.id} className="p-4 border border-muted rounded-lg space-y-3 bg-muted/10">
@@ -206,11 +238,11 @@ export default function ResumeEditorPage() {
                   </div>
                 )}
                 
-                {contentSection === "education" && (
+                {contentSection ==="education" && (
                   <div className="space-y-6">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="font-bold text-lg">Education</h3>
-                      <button onClick={addEducation} className="text-xs font-semibold bg-foreground text-background px-3 py-1.5 rounded-md hover:bg-foreground/90 transition-colors">+ Add School</button>
+                      <button onClick={addEducation} className="text-xs font-semibold bg-foreground text-background px-3 py-1.5 rounded-md hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors">+ Add School</button>
                     </div>
                     {data.education.map((edu) => (
                       <div key={edu.id} className="p-4 border border-muted rounded-lg space-y-3 bg-muted/10">
@@ -235,8 +267,8 @@ export default function ResumeEditorPage() {
               </div>
             )}
 
-            {activeTab === "design" && (
-              <div className="space-y-8 animate-in fade-in duration-300">
+            {activeTab ==="design" && (
+              <div className="space-y-8">
                 <div>
                   <h3 className="font-bold text-lg mb-4 flex items-center gap-2"><Settings className="w-5 h-5"/> Global Settings</h3>
                   
@@ -249,7 +281,7 @@ export default function ResumeEditorPage() {
                           <button 
                             key={color}
                             onClick={() => handleDesignChange("themeColor", color)}
-                            className={`w-8 h-8 rounded-full border-2 transition-all ${data.design.themeColor === color ? 'border-foreground scale-110' : 'border-transparent hover:scale-105'}`}
+                            className={`w-8 h-8 rounded-full border-2 ${data.design.themeColor === color ? 'border-foreground scale-110' : 'border-transparent hover:scale-105'}`}
                             style={{ backgroundColor: color }}
                           />
                         ))}
@@ -310,7 +342,7 @@ export default function ResumeEditorPage() {
         {/* Right Panel: Live Preview */}
         <div className="flex-1 bg-muted/30 p-8 overflow-y-auto flex justify-center items-start">
           {/* Resume Paper Wrapper */}
-          <div ref={componentRef} className="w-full max-w-[816px] origin-top bg-white shadow-xl transition-all duration-300">
+          <div ref={componentRef} className="w-full max-w-[816px] origin-top bg-white shadow-xl">
             {renderTemplate()}
           </div>
         </div>

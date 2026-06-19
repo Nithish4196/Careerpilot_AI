@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { Briefcase } from "lucide-react";
-import StatCardWrapper from "./StatCardWrapper";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from"react";
+import { useAuth } from"@/context/AuthContext";
+import { collection, onSnapshot } from"firebase/firestore";
+import { db } from"@/lib/firebase";
+import { Briefcase } from"lucide-react";
+import StatCardWrapper from"./StatCardWrapper";
+import { useRouter } from"next/navigation";
 
 export default function JobsStatCard() {
   const { user } = useAuth();
@@ -55,8 +55,8 @@ export default function JobsStatCard() {
   return (
     <StatCardWrapper
       title="Applied Jobs"
-      value={hasJobs ? `${data.total} Total` : "0 Total"}
-      subtext={hasJobs ? `${data.thisWeek} in last 7 days` : "Start applying →"}
+      value={hasJobs ? `${data.total} Total` :"0 Total"}
+      subtext={hasJobs ? `${data.thisWeek} in last 7 days` :"Start applying →"}
       icon={Briefcase}
       colorClass="bg-muted text-foreground"
       link="#"

@@ -12,15 +12,15 @@ interface JobCardProps {
 export default function JobCard({ job, isSaved = false, onToggleSave, onClick }: JobCardProps) {
   // Strict monochromatic styling for score
   const getScoreStyle = (score: number) => {
-    if (score >= 90) return "text-foreground bg-foreground/10 border-foreground/20 font-extrabold";
-    if (score >= 70) return "text-foreground bg-muted border-muted-foreground/30";
-    return "text-muted-foreground bg-background border-muted";
+    if (score >= 90) return"text-foreground bg-foreground/10 border-foreground/20 font-extrabold";
+    if (score >= 70) return"text-foreground bg-muted border-muted-foreground/30";
+    return"text-muted-foreground bg-background border-muted";
   };
 
   return (
     <div 
       onClick={() => onClick(job)}
-      className="bg-background border border-muted rounded-2xl p-6 hover:shadow-lg hover:border-foreground/20 transition-all cursor-pointer group"
+      className="bg-background border border-muted rounded-2xl p-6 hover:border-foreground/20 cursor-pointer group"
     >
       <div className="flex justify-between items-start mb-4">
         <div className="flex items-center gap-4">
@@ -43,7 +43,7 @@ export default function JobCard({ job, isSaved = false, onToggleSave, onClick }:
             e.stopPropagation(); 
             if (onToggleSave) onToggleSave(); 
           }}
-          className={`p-2 rounded-full transition-colors ${isSaved ? 'text-foreground bg-muted border border-muted-foreground/20' : 'text-muted-foreground hover:text-foreground hover:bg-muted'}`}
+          className={`p-2 rounded-full transition-colors ${isSaved ? 'text-foreground bg-muted border border-muted-foreground/20' : 'text-muted-foreground hover:text-foreground hover:bg-muted transition-colors duration-150 ease-out '}`}
         >
           <Bookmark className={`w-5 h-5 ${isSaved ? 'fill-current' : ''}`} />
         </button>
@@ -92,7 +92,7 @@ export default function JobCard({ job, isSaved = false, onToggleSave, onClick }:
           </div>
           <button 
             onClick={(e) => { e.stopPropagation(); /* quick apply */ }}
-            className="bg-foreground text-background text-sm font-bold px-5 py-2 rounded-lg hover:bg-foreground/90 transition-colors"
+            className="bg-foreground text-background text-sm font-bold px-5 py-2 rounded-lg hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors"
           >
             Quick Apply
           </button>

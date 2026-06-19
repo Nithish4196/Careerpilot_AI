@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Newspaper } from "lucide-react";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from"react";
+import { Newspaper } from"lucide-react";
+import { useRouter } from"next/navigation";
 
 export default function IndustryInsightsStatCard() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState({ headline: "", source: "", category: "Industry Trends", whyItMatters: "", publishedAt: null as Date | null });
+  const [data, setData] = useState({ headline:"", source:"", category:"Industry Trends", whyItMatters:"", publishedAt: null as Date | null });
 
   useEffect(() => {
     async function fetchNews() {
@@ -18,10 +18,10 @@ export default function IndustryInsightsStatCard() {
           if (result.data && result.data.length > 0) {
             const topDoc = result.data[0];
             setData({ 
-              headline: topDoc.headline || "Industry Insights", 
-              source: topDoc.source || "Industry News",
-              category: topDoc.category || "Industry Trends",
-              whyItMatters: topDoc.whyItMatters || "",
+              headline: topDoc.headline ||"Industry Insights", 
+              source: topDoc.source ||"Industry News",
+              category: topDoc.category ||"Industry Trends",
+              whyItMatters: topDoc.whyItMatters ||"",
               publishedAt: new Date(topDoc.publishedAt)
             });
           }
@@ -37,9 +37,9 @@ export default function IndustryInsightsStatCard() {
   }, []);
 
   const getHoursAgo = (date: Date | null) => {
-    if (!date) return "";
+    if (!date) return"";
     const diff = Math.floor((new Date().getTime() - date.getTime()) / (1000 * 60 * 60));
-    return diff === 0 ? "Just now" : `${diff} hours ago`;
+    return diff === 0 ?"Just now" : `${diff} hours ago`;
   };
 
   return (
@@ -86,7 +86,7 @@ export default function IndustryInsightsStatCard() {
         <div className="mt-8">
           <button 
             onClick={() => router.push("/dashboard/insights")}
-            className="inline-flex items-center justify-center w-full bg-muted/50 border border-muted text-foreground font-medium text-sm px-4 py-3 rounded-lg hover:bg-muted transition-colors"
+            className="inline-flex items-center justify-center w-full bg-muted/50 border border-muted text-foreground font-medium text-sm px-4 py-3 rounded-lg hover:bg-muted transition-colors duration-150 ease-out transition-colors"
           >
             View All Insights →
           </button>

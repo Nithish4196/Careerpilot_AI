@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { collection, query, orderBy, onSnapshot, doc, updateDoc, arrayUnion, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { Building2, Calendar, DollarSign, ExternalLink, ChevronDown, Clock, CheckCircle, XCircle } from "lucide-react";
-import Link from "next/link";
-import toast from "react-hot-toast";
+import React, { useEffect, useState } from"react";
+import { useAuth } from"@/context/AuthContext";
+import { collection, query, orderBy, onSnapshot, doc, updateDoc, arrayUnion, serverTimestamp } from"firebase/firestore";
+import { db } from"@/lib/firebase";
+import { Building2, Calendar, DollarSign, ExternalLink, ChevronDown, Clock, CheckCircle, XCircle } from"lucide-react";
+import Link from"next/link";
+import toast from"react-hot-toast";
 
 interface Application {
   id: string;
@@ -20,33 +20,26 @@ interface Application {
   logo?: string;
 }
 
-const STATUS_OPTIONS = [
-  "Applied",
-  "Under Review",
-  "Interview Scheduled",
-  "Interviewed",
-  "Offer Received",
-  "Rejected",
-  "Withdrawn"
+const STATUS_OPTIONS = ["Applied","Under Review","Interview Scheduled","Interviewed","Offer Received","Rejected","Withdrawn"
 ];
 
 const getStatusColor = (status: string) => {
   switch (status) {
-    case "Applied": return "bg-blue-500/10 text-blue-500 border-blue-500/20";
-    case "Under Review": return "bg-purple-500/10 text-purple-500 border-purple-500/20";
-    case "Interview Scheduled": return "bg-amber-500/10 text-amber-500 border-amber-500/20";
-    case "Interviewed": return "bg-orange-500/10 text-orange-500 border-orange-500/20";
-    case "Offer Received": return "bg-emerald-500/10 text-emerald-500 border-emerald-500/20";
-    case "Rejected": return "bg-red-500/10 text-red-500 border-red-500/20";
-    case "Withdrawn": return "bg-slate-500/10 text-slate-500 border-slate-500/20";
-    default: return "bg-muted text-foreground border-muted";
+    case"Applied": return"bg-blue-500/10 text-blue-500 border-blue-500/20";
+    case"Under Review": return"bg-purple-500/10 text-purple-500 border-purple-500/20";
+    case"Interview Scheduled": return"bg-amber-500/10 text-amber-500 border-amber-500/20";
+    case"Interviewed": return"bg-orange-500/10 text-orange-500 border-orange-500/20";
+    case"Offer Received": return"bg-emerald-500/10 text-emerald-500 border-emerald-500/20";
+    case"Rejected": return"bg-red-500/10 text-red-500 border-red-500/20";
+    case"Withdrawn": return"bg-slate-500/10 text-slate-500 border-slate-500/20";
+    default: return"bg-muted text-foreground border-muted";
   }
 };
 
 const getStatusIcon = (status: string) => {
   switch (status) {
-    case "Offer Received": return <CheckCircle className="w-3.5 h-3.5" />;
-    case "Rejected": case "Withdrawn": return <XCircle className="w-3.5 h-3.5" />;
+    case"Offer Received": return <CheckCircle className="w-3.5 h-3.5" />;
+    case"Rejected": case"Withdrawn": return <XCircle className="w-3.5 h-3.5" />;
     default: return <Clock className="w-3.5 h-3.5" />;
   }
 };
@@ -62,7 +55,7 @@ export default function ApplicationTrackerView() {
     if (!user) return;
 
     const appsRef = collection(db, `users/${user.uid}/appliedJobs`);
-    const q = query(appsRef, orderBy("appliedDate", "desc"));
+    const q = query(appsRef, orderBy("appliedDate","desc"));
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const apps = snapshot.docs.map(doc => ({
@@ -94,22 +87,22 @@ export default function ApplicationTrackerView() {
     }
   };
 
-  const filteredApps = filter === "All" 
+  const filteredApps = filter ==="All" 
     ? applications 
     : applications.filter(app => {
-        if (filter === "Interviewing") {
-          return ["Interview Scheduled", "Interviewed"].includes(app.status);
+        if (filter ==="Interviewing") {
+          return ["Interview Scheduled","Interviewed"].includes(app.status);
         }
-        if (filter === "Offer") {
-          return app.status === "Offer Received";
+        if (filter ==="Offer") {
+          return app.status ==="Offer Received";
         }
         return app.status === filter;
       });
 
   const formatDate = (date: any) => {
-    if (!date) return "Unknown date";
+    if (!date) return"Unknown date";
     const d = date.toDate ? date.toDate() : new Date(date);
-    return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    return d.toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" });
   };
 
   if (loading) {
@@ -137,14 +130,14 @@ export default function ApplicationTrackerView() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap gap-2 mb-6">
-        {["All", "Applied", "Under Review", "Interviewing", "Offer", "Rejected"].map(f => (
+        {["All","Applied","Under Review","Interviewing","Offer","Rejected"].map(f => (
           <button
             key={f}
             onClick={() => setFilter(f)}
             className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
               filter === f 
-                ? "bg-primary text-primary-foreground border-primary" 
-                : "bg-background text-foreground border-muted hover:border-primary/50"
+                ?"bg-primary text-primary-foreground border-primary" 
+                :"bg-background text-foreground border-muted hover:border-primary/50"
             }`}
           >
             {f}
@@ -154,7 +147,7 @@ export default function ApplicationTrackerView() {
 
       <div className="space-y-4">
         {filteredApps.map((app) => (
-          <div key={app.id} className="bg-background border border-muted rounded-xl overflow-hidden transition-all hover:border-primary/50">
+          <div key={app.id} className="bg-background border border-muted rounded-xl overflow-hidden hover:border-primary/50">
             {/* Main Row */}
             <div className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
               
@@ -200,16 +193,16 @@ export default function ApplicationTrackerView() {
                 </select>
 
                 {app.jobUrl && (
-                  <Link href={app.jobUrl} target="_blank" className="p-2 border border-muted rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="View Original Job">
+                  <Link href={app.jobUrl} target="_blank" className="p-2 border border-muted rounded-lg hover:bg-muted transition-colors duration-150 ease-out transition-colors text-muted-foreground hover:text-foreground" title="View Original Job">
                     <ExternalLink className="w-4 h-4" />
                   </Link>
                 )}
 
                 <button 
                   onClick={() => setExpandedAppId(expandedAppId === app.id ? null : app.id)}
-                  className="p-2 bg-muted/50 rounded-lg hover:bg-muted transition-colors"
+                  className="p-2 bg-muted/50 rounded-lg hover:bg-muted transition-colors duration-150 ease-out transition-colors"
                 >
-                  <ChevronDown className={`w-4 h-4 transition-transform ${expandedAppId === app.id ? "rotate-180" : ""}`} />
+                  <ChevronDown className={`w-4 h-4 transition-transform ${expandedAppId === app.id ?"rotate-180" :""}`} />
                 </button>
               </div>
             </div>

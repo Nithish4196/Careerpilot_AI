@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import { GoogleGenerativeAI, Schema, SchemaType } from "@google/generative-ai";
-import Parser from "rss-parser";
+import { NextResponse } from"next/server";
+import { GoogleGenerativeAI, Schema, SchemaType } from"@google/generative-ai";
+import Parser from"rss-parser";
 
 // Cache this API response for 6 hours (21600 seconds) natively in Next.js!
 export const revalidate = 21600;
@@ -20,13 +20,7 @@ export async function GET(request: Request) {
       throw new Error("Missing GEMINI_API_KEY in environment variables.");
     }
 
-    const rssFeeds = [
-      "https://news.google.com/rss/search?q=tech+layoffs",
-      "https://news.google.com/rss/search?q=tech+hiring",
-      "https://news.google.com/rss/search?q=startup+funding",
-      "https://news.google.com/rss/search?q=AI+jobs",
-      "https://news.google.com/rss/search?q=software+engineer+salary",
-      "https://techcrunch.com/feed/"
+    const rssFeeds = ["https://news.google.com/rss/search?q=tech+layoffs","https://news.google.com/rss/search?q=tech+hiring","https://news.google.com/rss/search?q=startup+funding","https://news.google.com/rss/search?q=AI+jobs","https://news.google.com/rss/search?q=software+engineer+salary","https://techcrunch.com/feed/"
     ];
 
     let allRawItems: any[] = [];
@@ -42,7 +36,7 @@ export async function GET(request: Request) {
               title: item.title,
               link: item.link,
               pubDate: item.pubDate,
-              snippet: item.contentSnippet || item.content || "",
+              snippet: item.contentSnippet || item.content ||"",
               source: sourceName
             });
           });
@@ -56,17 +50,16 @@ export async function GET(request: Request) {
     const timeWindowLimit = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
     const getCategory = (text: string) => {
       const lower = text.toLowerCase();
-      if (lower.includes('layoff') || lower.includes('cut') || lower.includes('fire') || lower.includes('downsize')) return "Layoffs";
-      if (lower.includes('hire') || lower.includes('hiring') || lower.includes('recruit') || lower.includes('job')) return "Hiring";
-      if (lower.includes('fund') || lower.includes('raise') || lower.includes('seed') || lower.includes('series a') || lower.includes('series b')) return "Funding";
-      if (lower.includes('ceo') || lower.includes('executive') || lower.includes('leader') || lower.includes('cfo') || lower.includes('appoint')) return "Leadership";
-      if (lower.includes('salary') || lower.includes('pay') || lower.includes('compensation') || lower.includes('wage')) return "Salary";
-      return "Industry Trend";
+      if (lower.includes('layoff') || lower.includes('cut') || lower.includes('fire') || lower.includes('downsize')) return"Layoffs";
+      if (lower.includes('hire') || lower.includes('hiring') || lower.includes('recruit') || lower.includes('job')) return"Hiring";
+      if (lower.includes('fund') || lower.includes('raise') || lower.includes('seed') || lower.includes('series a') || lower.includes('series b')) return"Funding";
+      if (lower.includes('ceo') || lower.includes('executive') || lower.includes('leader') || lower.includes('cfo') || lower.includes('appoint')) return"Leadership";
+      if (lower.includes('salary') || lower.includes('pay') || lower.includes('compensation') || lower.includes('wage')) return"Salary";
+      return"Industry Trend";
     };
 
     const uniqueLinks = new Set<string>();
-    const categorizedItems: Record<string, typeof allRawItems> = {
-      "Layoffs": [], "Hiring": [], "Funding": [], "Leadership": [], "Salary": [], "Industry Trend": []
+    const categorizedItems: Record<string, typeof allRawItems> = {"Layoffs": [],"Hiring": [],"Funding": [],"Leadership": [],"Salary": [],"Industry Trend": []
     };
 
     for (const item of allRawItems) {
@@ -77,7 +70,7 @@ export async function GET(request: Request) {
 
       if (!uniqueLinks.has(item.link)) {
         uniqueLinks.add(item.link);
-        const cat = getCategory(item.title + " " + item.snippet);
+        const cat = getCategory(item.title +"" + item.snippet);
         categorizedItems[cat].push({ ...item, pubDate, category: cat });
       }
     }
@@ -94,7 +87,7 @@ export async function GET(request: Request) {
     const topItems = diverseItems.slice(0, 24);
 
     if (topItems.length === 0) {
-      return NextResponse.json({ source: "empty", data: [] });
+      return NextResponse.json({ source:"empty", data: [] });
     }
 
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
@@ -103,21 +96,21 @@ export async function GET(request: Request) {
       items: {
         type: SchemaType.OBJECT,
         properties: {
-          headline: { type: SchemaType.STRING, description: "Use the original article title" },
+          headline: { type: SchemaType.STRING, description:"Use the original article title" },
           source: { type: SchemaType.STRING },
-          link: { type: SchemaType.STRING, description: "Original article URL" },
-          publishedAt: { type: SchemaType.STRING, description: "ISO date string" },
-          category: { type: SchemaType.STRING, description: "Hiring | Layoffs | Funding | Leadership | Salary | Industry Trend" },
-          whyItMatters: { type: SchemaType.STRING, description: "2-3 sentences explaining why this news matters specifically for students and job seekers" }
+          link: { type: SchemaType.STRING, description:"Original article URL" },
+          publishedAt: { type: SchemaType.STRING, description:"ISO date string" },
+          category: { type: SchemaType.STRING, description:"Hiring | Layoffs | Funding | Leadership | Salary | Industry Trend" },
+          whyItMatters: { type: SchemaType.STRING, description:"2-3 sentences explaining why this news matters specifically for students and job seekers" }
         },
-        required: ["headline", "source", "link", "publishedAt", "category", "whyItMatters"]
+        required: ["headline","source","link","publishedAt","category","whyItMatters"]
       }
     };
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model:"gemini-1.5-flash",
       generationConfig: {
-        responseMimeType: "application/json",
+        responseMimeType:"application/json",
         responseSchema: arraySchema,
         temperature: 0.2,
       },
@@ -165,31 +158,31 @@ Skip any article that has no meaningful career relevance for students or job see
         link: item.link,
         publishedAt: item.pubDate.toISOString(),
         category: item.category,
-        whyItMatters: item.snippet || "This article highlights recent developments in the tech industry that may affect job market conditions and career strategies."
+        whyItMatters: item.snippet ||"This article highlights recent developments in the tech industry that may affect job market conditions and career strategies."
       }));
     }
 
     if (insights && Array.isArray(insights) && insights.length > 0) {
       const newInsightsToReturn = insights.map((insight, index) => ({
         id: index.toString(),
-        headline: insight.headline || "Tech News Update",
-        source: insight.source || "Industry Source",
+        headline: insight.headline ||"Tech News Update",
+        source: insight.source ||"Industry Source",
         link: insight.link,
-        category: insight.category || "Industry Trend",
-        whyItMatters: insight.whyItMatters || "Important career context for this development.",
+        category: insight.category ||"Industry Trend",
+        whyItMatters: insight.whyItMatters ||"Important career context for this development.",
         publishedAt: insight.publishedAt || new Date().toISOString(),
       }));
 
       // Sort by newest published
       newInsightsToReturn.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
       
-      return NextResponse.json({ source: "live", data: newInsightsToReturn });
+      return NextResponse.json({ source:"live", data: newInsightsToReturn });
     }
 
-    return NextResponse.json({ source: "error", data: [] });
+    return NextResponse.json({ source:"error", data: [] });
 
   } catch (error) {
     console.error("News Fetch Error:", error);
-    return NextResponse.json({ error: "Failed to fetch news", details: error instanceof Error ? error.message : String(error) }, { status: 500 });
+    return NextResponse.json({ error:"Failed to fetch news", details: error instanceof Error ? error.message : String(error) }, { status: 500 });
   }
 }

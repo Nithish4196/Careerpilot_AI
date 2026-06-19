@@ -20,7 +20,7 @@ export default function JobsPage() {
   };
   
   // Search & Filter State
-  const [searchQuery, setSearchQuery] = useState({ role: "", location: "", experience: "", salary: "" });
+  const [searchQuery, setSearchQuery] = useState({ role:"", location:"", experience:"", salary:"" });
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
 
   const handleSearch = (q: any) => {
@@ -48,7 +48,7 @@ export default function JobsPage() {
 
   const handleClearAll = () => {
     setActiveFilters({});
-    setSearchQuery({ role: "", location: "", experience: "", salary: "" });
+    setSearchQuery({ role:"", location:"", experience:"", salary:"" });
     setVisibleCount(3);
   };
 
@@ -61,7 +61,7 @@ export default function JobsPage() {
       let q = searchQuery.role.toLowerCase();
       // Handle common typos specifically for this demo
       if (q.includes("dana") || q.includes("analytic")) {
-        q = "data analyst";
+        q ="data analyst";
       }
 
       // Broaden search logic for mock testing
@@ -77,7 +77,7 @@ export default function JobsPage() {
     // Location matching
     if (searchQuery.location) {
       let qLoc = searchQuery.location.toLowerCase();
-      if (qLoc === "banglore") qLoc = "bangalore"; // Handle common typo
+      if (qLoc ==="banglore") qLoc ="bangalore"; // Handle common typo
       if (!job.location.toLowerCase().includes(qLoc)) matches = false;
     }
 
@@ -108,7 +108,7 @@ export default function JobsPage() {
   const visibleJobs = filteredJobs.slice(0, visibleCount);
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-10">
+    <div className="space-y-8 pb-10">
       
       {/* Page Tabs */}
       <div className="flex items-center justify-between mb-6 border-b border-muted">
@@ -157,7 +157,7 @@ export default function JobsPage() {
             <div 
               key={job.id} 
               onClick={() => setSelectedJob(job)}
-              className="bg-background/10 border border-background/20 rounded-xl p-4 cursor-pointer hover:bg-background/20 transition-colors backdrop-blur-sm"
+              className="bg-background/10 border border-background/20 rounded-xl p-4 cursor-pointer hover:bg-background/20 transition-colors duration-150 ease-out transition-colors"
             >
               <h3 className="font-bold">{job.role}</h3>
               <p className="text-sm opacity-90 mb-3">{job.companyName}</p>
@@ -211,7 +211,7 @@ export default function JobsPage() {
           {visibleCount < filteredJobs.length && (
             <button 
               onClick={() => setVisibleCount(v => v + 3)}
-              className="w-full py-4 text-sm font-bold border border-muted rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition-colors mt-8"
+              className="w-full py-4 text-sm font-bold border border-muted rounded-xl text-muted-foreground hover:bg-muted transition-colors duration-150 ease-out hover:text-foreground transition-colors mt-8"
             >
               Load More Opportunities
             </button>

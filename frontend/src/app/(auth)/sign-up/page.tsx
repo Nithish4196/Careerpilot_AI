@@ -25,19 +25,19 @@ export default function SignUpPage() {
 
   // Password strength meter
   const getPasswordStrength = () => {
-    if (!password) return { label: "", color: "bg-muted", width: "0%" };
-    if (password.length < 8) return { label: "Weak", color: "bg-red-500", width: "25%" };
+    if (!password) return { label:"", color:"bg-muted", width:"0%" };
+    if (password.length < 8) return { label:"Weak", color:"bg-red-500", width:"25%" };
     
     let strength = 0;
     if (password.match(/[A-Z]/)) strength++;
     if (password.match(/[0-9]/)) strength++;
     if (password.match(/[^A-Za-z0-9]/)) strength++;
 
-    if (password.length >= 8 && strength === 0) return { label: "Fair", color: "bg-amber-500", width: "50%" };
-    if (password.length >= 8 && strength > 0 && password.length < 12) return { label: "Strong", color: "bg-green-500", width: "75%" };
-    if (password.length >= 12 && strength >= 2) return { label: "Very Strong", color: "bg-blue-500", width: "100%" };
+    if (password.length >= 8 && strength === 0) return { label:"Fair", color:"bg-amber-500", width:"50%" };
+    if (password.length >= 8 && strength > 0 && password.length < 12) return { label:"Strong", color:"bg-green-500", width:"75%" };
+    if (password.length >= 12 && strength >= 2) return { label:"Very Strong", color:"bg-blue-500", width:"100%" };
     
-    return { label: "Fair", color: "bg-amber-500", width: "50%" };
+    return { label:"Fair", color:"bg-amber-500", width:"50%" };
   };
 
   const strength = getPasswordStrength();
@@ -67,7 +67,7 @@ export default function SignUpPage() {
       toast.success("Account created successfully!");
       router.push("/verify-email");
     } else {
-      setErrorMsg(error || "An error occurred during sign up.");
+      setErrorMsg(error ||"An error occurred during sign up.");
     }
   };
 
@@ -102,7 +102,7 @@ export default function SignUpPage() {
             <label className="block text-sm font-bold mb-1">Password</label>
             <div className="relative">
               <input 
-                required type={showPassword ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)}
+                required type={showPassword ?"text" :"password"} value={password} onChange={e => setPassword(e.target.value)}
                 className="w-full bg-muted/30 border border-muted rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary/50 transition-colors pr-10"
                 placeholder="Minimum 8 characters"
               />
@@ -119,7 +119,7 @@ export default function SignUpPage() {
                   <span className={`text-xs font-bold ${strength.color.replace('bg-', 'text-')}`}>{strength.label}</span>
                 </div>
                 <div className="w-full h-1 bg-muted rounded-full overflow-hidden">
-                  <div className={`h-full ${strength.color} transition-all duration-300`} style={{ width: strength.width }}></div>
+                  <div className={`h-full ${strength.color}`} style={{ width: strength.width }}></div>
                 </div>
               </div>
             )}
@@ -129,7 +129,7 @@ export default function SignUpPage() {
             <label className="block text-sm font-bold mb-1">Confirm Password</label>
             <div className="relative">
               <input 
-                required type={showConfirm ? "text" : "password"} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
+                required type={showConfirm ?"text" :"password"} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
                 className="w-full bg-muted/30 border border-muted rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary/50 transition-colors pr-10"
                 placeholder="Confirm your password"
               />
@@ -157,9 +157,9 @@ export default function SignUpPage() {
 
           <button 
             type="submit" disabled={isLoading}
-            className="w-full py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-all flex justify-center items-center gap-2 mt-4 disabled:opacity-50"
+            className="w-full py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out flex justify-center items-center gap-2 mt-4 disabled:opacity-50"
           >
-            {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Create Account"}
+            {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> :"Create Account"}
           </button>
 
         </form>

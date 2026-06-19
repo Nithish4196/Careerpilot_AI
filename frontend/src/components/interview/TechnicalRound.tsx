@@ -29,7 +29,7 @@ export default function TechnicalRound({ role, onFinish }: TechnicalRoundProps) 
 
   useEffect(() => {
     setMessages([{
-      id: "ai_init",
+      id:"ai_init",
       sender: 'ai',
       text: `Hello! I'll be conducting your technical round for the ${role} position. Let's start with the first question: ${questions[0]}`
     }]);
@@ -49,21 +49,18 @@ export default function TechnicalRound({ role, onFinish }: TechnicalRoundProps) 
     setTimeout(() => {
       const nextQIndex = currentQIndex + 1;
       if (nextQIndex < questions.length) {
-        const acks = ["Good explanation. ", "I understand your approach. ", "That makes sense. ", "Valid point. "];
+        const acks = ["Good explanation.","I understand your approach.","That makes sense.","Valid point."];
         const randomAck = acks[Math.floor(Math.random() * acks.length)];
         
         setMessages(prev => [...prev, {
           id: `ai_${Date.now()}`,
           sender: 'ai',
-          text: randomAck + "Next question: " + questions[nextQIndex]
+          text: randomAck +"Next question:" + questions[nextQIndex]
         }]);
         setCurrentQIndex(nextQIndex);
       } else {
         const score = Math.floor(Math.random() * (98 - 65) + 65); 
-        onFinish(score, [
-          "Demonstrated solid understanding of core concepts.",
-          "Could optimize explanations with more practical examples.",
-          "Strong domain knowledge for the target role."
+        onFinish(score, ["Demonstrated solid understanding of core concepts.","Could optimize explanations with more practical examples.","Strong domain knowledge for the target role."
         ]);
       }
     }, 1500);
@@ -111,7 +108,7 @@ export default function TechnicalRound({ role, onFinish }: TechnicalRoundProps) 
           <button 
             onClick={handleSend}
             disabled={!inputText.trim()}
-            className="absolute right-3 bottom-3 p-2 bg-foreground text-background rounded-xl hover:bg-foreground/90 transition-colors disabled:opacity-50"
+            className="absolute right-3 bottom-3 p-2 bg-foreground text-background rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors disabled:opacity-50"
           >
             <Send className="w-4 h-4" />
           </button>

@@ -13,7 +13,7 @@ export default function VideoCard({ video }: VideoCardProps) {
   
   const handleVideoClick = () => {
     if (user) {
-      logActivity(user.uid, "coursesStudied");
+      logActivity(user.uid,"coursesStudied");
     }
   };
 
@@ -23,14 +23,14 @@ export default function VideoCard({ video }: VideoCardProps) {
       onClick={handleVideoClick}
       target="_blank"
       rel="noopener noreferrer"
-      className="bg-background border border-muted rounded-2xl overflow-hidden hover:shadow-lg hover:border-foreground/20 transition-all cursor-pointer group flex flex-col h-full"
+      className="bg-background border border-muted rounded-2xl overflow-hidden hover:border-foreground/20 cursor-pointer group flex flex-col h-full"
     >
       {/* Thumbnail Area */}
-      <div className="h-36 bg-muted/50 flex items-center justify-center relative group-hover:bg-muted transition-colors">
-        <span className="text-5xl group-hover:scale-110 transition-transform duration-300">
+      <div className="h-36 bg-muted/50 flex items-center justify-center relative group-hover:bg-muted transition-colors duration-150 ease-out transition-colors">
+        <span className="text-5xl group-hover:scale-110 transition-transform">
           {video.thumb}
         </span>
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-background/20 backdrop-blur-[2px]">
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-background/20">
           <PlayCircle className="w-12 h-12 text-foreground" />
         </div>
       </div>

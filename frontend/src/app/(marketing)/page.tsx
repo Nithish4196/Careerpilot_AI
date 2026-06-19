@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { ArrowRight, Sparkles, PlayCircle, BarChart3 } from "lucide-react";
+import Link from"next/link";
+import { ArrowRight, Sparkles, PlayCircle, BarChart3 } from"lucide-react";
 
 export default function HomePage() {
   return (
@@ -21,14 +21,14 @@ export default function HomePage() {
         </h1>
         
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-          Build resumes, discover jobs, learn in-demand skills, prepare for interviews, and get hired faster with our unified AI platform.
+          Parse your resume against real ATS criteria, simulate timed technical interviews, and track active remote job postings all in one place.
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href="/signup" className="flex items-center justify-center gap-2 bg-primary text-primary-foreground w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl hover:-translate-y-1">
+          <Link href="/signup" className="flex items-center justify-center gap-2 bg-primary text-primary-foreground w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-lg hover:bg-primary/90 transition-colors duration-150 ease-out shadow-lg">
             Get Started <ArrowRight className="w-5 h-5" />
           </Link>
-          <Link href="#demo" className="flex items-center justify-center gap-2 bg-muted text-foreground w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-lg hover:bg-muted/80 transition-all">
+          <Link href="#demo" className="flex items-center justify-center gap-2 bg-muted text-foreground w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-lg hover:bg-muted/80 transition-colors duration-150 ease-out ">
             Watch Demo <PlayCircle className="w-5 h-5" />
           </Link>
         </div>

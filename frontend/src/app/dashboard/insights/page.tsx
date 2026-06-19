@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Newspaper, ExternalLink, Clock } from "lucide-react";
-import Link from "next/link";
-import BackButton from "@/components/dashboard/BackButton";
+import React, { useEffect, useState } from"react";
+import { Newspaper, ExternalLink, Clock } from"lucide-react";
+import Link from"next/link";
+import BackButton from"@/components/dashboard/BackButton";
 
 interface InsightItem {
   id: string;
@@ -40,21 +40,21 @@ export default function IndustryInsightsPage() {
     fetchInsights();
   }, []);
 
-  const filteredInsights = filter === "All" ? insights : insights.filter(n => n.category === filter);
+  const filteredInsights = filter ==="All" ? insights : insights.filter(n => n.category === filter);
 
   const getHoursAgo = (dateStr: string) => {
-    if (!dateStr) return "Unknown";
+    if (!dateStr) return"Unknown";
     const d = new Date(dateStr);
     const diff = Math.floor((new Date().getTime() - d.getTime()) / (1000 * 60 * 60));
-    if (diff < 1) return "Just now";
+    if (diff < 1) return"Just now";
     if (diff < 24) return `${diff}h ago`;
     return `${Math.floor(diff / 24)}d ago`;
   };
 
-  const categories = ["All", "Hiring", "Layoffs", "Funding", "Leadership", "Salary", "Industry Trend"];
+  const categories = ["All","Hiring","Layoffs","Funding","Leadership","Salary","Industry Trend"];
 
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="max-w-4xl mx-auto p-4 md:p-8">
       <BackButton />
 
       <div className="mb-8">
@@ -72,8 +72,8 @@ export default function IndustryInsightsPage() {
             onClick={() => setFilter(c)}
             className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
               filter === c 
-                ? "bg-foreground text-background border-foreground" 
-                : "bg-background text-foreground border-muted hover:border-foreground/50"
+                ?"bg-foreground text-background border-foreground" 
+                :"bg-background text-foreground border-muted hover:border-foreground/50"
             }`}
           >
             {c}
@@ -113,7 +113,7 @@ export default function IndustryInsightsPage() {
                     </span>
                   </div>
                   <h3 className="font-bold text-xl mb-4 leading-tight text-foreground hover:text-muted-foreground transition-colors">
-                    <Link href={item.sourceUrl || item.link || "#"} target="_blank">{item.headline}</Link>
+                    <Link href={item.sourceUrl || item.link ||"#"} target="_blank">{item.headline}</Link>
                   </h3>
                   
                   <div className="bg-muted/30 border border-muted rounded-lg p-4 mb-4">
@@ -124,7 +124,7 @@ export default function IndustryInsightsPage() {
                   </div>
 
                   <Link 
-                    href={item.sourceUrl || item.link || "#"} 
+                    href={item.sourceUrl || item.link ||"#"} 
                     target="_blank"
                     className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground hover:underline transition-colors"
                   >

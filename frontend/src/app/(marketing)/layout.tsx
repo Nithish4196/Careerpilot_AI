@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { Sparkles } from "lucide-react";
-import React from "react";
+import Link from"next/link";
+import { Sparkles } from"lucide-react";
+import React from"react";
 
 export default function MarketingLayout({
   children,
@@ -21,14 +21,14 @@ export default function MarketingLayout({
           </Link>
         </div>
         <nav className="flex-1 px-4 py-6 space-y-2">
-          <Link href="/features" className="block px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-muted transition-colors text-muted-foreground hover:text-foreground">Features</Link>
-          <Link href="/roadmaps" className="block px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-muted transition-colors text-muted-foreground hover:text-foreground">Roadmaps</Link>
-          <Link href="/interviews" className="block px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-muted transition-colors text-muted-foreground hover:text-foreground">Interviews</Link>
-          <Link href="/faq" className="block px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-muted transition-colors text-muted-foreground hover:text-foreground">FAQ</Link>
+          <Link href="/features" className="block px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-muted transition-colors duration-150 ease-out transition-colors text-muted-foreground hover:text-foreground">Features</Link>
+          <Link href="/roadmaps" className="block px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-muted transition-colors duration-150 ease-out transition-colors text-muted-foreground hover:text-foreground">Roadmaps</Link>
+          <Link href="/interviews" className="block px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-muted transition-colors duration-150 ease-out transition-colors text-muted-foreground hover:text-foreground">Interviews</Link>
+          <Link href="/faq" className="block px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-muted transition-colors duration-150 ease-out transition-colors text-muted-foreground hover:text-foreground">FAQ</Link>
         </nav>
         <div className="p-4 border-t border-muted flex flex-col gap-3">
-          <Link href="/login" className="w-full text-center py-2.5 text-sm font-medium hover:text-primary transition-colors rounded-lg hover:bg-muted">Sign In</Link>
-          <Link href="/signup" className="w-full text-center py-2.5 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all shadow-md hover:shadow-lg">
+          <Link href="/login" className="w-full text-center py-2.5 text-sm font-medium hover:text-primary transition-colors rounded-lg hover:bg-muted transition-colors duration-150 ease-out ">Sign In</Link>
+          <Link href="/signup" className="w-full text-center py-2.5 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors duration-150 ease-out shadow-md">
             Get Started
           </Link>
         </div>

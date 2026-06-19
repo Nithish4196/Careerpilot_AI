@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { GraduationCap } from "lucide-react";
-import StatCardWrapper from "./StatCardWrapper";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from"react";
+import { useAuth } from"@/context/AuthContext";
+import { collection, onSnapshot } from"firebase/firestore";
+import { db } from"@/lib/firebase";
+import { GraduationCap } from"lucide-react";
+import StatCardWrapper from"./StatCardWrapper";
+import { useRouter } from"next/navigation";
 
 export default function ActiveLearningStatCard() {
   const { user } = useAuth();
@@ -25,9 +25,9 @@ export default function ActiveLearningStatCard() {
       
       snapshot.docs.forEach(doc => {
         const d = doc.data();
-        if (d.status === "in_progress") {
+        if (d.status ==="in_progress") {
           inProgress++;
-        } else if (d.status === "completed") {
+        } else if (d.status ==="completed") {
           completed++;
         }
       });
@@ -49,8 +49,8 @@ export default function ActiveLearningStatCard() {
   return (
     <StatCardWrapper
       title="Active Learning"
-      value={totalCourses > 0 ? `${activeCount} in progress` : "0 in progress"}
-      subtext={totalCourses > 0 ? `${completedCount} courses completed` : "Start learning →"}
+      value={totalCourses > 0 ? `${activeCount} in progress` :"0 in progress"}
+      subtext={totalCourses > 0 ? `${completedCount} courses completed` :"Start learning →"}
       icon={GraduationCap}
       colorClass="bg-muted text-foreground"
       link="#"

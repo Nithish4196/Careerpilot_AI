@@ -1,15 +1,7 @@
 import React from 'react';
 import { Search, MapPin, Briefcase, IndianRupee } from 'lucide-react';
 
-const chips = [
-  "Freshers Hiring Now",
-  "High Package Jobs",
-  "Quick Hiring Jobs",
-  "Remote Jobs",
-  "Internship Opportunities",
-  "Top MNC Hiring",
-  "Startup Hiring",
-  "AI Recommended"
+const chips = ["Freshers Hiring Now","High Package Jobs","Quick Hiring Jobs","Remote Jobs","Internship Opportunities","Top MNC Hiring","Startup Hiring","AI Recommended"
 ];
 interface JobSearchQuery {
   role: string;
@@ -88,7 +80,7 @@ export default function JobSearchHeader({ onSearch, onChipSelect }: JobSearchHea
         </div>
         <button 
           onClick={handleSearch}
-          className="w-full md:w-auto bg-foreground text-background px-8 py-3 rounded-xl font-bold text-sm hover:bg-foreground/90 transition-all shrink-0 mt-2 md:mt-0"
+          className="w-full md:w-auto bg-foreground text-background px-8 py-3 rounded-xl font-bold text-sm hover:bg-foreground/90 transition-colors duration-150 ease-out shrink-0 mt-2 md:mt-0"
         >
           Find Jobs
         </button>

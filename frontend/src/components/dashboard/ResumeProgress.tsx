@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { FileText } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
-import { collection, onSnapshot, query, orderBy, limit } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from"react";
+import { FileText } from"lucide-react";
+import { useAuth } from"@/context/AuthContext";
+import { collection, onSnapshot, query, orderBy, limit } from"firebase/firestore";
+import { db } from"@/lib/firebase";
+import { useRouter } from"next/navigation";
 
 export default function ResumeProgress() {
   const { user } = useAuth();
   const router = useRouter();
   
   const [percentage, setPercentage] = useState(0);
-  const [feedbackText, setFeedbackText] = useState("Upload or build your resume to see your score.");
+  const [feedbackText, setFeedbackText] = useState("Run your current resume through the ATS parser to get your first baseline score.");
   const [hasResume, setHasResume] = useState(false);
   const [offset, setOffset] = useState(0);
 
@@ -23,7 +23,7 @@ export default function ResumeProgress() {
     if (!user) return;
 
     const resumesRef = collection(db, `users/${user.uid}/resumes`);
-    const q = query(resumesRef, orderBy("updatedAt", "desc"), limit(1));
+    const q = query(resumesRef, orderBy("updatedAt","desc"), limit(1));
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       if (!snapshot.empty) {
@@ -39,7 +39,7 @@ export default function ResumeProgress() {
         const missingKeywords = analysis.missingKeywords || [];
 
         // Find weakest section
-        let weakestSection = "experience";
+        let weakestSection ="experience";
         let lowestScore = 100;
         for (const [section, val] of Object.entries(sectionScores)) {
           if (typeof val === 'number' && val < lowestScore) {
@@ -48,11 +48,11 @@ export default function ResumeProgress() {
           }
         }
 
-        const missingItem = missingKeywords.length > 0 ? missingKeywords[0] : (improvementTips.length > 0 ? improvementTips[0].toLowerCase() : "details");
+        const missingItem = missingKeywords.length > 0 ? missingKeywords[0] : (improvementTips.length > 0 ? improvementTips[0].toLowerCase() :"details");
 
-        let text = "";
+        let text ="";
         if (score === 0) {
-          text = "Upload or build your resume to see your score.";
+          text ="Run your current resume through the ATS parser to get your first baseline score.";
         } else if (score >= 1 && score <= 40) {
           text = `Your resume needs work. Your ${weakestSection} section is the biggest gap — let's fix that first.`;
         } else if (score >= 41 && score <= 60) {
@@ -62,7 +62,7 @@ export default function ResumeProgress() {
         } else if (score >= 81 && score <= 94) {
           text = `Your resume is looking great! Add a few more ${missingItem} to reach 100%.`;
         } else {
-          text = "Excellent! Your resume is in top shape for ATS systems.";
+          text ="Excellent! Your resume is in top shape for ATS systems.";
         }
 
         setFeedbackText(text);
@@ -70,7 +70,7 @@ export default function ResumeProgress() {
       } else {
         setPercentage(0);
         setHasResume(false);
-        setFeedbackText("Upload or build your resume to see your score.");
+        setFeedbackText("Run your current resume through the ATS parser to get your first baseline score.");
       }
     });
 
@@ -83,11 +83,7 @@ export default function ResumeProgress() {
   }, [percentage, circumference]);
 
   const handleClick = () => {
-    if (hasResume) {
-      router.push("/dashboard/resume/editor");
-    } else {
-      router.push("/dashboard/resume/score");
-    }
+    router.push("/dashboard/resume/score");
   };
 
   return (
@@ -116,7 +112,7 @@ export default function ResumeProgress() {
           />
           {/* Progress Circle */}
           <circle
-            className="text-foreground transition-all duration-1000 ease-out"
+            className="text-foreground"
             strokeWidth="8"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
@@ -126,6 +122,7 @@ export default function ResumeProgress() {
             r={circleRadius}
             cx="64"
             cy="64"
+            style={{ transition: 'stroke-dashoffset 1.2s cubic-bezier(0.25, 1, 0.5, 1)' }}
           />
         </svg>
         <div className="absolute flex flex-col items-center justify-center">

@@ -1,12 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
-import { auth, db } from "@/lib/firebase";
-import { UserProfile, signOutUser } from "@/lib/auth";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import React, { createContext, useContext, useEffect, useState } from"react";
+import { onAuthStateChanged, User } from"firebase/auth";
+import { doc, getDoc, onSnapshot } from"firebase/firestore";
+import { auth, db } from"@/lib/firebase";
+import { UserProfile, signOutUser } from"@/lib/auth";
+import { useRouter } from"next/navigation";
+import toast from"react-hot-toast";
 
 interface AuthContextType {
   user: User | null;
@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (firebaseUser) {
         // Subscribe to user document changes in Firestore
-        const userDocRef = doc(db, "users", firebaseUser.uid);
+        const userDocRef = doc(db,"users", firebaseUser.uid);
         unsubscribeProfile = onSnapshot(userDocRef, (docSnap) => {
           if (docSnap.exists()) {
             setUserProfile(docSnap.data() as UserProfile);

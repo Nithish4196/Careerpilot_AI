@@ -19,21 +19,21 @@ export default function RoadmapView({ roadmap, onSave, onRegenerate, isSaved }: 
   const [activeTab, setActiveTab] = useState("overview");
 
   const tabs = [
-    { id: "overview", label: "Overview", icon: LayoutDashboard },
-    { id: "skilltree", label: "Skill Tree", icon: GitMerge },
-    { id: "weekly", label: "Week Plan", icon: Calendar },
-    { id: "resources", label: "Resources", icon: BookOpen },
-    { id: "projects", label: "Projects", icon: Code2 },
-    { id: "certs", label: "Certifications", icon: Award },
-    { id: "interview", label: "Interview", icon: MessageSquare }
+    { id:"overview", label:"Overview", icon: LayoutDashboard },
+    { id:"skilltree", label:"Skill Tree", icon: GitMerge },
+    { id:"weekly", label:"Week Plan", icon: Calendar },
+    { id:"resources", label:"Resources", icon: BookOpen },
+    { id:"projects", label:"Projects", icon: Code2 },
+    { id:"certs", label:"Certifications", icon: Award },
+    { id:"interview", label:"Interview", icon: MessageSquare }
   ];
 
   const handleCopyKeywords = () => {
-    navigator.clipboard.writeText(roadmap.interviewPrep.resumeKeywords.join(", "));
+    navigator.clipboard.writeText(roadmap.interviewPrep.resumeKeywords.join(","));
   };
 
   return (
-    <div className="flex flex-col h-full animate-in fade-in duration-500">
+    <div className="flex flex-col h-full">
       
       {/* Header */}
       <div className="bg-background border border-muted rounded-2xl p-6 mb-6 shrink-0 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm">
@@ -56,16 +56,16 @@ export default function RoadmapView({ roadmap, onSave, onRegenerate, isSaved }: 
         <div className="flex gap-3 w-full md:w-auto">
           <button 
             onClick={onRegenerate}
-            className="flex-1 md:flex-none px-4 py-2 border border-muted text-foreground font-semibold rounded-xl hover:bg-muted transition-colors"
+            className="flex-1 md:flex-none px-4 py-2 border border-muted text-foreground font-semibold rounded-xl hover:bg-muted transition-colors duration-150 ease-out transition-colors"
           >
             Regenerate
           </button>
           <button 
             onClick={onSave}
             disabled={isSaved}
-            className="flex-1 md:flex-none px-6 py-2 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="flex-1 md:flex-none px-6 py-2 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
-            {isSaved ? <><CheckCircle2 className="w-4 h-4" /> Saved</> : "Save Roadmap"}
+            {isSaved ? <><CheckCircle2 className="w-4 h-4" /> Saved</> :"Save Roadmap"}
           </button>
         </div>
       </div>
@@ -89,13 +89,13 @@ export default function RoadmapView({ roadmap, onSave, onRegenerate, isSaved }: 
 
       {/* Content Area */}
       <div className="flex-1 overflow-y-auto pb-12">
-        {activeTab === "overview" && <TabOverview roadmap={roadmap} />}
-        {activeTab === "skilltree" && <TabSkillTree tree={roadmap.skillTree} onFindResource={() => setActiveTab('resources')} />}
-        {activeTab === "weekly" && <TabWeekly plan={roadmap.weeklyPlan} />}
-        {activeTab === "resources" && <TabResources resources={roadmap.resources} />}
-        {activeTab === "projects" && <TabProjects phases={roadmap.projects} />}
-        {activeTab === "certs" && <TabCerts groups={roadmap.certifications} />}
-        {activeTab === "interview" && <TabInterview prep={roadmap.interviewPrep} onCopy={handleCopyKeywords} />}
+        {activeTab ==="overview" && <TabOverview roadmap={roadmap} />}
+        {activeTab ==="skilltree" && <TabSkillTree tree={roadmap.skillTree} onFindResource={() => setActiveTab('resources')} />}
+        {activeTab ==="weekly" && <TabWeekly plan={roadmap.weeklyPlan} />}
+        {activeTab ==="resources" && <TabResources resources={roadmap.resources} />}
+        {activeTab ==="projects" && <TabProjects phases={roadmap.projects} />}
+        {activeTab ==="certs" && <TabCerts groups={roadmap.certifications} />}
+        {activeTab ==="interview" && <TabInterview prep={roadmap.interviewPrep} onCopy={handleCopyKeywords} />}
       </div>
 
     </div>
@@ -108,15 +108,15 @@ export default function RoadmapView({ roadmap, onSave, onRegenerate, isSaved }: 
 
 function TabOverview({ roadmap }: { roadmap: CareerRoadmap }) {
   return (
-    <div className="space-y-8 animate-in slide-in-from-bottom-2 fade-in duration-300">
+    <div className="space-y-8">
       
       {/* Stats Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: "Skills to Learn", value: roadmap.overview.totalSkills },
-          { label: "Recommended Courses", value: roadmap.overview.coursesRecommended },
-          { label: "Projects to Build", value: roadmap.overview.projectsToBuild },
-          { label: "Estimated Weeks", value: roadmap.overview.estimatedWeeks }
+          { label:"Skills to Learn", value: roadmap.overview.totalSkills },
+          { label:"Recommended Courses", value: roadmap.overview.coursesRecommended },
+          { label:"Projects to Build", value: roadmap.overview.projectsToBuild },
+          { label:"Estimated Weeks", value: roadmap.overview.estimatedWeeks }
         ].map(stat => (
           <div key={stat.label} className="bg-background border border-muted rounded-2xl p-5 shadow-sm text-center">
             <div className="text-3xl font-extrabold text-foreground mb-1">{stat.value}</div>
@@ -195,7 +195,7 @@ function TabOverview({ roadmap }: { roadmap: CareerRoadmap }) {
 
 function TabSkillTree({ tree, onFindResource }: { tree: SkillCategory[], onFindResource: () => void }) {
   return (
-    <div className="space-y-8 animate-in slide-in-from-bottom-2 fade-in duration-300">
+    <div className="space-y-8">
       {tree.map(category => (
         <div key={category.category} className="bg-background border border-muted rounded-2xl p-6 shadow-sm">
           <h2 className="text-xl font-bold mb-6 pb-4 border-b border-muted">{category.category}</h2>
@@ -226,7 +226,7 @@ function TabSkillTree({ tree, onFindResource }: { tree: SkillCategory[], onFindR
                   }}></div>
                 </div>
 
-                <button onClick={onFindResource} className="mt-auto flex items-center justify-between px-4 py-2 bg-background border border-muted text-sm font-bold rounded-lg hover:bg-muted transition-colors">
+                <button onClick={onFindResource} className="mt-auto flex items-center justify-between px-4 py-2 bg-background border border-muted text-sm font-bold rounded-lg hover:bg-muted transition-colors duration-150 ease-out transition-colors">
                   Find Resources <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -250,14 +250,14 @@ function TabWeekly({ plan }: { plan: WeeklyPlan[] }) {
       setCompletedWeeks(completedWeeks.filter(n => n !== weekNo));
     } else {
       setCompletedWeeks([...completedWeeks, weekNo]);
-      if (user) logActivity(user.uid, "roadmapTasksCompleted");
+      if (user) logActivity(user.uid,"roadmapTasksCompleted");
     }
   };
 
   const progress = Math.round((completedWeeks.length / plan.length) * 100) || 0;
 
   return (
-    <div className="animate-in slide-in-from-bottom-2 fade-in duration-300">
+    <div className="">
       
       <div className="bg-background border border-muted rounded-2xl p-6 mb-8 sticky top-0 z-10 shadow-sm">
         <div className="flex items-center justify-between mb-2">
@@ -265,7 +265,7 @@ function TabWeekly({ plan }: { plan: WeeklyPlan[] }) {
           <span className="font-bold text-primary">{progress}%</span>
         </div>
         <div className="w-full bg-muted rounded-full h-3">
-          <div className="bg-primary h-3 rounded-full transition-all duration-500" style={{ width: `${progress}%` }}></div>
+          <div className="bg-primary h-3 rounded-full" style={{ width: `${progress}%` }}></div>
         </div>
       </div>
 
@@ -273,7 +273,7 @@ function TabWeekly({ plan }: { plan: WeeklyPlan[] }) {
         {plan.map(week => {
           const isDone = completedWeeks.includes(week.weekNumber);
           return (
-            <div key={week.weekNumber} className={`bg-background border rounded-2xl p-6 transition-all ${isDone ? 'border-green-500/30 bg-green-500/5' : 'border-muted shadow-sm'}`}>
+            <div key={week.weekNumber} className={`bg-background border rounded-2xl p-6 ${isDone ? 'border-green-500/30 bg-green-500/5' : 'border-muted shadow-sm'}`}>
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-muted">
                 <div>
                   <div className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">Week {week.weekNumber} • {week.dateRange}</div>
@@ -286,7 +286,7 @@ function TabWeekly({ plan }: { plan: WeeklyPlan[] }) {
                 </div>
                 <button 
                   onClick={() => toggleWeek(week.weekNumber)}
-                  className={`flex items-center gap-2 px-4 py-2 font-bold text-sm rounded-xl transition-colors ${isDone ? 'bg-green-500 text-white' : 'bg-muted text-foreground hover:bg-muted/70'}`}
+                  className={`flex items-center gap-2 px-4 py-2 font-bold text-sm rounded-xl transition-colors ${isDone ? 'bg-green-500 text-white' : 'bg-muted text-foreground hover:bg-muted/70 transition-colors duration-150 ease-out '}`}
                 >
                   {isDone ? <CheckSquare className="w-4 h-4" /> : <Square className="w-4 h-4" />}
                   {isDone ? 'Completed' : 'Mark Complete'}
@@ -295,7 +295,7 @@ function TabWeekly({ plan }: { plan: WeeklyPlan[] }) {
 
               <div className="space-y-3">
                 {week.days.map(day => (
-                  <div key={day.day} className="flex items-center justify-between p-3 bg-muted/20 rounded-xl hover:bg-muted/40 transition-colors">
+                  <div key={day.day} className="flex items-center justify-between p-3 bg-muted/20 rounded-xl hover:bg-muted/40 transition-colors duration-150 ease-out transition-colors">
                     <div className="flex items-center gap-4">
                       <span className="w-20 font-bold text-sm text-muted-foreground">{day.day}</span>
                       <span className="font-semibold text-sm">{day.topic}</span>
@@ -334,7 +334,7 @@ function TabResources({ resources }: { resources: SkillResources[] }) {
   const [filter, setFilter] = useState("All");
 
   return (
-    <div className="space-y-8 animate-in slide-in-from-bottom-2 fade-in duration-300">
+    <div className="space-y-8">
       
       <div className="flex gap-2 pb-2 overflow-x-auto scrollbar-hide">
         {['All', 'Video', 'Course', 'Documentation'].map(f => (
@@ -359,7 +359,7 @@ function TabResources({ resources }: { resources: SkillResources[] }) {
             <div>
               <h3 className="font-bold text-sm text-muted-foreground uppercase tracking-widest mb-4">Free Resources</h3>
               <div className="space-y-3">
-                {res.free.filter(r => filter === "All" || r.type === filter).map(item => (
+                {res.free.filter(r => filter ==="All" || r.type === filter).map(item => (
                   <a key={item.name} href={item.url} target="_blank" className="block p-4 border border-muted rounded-xl hover:border-primary transition-colors group">
                     <div className="font-bold text-sm mb-1 group-hover:text-primary">{item.name}</div>
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
@@ -375,7 +375,7 @@ function TabResources({ resources }: { resources: SkillResources[] }) {
             <div>
               <h3 className="font-bold text-sm text-muted-foreground uppercase tracking-widest mb-4">Paid Courses</h3>
               <div className="space-y-3">
-                {res.paid.filter(r => filter === "All" || r.type === filter).map(item => (
+                {res.paid.filter(r => filter ==="All" || r.type === filter).map(item => (
                   <a key={item.name} href={item.url} target="_blank" className="block p-4 border border-muted rounded-xl hover:border-primary transition-colors group relative overflow-hidden">
                     {item.hasCertification && <div className="absolute top-0 right-0 bg-primary text-primary-foreground text-[8px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">Cert Included</div>}
                     <div className="font-bold text-sm mb-1 group-hover:text-primary pr-8">{item.name}</div>
@@ -392,7 +392,7 @@ function TabResources({ resources }: { resources: SkillResources[] }) {
             <div>
               <h3 className="font-bold text-sm text-muted-foreground uppercase tracking-widest mb-4">Practice</h3>
               <div className="space-y-3">
-                {res.practice.filter(r => filter === "All" || r.type === filter).map(item => (
+                {res.practice.filter(r => filter ==="All" || r.type === filter).map(item => (
                   <a key={item.name} href={item.url} target="_blank" className="block p-4 border border-muted rounded-xl hover:border-primary transition-colors group">
                     <div className="font-bold text-sm mb-1 group-hover:text-primary">{item.name}</div>
                     <div className="text-xs text-muted-foreground">{item.platform}</div>
@@ -409,7 +409,7 @@ function TabResources({ resources }: { resources: SkillResources[] }) {
 
 function TabProjects({ phases }: { phases: ProjectPhase[] }) {
   return (
-    <div className="space-y-10 animate-in slide-in-from-bottom-2 fade-in duration-300">
+    <div className="space-y-10">
       {phases.map(phase => (
         <div key={phase.phaseName}>
           <h2 className="text-xl font-bold mb-6 flex items-center gap-3">
@@ -466,7 +466,7 @@ function TabProjects({ phases }: { phases: ProjectPhase[] }) {
 
 function TabCerts({ groups }: { groups: CertificationsGroup[] }) {
   return (
-    <div className="space-y-8 animate-in slide-in-from-bottom-2 fade-in duration-300">
+    <div className="space-y-8">
       {groups.map(group => (
         <div key={group.category}>
           <h2 className="text-xl font-bold mb-6">{group.category} Certifications</h2>
@@ -492,7 +492,7 @@ function TabCerts({ groups }: { groups: CertificationsGroup[] }) {
                   </div>
                 </div>
 
-                <a href={cert.url} target="_blank" className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-muted text-sm font-bold rounded-xl hover:bg-muted transition-colors">
+                <a href={cert.url} target="_blank" className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-muted text-sm font-bold rounded-xl hover:bg-muted transition-colors duration-150 ease-out transition-colors">
                   Official Exam Page <ExternalLink className="w-4 h-4" />
                 </a>
               </div>
@@ -506,7 +506,7 @@ function TabCerts({ groups }: { groups: CertificationsGroup[] }) {
 
 function TabInterview({ prep, onCopy }: { prep: InterviewPrep, onCopy: () => void }) {
   return (
-    <div className="space-y-8 animate-in slide-in-from-bottom-2 fade-in duration-300">
+    <div className="space-y-8">
       
       {/* Overview */}
       <div className="bg-background border border-muted rounded-2xl p-6 shadow-sm">
@@ -571,7 +571,7 @@ function TabInterview({ prep, onCopy }: { prep: InterviewPrep, onCopy: () => voi
           <div className="bg-background border border-muted rounded-2xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold">Resume Keywords</h2>
-              <button onClick={onCopy} className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-muted" title="Copy Keywords">
+              <button onClick={onCopy} className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-muted transition-colors duration-150 ease-out " title="Copy Keywords">
                 <Copy className="w-4 h-4" />
               </button>
             </div>

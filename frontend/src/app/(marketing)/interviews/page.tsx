@@ -1,4 +1,4 @@
-import { Bot, ArrowRight } from "lucide-react";
+import { Bot, ArrowRight } from"lucide-react";
 
 export default function InterviewsPage() {
   return (

@@ -1,11 +1,11 @@
 import React from 'react';
 
 const filters = {
-  experience: ["Fresher (0 Years)", "0-2 Years", "2-5 Years", "5+ Years"],
-  salary: ["₹3 LPA+", "₹5 LPA+", "₹8 LPA+", "₹10 LPA+", "₹15 LPA+", "₹20 LPA+"],
-  jobType: ["Full-Time", "Internship", "Contract", "Remote", "Hybrid", "Onsite"],
-  location: ["Anywhere in India", "Chennai", "Bangalore", "Hyderabad", "Pune", "Mumbai", "Delhi NCR", "Coimbatore", "Kolkata"],
-  source: ["LinkedIn", "Naukri", "Foundit", "Unstop", "Indeed", "Glassdoor", "Google Jobs", "Bing Jobs"]
+  experience: ["Fresher (0 Years)","0-2 Years","2-5 Years","5+ Years"],
+  salary: ["₹3 LPA+","₹5 LPA+","₹8 LPA+","₹10 LPA+","₹15 LPA+","₹20 LPA+"],
+  jobType: ["Full-Time","Internship","Contract","Remote","Hybrid","Onsite"],
+  location: ["Anywhere in India","Chennai","Bangalore","Hyderabad","Pune","Mumbai","Delhi NCR","Coimbatore","Kolkata"],
+  source: ["LinkedIn","Naukri","Foundit","Unstop","Indeed","Glassdoor","Google Jobs","Bing Jobs"]
 };
 
 interface JobSidebarFiltersProps {

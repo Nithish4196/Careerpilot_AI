@@ -1,14 +1,14 @@
-import { doc, getDoc, setDoc, updateDoc, increment, serverTimestamp } from "firebase/firestore";
-import { db } from "./firebase";
+import { doc, getDoc, setDoc, updateDoc, increment, serverTimestamp } from"firebase/firestore";
+import { db } from"./firebase";
 
 export type ActivityCategory =
-  | "resumeEdits"
-  | "jobsApplied"
-  | "coursesStudied"
-  | "mockInterviews"
-  | "projectsWorked"
-  | "aiChatMessages"
-  | "roadmapTasksCompleted";
+  |"resumeEdits"
+  |"jobsApplied"
+  |"coursesStudied"
+  |"mockInterviews"
+  |"projectsWorked"
+  |"aiChatMessages"
+  |"roadmapTasksCompleted";
 
 /**
  * Logs a specific activity action to Firestore for the given user.
@@ -40,13 +40,13 @@ export const logActivity = async (uid: string, category: ActivityCategory) => {
         date: localISOTime,
         actions: 1,
         breakdown: {
-          resumeEdits: category === "resumeEdits" ? 1 : 0,
-          jobsApplied: category === "jobsApplied" ? 1 : 0,
-          coursesStudied: category === "coursesStudied" ? 1 : 0,
-          mockInterviews: category === "mockInterviews" ? 1 : 0,
-          projectsWorked: category === "projectsWorked" ? 1 : 0,
-          aiChatMessages: category === "aiChatMessages" ? 1 : 0,
-          roadmapTasksCompleted: category === "roadmapTasksCompleted" ? 1 : 0,
+          resumeEdits: category ==="resumeEdits" ? 1 : 0,
+          jobsApplied: category ==="jobsApplied" ? 1 : 0,
+          coursesStudied: category ==="coursesStudied" ? 1 : 0,
+          mockInterviews: category ==="mockInterviews" ? 1 : 0,
+          projectsWorked: category ==="projectsWorked" ? 1 : 0,
+          aiChatMessages: category ==="aiChatMessages" ? 1 : 0,
+          roadmapTasksCompleted: category ==="roadmapTasksCompleted" ? 1 : 0,
         },
         lastUpdated: serverTimestamp(),
       });

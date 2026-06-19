@@ -18,29 +18,29 @@ export default function JobDetailsPanel({ job, isSaved = false, onToggleSave, on
 
   const handleApplyClick = () => {
     if (user) {
-      logActivity(user.uid, "jobsApplied");
+      logActivity(user.uid,"jobsApplied");
     }
   };
 
   const handleSaveClick = () => {
     if (user && !isSaved) {
       // Only log on save, not unsave
-      logActivity(user.uid, "jobsApplied");
+      logActivity(user.uid,"jobsApplied");
     }
     if (onToggleSave) onToggleSave();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-background/80 backdrop-blur-sm animate-in fade-in">
-      <div className="w-full max-w-2xl bg-background border-l border-muted h-full overflow-y-auto shadow-2xl animate-in slide-in-from-right duration-300">
+    <div className="fixed inset-0 z-50 flex justify-end bg-background/80">
+      <div className="w-full max-w-2xl bg-background border-l border-muted h-full overflow-y-auto shadow-2xl">
         
         {/* Sticky Header */}
-        <div className="sticky top-0 bg-background/95 backdrop-blur-sm border-b border-muted p-6 z-10 flex items-start justify-between">
+        <div className="sticky top-0 bg-background/95 border-b border-muted p-6 z-10 flex items-start justify-between">
           <div>
             <h2 className="text-2xl font-bold mb-1">{job.role}</h2>
             <p className="text-muted-foreground font-medium">{job.companyName} • {job.location}</p>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-muted rounded-full transition-colors">
+          <button onClick={onClose} className="p-2 hover:bg-muted transition-colors duration-150 ease-out rounded-full transition-colors">
             <X className="w-6 h-6" />
           </button>
         </div>
@@ -140,10 +140,10 @@ export default function JobDetailsPanel({ job, isSaved = false, onToggleSave, on
         </div>
 
         {/* Sticky Footer */}
-        <div className="sticky bottom-0 bg-background/95 backdrop-blur-sm border-t border-muted p-6 flex justify-end gap-4 mt-auto">
+        <div className="sticky bottom-0 bg-background/95 border-t border-muted p-6 flex justify-end gap-4 mt-auto">
           <button 
             onClick={handleSaveClick}
-            className={`px-6 py-3 rounded-xl font-bold text-sm border transition-colors ${isSaved ? 'bg-muted border-foreground/20 text-foreground' : 'border-muted hover:bg-muted text-foreground'}`}
+            className={`px-6 py-3 rounded-xl font-bold text-sm border transition-colors ${isSaved ? 'bg-muted border-foreground/20 text-foreground' : 'border-muted hover:bg-muted transition-colors duration-150 ease-out text-foreground'}`}
           >
             {isSaved ? 'Saved' : 'Save Job'}
           </button>
@@ -152,7 +152,7 @@ export default function JobDetailsPanel({ job, isSaved = false, onToggleSave, on
             onClick={handleApplyClick}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-foreground text-background px-8 py-3 rounded-xl font-bold text-sm hover:bg-foreground/90 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            className="flex items-center gap-2 bg-foreground text-background px-8 py-3 rounded-xl font-bold text-sm hover:bg-foreground/90 transition-colors duration-150 ease-out shadow-lg"
           >
             Apply Now <ExternalLink className="w-4 h-4" />
           </a>

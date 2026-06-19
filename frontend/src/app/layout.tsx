@@ -1,23 +1,23 @@
-import type { Metadata } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { AuthProvider } from "@/context/AuthContext";
-import { ThemeProvider } from "@/context/ThemeContext";
-import { Toaster } from "react-hot-toast";
+import type { Metadata } from"next";
+import { Inter, Geist_Mono } from"next/font/google";
+import"./globals.css";
+import { AuthProvider } from"@/context/AuthContext";
+import { ThemeProvider } from"@/context/ThemeContext";
+import { Toaster } from"react-hot-toast";
 
 const inter = Inter({
-  variable: "--font-inter",
+  variable:"--font-inter",
   subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+  variable:"--font-geist-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "CareerPilot AI | Your AI Career Copilot",
-  description: "Build resumes, discover jobs, learn in-demand skills, prepare for interviews, and get hired faster with AI.",
+  title:"CareerPilot AI | Your AI Career Copilot",
+  description:"Build resumes, discover jobs, learn in-demand skills, prepare for interviews, and get hired faster with AI.",
 };
 
 export default function RootLayout({

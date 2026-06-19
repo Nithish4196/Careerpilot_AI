@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { Video } from "lucide-react";
-import StatCardWrapper from "./StatCardWrapper";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from"react";
+import { useAuth } from"@/context/AuthContext";
+import { collection, onSnapshot } from"firebase/firestore";
+import { db } from"@/lib/firebase";
+import { Video } from"lucide-react";
+import StatCardWrapper from"./StatCardWrapper";
+import { useRouter } from"next/navigation";
 
 export default function InterviewsStatCard() {
   const { user } = useAuth();
@@ -49,8 +49,8 @@ export default function InterviewsStatCard() {
   return (
     <StatCardWrapper
       title="Mock Interviews"
-      value={hasInterviews ? `${data.total} Taken` : "0 Taken"}
-      subtext={hasInterviews ? `Avg Score: ${data.avgScore}` : "Take your first mock interview →"}
+      value={hasInterviews ? `${data.total} Taken` :"0 Taken"}
+      subtext={hasInterviews ? `Avg Score: ${data.avgScore}` :"Take your first mock interview →"}
       icon={Video}
       colorClass="bg-muted text-foreground"
       link="#"

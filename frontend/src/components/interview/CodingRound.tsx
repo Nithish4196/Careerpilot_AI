@@ -3,7 +3,7 @@ import { CODING_PROBLEMS } from '@/types/interview';
 import { Play, Check, Lightbulb } from 'lucide-react';
 
 interface CodingRoundProps {
-  difficulty: "Easy" | "Medium" | "Hard";
+  difficulty:"Easy" |"Medium" |"Hard";
   onFinish: (score: number, feedback: string[]) => void;
 }
 
@@ -15,7 +15,7 @@ export default function CodingRound({ difficulty, onFinish }: CodingRoundProps) 
   const [output, setOutput] = useState<string | null>(null);
 
   const handleRun = () => {
-    setOutput("Compiling...\nRunning tests...\n\nOutput:\nExpected: " + problem.examples.split("→ Output: ")[1] + "\nActual: null (Logic not implemented)\n\nResult: Failed 1/3 hidden test cases.");
+    setOutput("Compiling...\nRunning tests...\n\nOutput:\nExpected:" + problem.examples.split("→ Output:")[1] +"\nActual: null (Logic not implemented)\n\nResult: Failed 1/3 hidden test cases.");
   };
 
   const handleSubmit = () => {
@@ -23,8 +23,8 @@ export default function CodingRound({ difficulty, onFinish }: CodingRoundProps) 
     const passed = code.length > 50;
     const score = passed ? Math.floor(Math.random() * (100 - 85) + 85) : Math.floor(Math.random() * (40 - 20) + 20);
     const feedback = passed 
-      ? ["Good algorithmic approach.", "Clean syntax and code structure.", "Optimal time complexity achieved."]
-      : ["Code is incomplete or contains syntax errors.", "Try testing with edge cases before submitting.", "Review data structures required for this problem."];
+      ? ["Good algorithmic approach.","Clean syntax and code structure.","Optimal time complexity achieved."]
+      : ["Code is incomplete or contains syntax errors.","Try testing with edge cases before submitting.","Review data structures required for this problem."];
     
     onFinish(score, feedback);
   };
@@ -78,7 +78,7 @@ export default function CodingRound({ difficulty, onFinish }: CodingRoundProps) 
         {/* Editor Header */}
         <div className="bg-[#2d2d2d] px-4 py-2 flex items-center justify-between">
           <div className="flex gap-2">
-            {["Python", "JavaScript", "Java", "C++"].map(lang => (
+            {["Python","JavaScript","Java","C++"].map(lang => (
               <button 
                 key={lang}
                 onClick={() => setLanguage(lang)}
@@ -93,13 +93,13 @@ export default function CodingRound({ difficulty, onFinish }: CodingRoundProps) 
           <div className="flex gap-2">
             <button 
               onClick={handleRun}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 text-white rounded-md text-xs font-bold hover:bg-white/20 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 text-white rounded-md text-xs font-bold hover:bg-white/20 transition-colors duration-150 ease-out transition-colors"
             >
               <Play className="w-3.5 h-3.5" /> Run Code
             </button>
             <button 
               onClick={handleSubmit}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-green-600 text-white rounded-md text-xs font-bold hover:bg-green-500 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-green-600 text-white rounded-md text-xs font-bold hover:bg-green-500 transition-colors duration-150 ease-out transition-colors"
             >
               <Check className="w-3.5 h-3.5" /> Submit
             </button>

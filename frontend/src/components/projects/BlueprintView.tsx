@@ -13,21 +13,20 @@ interface BlueprintViewProps {
 }
 
 export default function BlueprintView({ blueprint, onSave, onBack, isSaved = false }: BlueprintViewProps) {
-  const [activeTab, setActiveTab] = useState<
-    "overview" | "roadmap" | "architecture" | "projects" | "build" | "extra"
+  const [activeTab, setActiveTab] = useState<"overview" |"roadmap" |"architecture" |"projects" |"build" |"extra"
   >("overview");
 
   const tabs = [
-    { id: "overview", label: "Overview", icon: FileText },
-    { id: "roadmap", label: "Roadmap", icon: Map },
-    { id: "architecture", label: "Architecture", icon: LayoutTemplate },
-    { id: "projects", label: "Existing Projects", icon: GitBranch },
-    { id: "build", label: "How to Build", icon: Code2 },
-    { id: "extra", label: "Extra Features", icon: Sparkles }
+    { id:"overview", label:"Overview", icon: FileText },
+    { id:"roadmap", label:"Roadmap", icon: Map },
+    { id:"architecture", label:"Architecture", icon: LayoutTemplate },
+    { id:"projects", label:"Existing Projects", icon: GitBranch },
+    { id:"build", label:"How to Build", icon: Code2 },
+    { id:"extra", label:"Extra Features", icon: Sparkles }
   ] as const;
 
   return (
-    <div className="max-w-6xl mx-auto py-8 animate-in fade-in duration-500 pb-20">
+    <div className="max-w-6xl mx-auto py-8 pb-20">
       
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 border-b border-muted pb-8">
@@ -60,9 +59,9 @@ export default function BlueprintView({ blueprint, onSave, onBack, isSaved = fal
         <button 
           onClick={onSave}
           disabled={isSaved}
-          className="flex items-center gap-2 px-6 py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-all shrink-0 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center gap-2 px-6 py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out shrink-0 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSaved ? "Blueprint Saved ✓" : "Save Project Blueprint"}
+          {isSaved ?"Blueprint Saved ✓" :"Save Project Blueprint"}
         </button>
       </div>
 
@@ -75,10 +74,10 @@ export default function BlueprintView({ blueprint, onSave, onBack, isSaved = fal
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id)}
-              className={`flex items-center gap-2 px-5 py-3 rounded-t-xl text-sm font-bold transition-all whitespace-nowrap border-b-2 ${
+              className={`flex items-center gap-2 px-5 py-3 rounded-t-xl text-sm font-bold whitespace-nowrap border-b-2 ${
                 isActive 
-                  ? "bg-muted/30 border-foreground text-foreground" 
-                  : "border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/10"
+                  ?"bg-muted/30 border-foreground text-foreground" 
+                  :"border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/10 transition-colors duration-150 ease-out "
               }`}
             >
               <Icon className="w-4 h-4" /> {t.label}
@@ -91,8 +90,8 @@ export default function BlueprintView({ blueprint, onSave, onBack, isSaved = fal
       <div className="min-h-[500px]">
         
         {/* OVERVIEW TAB */}
-        {activeTab === "overview" && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4">
+        {activeTab ==="overview" && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2 space-y-8">
               <div className="bg-background border border-muted rounded-2xl p-8">
                 <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
@@ -144,15 +143,15 @@ export default function BlueprintView({ blueprint, onSave, onBack, isSaved = fal
         )}
 
         {/* ROADMAP TAB */}
-        {activeTab === "roadmap" && (
-          <div className="max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4">
+        {activeTab ==="roadmap" && (
+          <div className="max-w-4xl mx-auto">
             
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12">
               {[
-                { label: "Coding", val: blueprint.roadmap.hours.coding },
-                { label: "Research", val: blueprint.roadmap.hours.research },
-                { label: "Testing", val: blueprint.roadmap.hours.testing },
-                { label: "Deployment", val: blueprint.roadmap.hours.deployment }
+                { label:"Coding", val: blueprint.roadmap.hours.coding },
+                { label:"Research", val: blueprint.roadmap.hours.research },
+                { label:"Testing", val: blueprint.roadmap.hours.testing },
+                { label:"Deployment", val: blueprint.roadmap.hours.deployment }
               ].map(stat => (
                 <div key={stat.label} className="bg-muted/30 border border-muted rounded-xl p-4 text-center">
                   <div className="text-2xl font-extrabold mb-1">{stat.val}h</div>
@@ -192,8 +191,8 @@ export default function BlueprintView({ blueprint, onSave, onBack, isSaved = fal
         )}
 
         {/* ARCHITECTURE TAB */}
-        {activeTab === "architecture" && (
-          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4">
+        {activeTab ==="architecture" && (
+          <div className="space-y-12">
             <section className="max-w-3xl">
               <h3 className="text-2xl font-bold mb-4">System Design Overview</h3>
               <p className="text-lg text-muted-foreground leading-relaxed">
@@ -276,8 +275,8 @@ export default function BlueprintView({ blueprint, onSave, onBack, isSaved = fal
         )}
 
         {/* PROJECTS TAB */}
-        {activeTab === "projects" && (
-          <div className="animate-in fade-in slide-in-from-bottom-4">
+        {activeTab ==="projects" && (
+          <div className="">
             <p className="text-lg text-muted-foreground mb-8 max-w-3xl">
               Study these real-world repositories to understand how professionals implement similar architectures and features.
             </p>
@@ -289,7 +288,7 @@ export default function BlueprintView({ blueprint, onSave, onBack, isSaved = fal
                   href={proj.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-background border border-muted rounded-2xl p-6 hover:shadow-lg hover:border-foreground/30 transition-all flex flex-col h-full group"
+                  className="bg-background border border-muted rounded-2xl p-6 hover:border-foreground/30 flex flex-col h-full group"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <h3 className="font-bold text-lg group-hover:text-primary transition-colors">{proj.name}</h3>
@@ -323,8 +322,8 @@ export default function BlueprintView({ blueprint, onSave, onBack, isSaved = fal
         )}
 
         {/* HOW TO BUILD TAB */}
-        {activeTab === "build" && (
-          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4">
+        {activeTab ==="build" && (
+          <div className="space-y-12">
             
             <section className="bg-muted/20 border border-muted rounded-2xl p-8">
               <h3 className="text-xl font-bold mb-4">Prerequisites</h3>
@@ -422,8 +421,8 @@ export default function BlueprintView({ blueprint, onSave, onBack, isSaved = fal
         )}
 
         {/* EXTRA FEATURES TAB */}
-        {activeTab === "extra" && (
-          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4">
+        {activeTab ==="extra" && (
+          <div className="space-y-12">
             
             <section>
               <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
@@ -432,7 +431,7 @@ export default function BlueprintView({ blueprint, onSave, onBack, isSaved = fal
               <div className="grid md:grid-cols-3 gap-6">
                 {blueprint.extraFeatures.resumeUpgrades.map((upg, idx) => (
                   <div key={idx} className="bg-foreground text-background rounded-2xl p-6 shadow-xl relative overflow-hidden group">
-                    <div className="absolute -right-4 -top-4 w-24 h-24 bg-background/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500" />
+                    <div className="absolute -right-4 -top-4 w-24 h-24 bg-background/10 rounded-full blur-2xl group-hover:scale-150 transition-transform" />
                     <h4 className="font-bold text-lg mb-2 relative z-10">{upg.name}</h4>
                     <p className="text-sm text-background/80 mb-4 font-medium relative z-10">{upg.why}</p>
                     <div className="bg-background/10 p-3 rounded-xl text-sm relative z-10">

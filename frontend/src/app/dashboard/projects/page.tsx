@@ -7,7 +7,7 @@ import GeneratingScreen from '@/components/projects/GeneratingScreen';
 import BlueprintView from '@/components/projects/BlueprintView';
 import SavedProjects from '@/components/projects/SavedProjects';
 
-type AppState = "landing" | "generating" | "blueprint" | "saved";
+type AppState ="landing" |"generating" |"blueprint" |"saved";
 
 export default function ProjectsPage() {
   const [appState, setAppState] = useState<AppState>("landing");
@@ -77,7 +77,7 @@ export default function ProjectsPage() {
   };
 
   // Rendering
-  if (appState === "landing") {
+  if (appState ==="landing") {
     return (
       <LandingForm 
         onSubmit={handleGenerate} 
@@ -87,11 +87,11 @@ export default function ProjectsPage() {
     );
   }
 
-  if (appState === "generating") {
+  if (appState ==="generating") {
     return <GeneratingScreen />;
   }
 
-  if (appState === "blueprint" && currentBlueprint) {
+  if (appState ==="blueprint" && currentBlueprint) {
     const isAlreadySaved = savedProjects.some(p => p.id === currentBlueprint.id);
     return (
       <BlueprintView 
@@ -103,7 +103,7 @@ export default function ProjectsPage() {
     );
   }
 
-  if (appState === "saved") {
+  if (appState ==="saved") {
     return (
       <SavedProjects 
         savedBlueprints={savedProjects}

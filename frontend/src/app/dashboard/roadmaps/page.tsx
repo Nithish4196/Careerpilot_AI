@@ -7,7 +7,7 @@ import GeneratingScreen from '@/components/roadmaps/GeneratingScreen';
 import RoadmapView from '@/components/roadmaps/RoadmapView';
 import SavedRoadmaps from '@/components/roadmaps/SavedRoadmaps';
 
-type AppState = "landing" | "generating" | "roadmap" | "saved";
+type AppState ="landing" |"generating" |"roadmap" |"saved";
 
 export default function RoadmapsPage() {
   const [appState, setAppState] = useState<AppState>("landing");
@@ -77,7 +77,7 @@ export default function RoadmapsPage() {
   };
 
   // Rendering
-  if (appState === "landing") {
+  if (appState ==="landing") {
     return (
       <LandingForm 
         onSubmit={handleGenerate} 
@@ -87,11 +87,11 @@ export default function RoadmapsPage() {
     );
   }
 
-  if (appState === "generating") {
+  if (appState ==="generating") {
     return <GeneratingScreen />;
   }
 
-  if (appState === "roadmap" && currentRoadmap) {
+  if (appState ==="roadmap" && currentRoadmap) {
     const isAlreadySaved = savedRoadmaps.some(p => p.id === currentRoadmap.id);
     return (
       <RoadmapView 
@@ -103,7 +103,7 @@ export default function RoadmapsPage() {
     );
   }
 
-  if (appState === "saved") {
+  if (appState ==="saved") {
     return (
       <SavedRoadmaps 
         savedRoadmaps={savedRoadmaps}

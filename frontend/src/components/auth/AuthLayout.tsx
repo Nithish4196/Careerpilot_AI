@@ -24,10 +24,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
           <div className="space-y-6">
             {[
-              { icon: FileText, title: "AI Resume Builder", desc: "ATS-optimized templates & scoring" },
-              { icon: Search, title: "Smart Job Finder", desc: "Multi-platform remote job aggregation" },
-              { icon: Video, title: "Mock Interview System", desc: "Practice coding & HR rounds with AI" },
-              { icon: Map, title: "Personalized Career Roadmap", desc: "Step-by-step learning paths" },
+              { icon: FileText, title:"AI Resume Builder", desc:"ATS-optimized templates & scoring" },
+              { icon: Search, title:"Smart Job Finder", desc:"Multi-platform remote job aggregation" },
+              { icon: Video, title:"Mock Interview System", desc:"Practice coding & HR rounds with AI" },
+              { icon: Map, title:"Personalized Career Roadmap", desc:"Step-by-step learning paths" },
             ].map((feature, i) => (
               <div key={i} className="flex items-start gap-4">
                 <div className="p-2 bg-background/10 rounded-lg">
@@ -48,7 +48,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
       {/* Right Panel - Form Content */}
       <div className="w-full md:w-1/2 flex items-center justify-center p-8 bg-background relative">
-        <div className="w-full max-w-md animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="w-full max-w-md">
           {children}
         </div>
       </div>

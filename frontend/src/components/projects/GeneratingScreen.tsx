@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
 
-const MESSAGES = [
-  "Analyzing your project idea…",
-  "Researching similar projects…",
-  "Building your roadmap…",
-  "Finding the best resources…",
-  "Writing your project guide…"
+const MESSAGES = ["Analyzing your project idea…","Researching similar projects…","Building your roadmap…","Finding the best resources…","Writing your project guide…"
 ];
 
 export default function GeneratingScreen() {
@@ -21,7 +16,7 @@ export default function GeneratingScreen() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center h-[60vh] animate-in fade-in duration-500">
+    <div className="flex flex-col items-center justify-center h-[60vh]">
       <div className="relative flex items-center justify-center w-24 h-24 mb-8">
         <div className="absolute inset-0 border-4 border-muted rounded-full"></div>
         <div className="absolute inset-0 border-4 border-foreground rounded-full border-t-transparent animate-spin"></div>
@@ -34,7 +29,7 @@ export default function GeneratingScreen() {
         {MESSAGES.map((msg, idx) => (
           <p 
             key={idx}
-            className={`absolute inset-0 text-muted-foreground font-medium transition-all duration-500 ${
+            className={`absolute inset-0 text-muted-foreground font-medium ${
               idx === msgIndex ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >

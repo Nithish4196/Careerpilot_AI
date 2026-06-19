@@ -19,7 +19,7 @@ export default function OAuthButtons() {
       toast.success("Signed in with Google!");
       router.push("/dashboard");
     } else {
-      toast.error(error || "Google sign-in failed.");
+      toast.error(error ||"Google sign-in failed.");
     }
   };
 
@@ -29,7 +29,7 @@ export default function OAuthButtons() {
         onClick={handleGoogleSignIn}
         disabled={isLoading}
         type="button" 
-        className="w-full flex items-center justify-center gap-3 px-4 py-2.5 bg-background border border-muted text-foreground font-semibold rounded-xl hover:bg-muted transition-colors disabled:opacity-50"
+        className="w-full flex items-center justify-center gap-3 px-4 py-2.5 bg-background border border-muted text-foreground font-semibold rounded-xl hover:bg-muted transition-colors duration-150 ease-out transition-colors disabled:opacity-50"
       >
         {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
           <svg className="w-5 h-5" viewBox="0 0 24 24">

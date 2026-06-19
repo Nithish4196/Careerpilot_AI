@@ -15,15 +15,15 @@ export default function SavedRoadmaps({ savedRoadmaps, onView, onDelete, onBack 
   
   if (savedRoadmaps.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-[60vh] animate-in fade-in duration-500">
+      <div className="flex flex-col items-center justify-center h-[60vh]">
         <Folder className="w-16 h-16 text-muted-foreground mb-4" />
         <h2 className="text-2xl font-bold mb-2">No saved roadmaps yet</h2>
         <p className="text-muted-foreground mb-8 text-center max-w-sm">
-          Generate a new career roadmap and click the "Save" button to track your progress here.
+          Generate a new career roadmap and click the"Save" button to track your progress here.
         </p>
         <button 
           onClick={onBack}
-          className="px-6 py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-all"
+          className="px-6 py-3 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out "
         >
           Create New Roadmap
         </button>
@@ -40,7 +40,7 @@ export default function SavedRoadmaps({ savedRoadmaps, onView, onDelete, onBack 
   }, 0);
 
   return (
-    <div className="max-w-6xl mx-auto py-8 animate-in fade-in duration-500">
+    <div className="max-w-6xl mx-auto py-8">
       
       <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 pb-8 border-b border-muted gap-6">
         <div>
@@ -100,20 +100,20 @@ export default function SavedRoadmaps({ savedRoadmaps, onView, onDelete, onBack 
                   <span className="text-xs font-bold text-foreground">{progress}%</span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-2">
-                  <div className="bg-primary h-2 rounded-full transition-all" style={{ width: `${progress}%` }}></div>
+                  <div className="bg-primary h-2 rounded-full" style={{ width: `${progress}%` }}></div>
                 </div>
               </div>
 
               <div className="flex items-center gap-2 mt-auto">
                 <button 
                   onClick={() => onView(rm)}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors text-sm"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-foreground text-background font-bold rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out transition-colors text-sm"
                 >
                   Continue Roadmap <ArrowRight className="w-4 h-4" />
                 </button>
                 <button 
                   onClick={() => onDelete(rm.id)}
-                  className="p-2.5 border border-red-500/20 text-red-500 hover:bg-red-500/10 rounded-xl transition-colors shrink-0"
+                  className="p-2.5 border border-red-500/20 text-red-500 hover:bg-red-500/10 transition-colors duration-150 ease-out rounded-xl transition-colors shrink-0"
                   title="Delete Roadmap"
                 >
                   <Trash2 className="w-4 h-4" />

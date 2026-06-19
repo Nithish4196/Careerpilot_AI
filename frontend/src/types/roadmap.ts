@@ -183,42 +183,42 @@ export function generateMockRoadmap(request: RoadmapRequest): CareerRoadmap {
       gapSummary: `Based on your background as a ${request.currentRole}, you have a solid foundation in ${request.currentSkills.join(', ') || 'basic concepts'}. To transition to a ${request.targetRole}, your biggest gaps are advanced backend architecture, distributed systems, and specific industry-standard cloud tools. We've structured a roadmap to bridge these gaps effectively.`,
       skillsYouHave: request.currentSkills,
       skillsYouNeed: [
-        { name: "Advanced System Design", status: "Need to learn" },
-        { name: "Docker & Kubernetes", status: "Need to learn" },
-        { name: "CI/CD Pipelines", status: "Partially know" },
-        { name: "Cloud Platforms (AWS/GCP)", status: "Need to learn" },
-        { name: "TypeScript / Strong Typing", status: "Already have" },
-        { name: "Microservices", status: "Need to learn" }
+        { name:"Advanced System Design", status:"Need to learn" },
+        { name:"Docker & Kubernetes", status:"Need to learn" },
+        { name:"CI/CD Pipelines", status:"Partially know" },
+        { name:"Cloud Platforms (AWS/GCP)", status:"Need to learn" },
+        { name:"TypeScript / Strong Typing", status:"Already have" },
+        { name:"Microservices", status:"Need to learn" }
       ],
       careerProgression: [
-        { role: request.currentRole, avgSalary: "₹4,00,000", keySkills: request.currentSkills },
-        { role: `Junior ${request.targetRole}`, avgSalary: "₹8,00,000", keySkills: ["Basic Fullstack", "Version Control", "Core Language"] },
-        { role: request.targetRole, avgSalary: "₹15,00,000", keySkills: ["System Design", "Cloud", "Microservices"] },
-        { role: `Senior ${request.targetRole}`, avgSalary: "₹28,00,000", keySkills: ["Architecture", "Leadership", "Scalability"] }
+        { role: request.currentRole, avgSalary:"₹4,00,000", keySkills: request.currentSkills },
+        { role: `Junior ${request.targetRole}`, avgSalary:"₹8,00,000", keySkills: ["Basic Fullstack","Version Control","Core Language"] },
+        { role: request.targetRole, avgSalary:"₹15,00,000", keySkills: ["System Design","Cloud","Microservices"] },
+        { role: `Senior ${request.targetRole}`, avgSalary:"₹28,00,000", keySkills: ["Architecture","Leadership","Scalability"] }
       ]
     },
     skillTree: [
       {
-        category: "Programming & Frameworks",
+        category:"Programming & Frameworks",
         skills: [
-          { name: "TypeScript", priority: "Core", estimatedTime: "2 weeks", currentLevel: "Intermediate" },
-          { name: "React / Next.js", priority: "Core", estimatedTime: "3 weeks", currentLevel: "Beginner" },
-          { name: "Node.js", priority: "Core", estimatedTime: "2 weeks", currentLevel: "Not Started" }
+          { name:"TypeScript", priority:"Core", estimatedTime:"2 weeks", currentLevel:"Intermediate" },
+          { name:"React / Next.js", priority:"Core", estimatedTime:"3 weeks", currentLevel:"Beginner" },
+          { name:"Node.js", priority:"Core", estimatedTime:"2 weeks", currentLevel:"Not Started" }
         ]
       },
       {
-        category: "Databases & Architecture",
+        category:"Databases & Architecture",
         skills: [
-          { name: "PostgreSQL", priority: "Core", estimatedTime: "2 weeks", currentLevel: "Not Started" },
-          { name: "Redis Caching", priority: "Important", estimatedTime: "1 week", currentLevel: "Not Started" },
-          { name: "System Design Patterns", priority: "Important", estimatedTime: "3 weeks", currentLevel: "Not Started" }
+          { name:"PostgreSQL", priority:"Core", estimatedTime:"2 weeks", currentLevel:"Not Started" },
+          { name:"Redis Caching", priority:"Important", estimatedTime:"1 week", currentLevel:"Not Started" },
+          { name:"System Design Patterns", priority:"Important", estimatedTime:"3 weeks", currentLevel:"Not Started" }
         ]
       },
       {
-        category: "DevOps & Deployment",
+        category:"DevOps & Deployment",
         skills: [
-          { name: "Docker", priority: "Important", estimatedTime: "1 week", currentLevel: "Not Started" },
-          { name: "GitHub Actions", priority: "Good to Know", estimatedTime: "1 week", currentLevel: "Beginner" }
+          { name:"Docker", priority:"Important", estimatedTime:"1 week", currentLevel:"Not Started" },
+          { name:"GitHub Actions", priority:"Good to Know", estimatedTime:"1 week", currentLevel:"Beginner" }
         ]
       }
     ],
@@ -226,103 +226,97 @@ export function generateMockRoadmap(request: RoadmapRequest): CareerRoadmap {
       weekNumber: i + 1,
       monthNumber: 1,
       dateRange: `Week ${i + 1} from today`,
-      theme: i === 0 ? "Fundamentals Refresher" : i === 1 ? "Core Tooling" : i === 2 ? "Database Design" : "Mini Project",
+      theme: i === 0 ?"Fundamentals Refresher" : i === 1 ?"Core Tooling" : i === 2 ?"Database Design" :"Mini Project",
       days: [
-        { day: "Monday", topic: "Theory & Concepts", time: "2 hrs", type: "Learn" },
-        { day: "Tuesday", topic: "Code Along", time: "2 hrs", type: "Practice" },
-        { day: "Wednesday", topic: "Deep Dive", time: "2 hrs", type: "Learn" },
-        { day: "Thursday", topic: "Implementation", time: "2 hrs", type: "Project" },
-        { day: "Friday", topic: "Review & Refactor", time: "1 hr", type: "Revise" }
+        { day:"Monday", topic:"Theory & Concepts", time:"2 hrs", type:"Learn" },
+        { day:"Tuesday", topic:"Code Along", time:"2 hrs", type:"Practice" },
+        { day:"Wednesday", topic:"Deep Dive", time:"2 hrs", type:"Learn" },
+        { day:"Thursday", topic:"Implementation", time:"2 hrs", type:"Project" },
+        { day:"Friday", topic:"Review & Refactor", time:"1 hr", type:"Revise" }
       ],
-      weekendTask: "Build a small CLI tool or API endpoint summarizing the week's concepts.",
-      milestone: i === 3 ? "Complete Phase 1: Foundations" : undefined,
+      weekendTask:"Build a small CLI tool or API endpoint summarizing the week's concepts.",
+      milestone: i === 3 ?"Complete Phase 1: Foundations" : undefined,
       completed: false
     })),
     resources: [
       {
-        skillName: "System Design",
-        priority: "Core",
-        estimatedTime: "3 weeks",
+        skillName:"System Design",
+        priority:"Core",
+        estimatedTime:"3 weeks",
         free: [
-          { name: "System Design Primer", platform: "GitHub", type: "Documentation", duration: "20 hrs", url: "#" },
-          { name: "Gaurav Sen System Design", platform: "YouTube", type: "Video", duration: "10 hrs", url: "#" }
+          { name:"System Design Primer", platform:"GitHub", type:"Documentation", duration:"20 hrs", url:"#" },
+          { name:"Gaurav Sen System Design", platform:"YouTube", type:"Video", duration:"10 hrs", url:"#" }
         ],
         paid: [
-          { name: "Grokking the System Design Interview", platform: "Educative", type: "Course", duration: "15 hrs", priceRange: "₹3,500/mo", url: "#", hasCertification: true }
+          { name:"Grokking the System Design Interview", platform:"Educative", type:"Course", duration:"15 hrs", priceRange:"₹3,500/mo", url:"#", hasCertification: true }
         ],
         practice: [
-          { name: "LeetCode System Design", platform: "LeetCode", type: "Platform", url: "#" }
+          { name:"LeetCode System Design", platform:"LeetCode", type:"Platform", url:"#" }
         ]
       }
     ],
     projects: [
       {
-        phaseName: "Phase 1: Core Skills",
+        phaseName:"Phase 1: Core Skills",
         projects: [
           {
-            title: "Task Management API with Authentication",
-            difficulty: "Beginner",
-            skills: ["Node.js", "Express", "JWT", "PostgreSQL"],
-            buildTime: "1 week",
-            description: "Build a robust REST API for a task management system. Implements secure user authentication, CRUD operations, and pagination.",
-            learnings: [
-              "Understand JWT-based authentication flows",
-              "Design normalized database schemas",
-              "Implement robust error handling and logging"
+            title:"Task Management API with Authentication",
+            difficulty:"Beginner",
+            skills: ["Node.js","Express","JWT","PostgreSQL"],
+            buildTime:"1 week",
+            description:"Build a robust REST API for a task management system. Implements secure user authentication, CRUD operations, and pagination.",
+            learnings: ["Understand JWT-based authentication flows","Design normalized database schemas","Implement robust error handling and logging"
             ],
-            resumeImpactScore: "Medium",
-            impactReason: "Demonstrates foundational backend skills, though it is a common beginner project."
+            resumeImpactScore:"Medium",
+            impactReason:"Demonstrates foundational backend skills, though it is a common beginner project."
           }
         ]
       },
       {
-        phaseName: "Phase 2: Advanced Architecture",
+        phaseName:"Phase 2: Advanced Architecture",
         projects: [
           {
-            title: "Real-time Collaborative Whiteboard",
-            difficulty: "Advanced",
-            skills: ["WebSockets", "React", "Redis", "Docker"],
-            buildTime: "3 weeks",
-            description: "A full-stack application allowing multiple users to draw on a shared canvas in real-time.",
-            learnings: [
-              "Manage bi-directional data flow with WebSockets",
-              "Use Redis pub/sub for scaling socket connections",
-              "Containerize applications for consistent deployment"
+            title:"Real-time Collaborative Whiteboard",
+            difficulty:"Advanced",
+            skills: ["WebSockets","React","Redis","Docker"],
+            buildTime:"3 weeks",
+            description:"A full-stack application allowing multiple users to draw on a shared canvas in real-time.",
+            learnings: ["Manage bi-directional data flow with WebSockets","Use Redis pub/sub for scaling socket connections","Containerize applications for consistent deployment"
             ],
-            resumeImpactScore: "High",
-            impactReason: "Shows ability to handle real-time concurrency and scalable infrastructure."
+            resumeImpactScore:"High",
+            impactReason:"Shows ability to handle real-time concurrency and scalable infrastructure."
           }
         ]
       }
     ],
     certifications: [
       {
-        category: "Foundation",
+        category:"Foundation",
         items: [
           {
-            name: "AWS Certified Cloud Practitioner",
-            issuer: "Amazon Web Services",
-            whyItMatters: "Validates overall understanding of the AWS Cloud platform, covering basic cloud concepts and security.",
+            name:"AWS Certified Cloud Practitioner",
+            issuer:"Amazon Web Services",
+            whyItMatters:"Validates overall understanding of the AWS Cloud platform, covering basic cloud concepts and security.",
             prerequisites: ["Basic IT knowledge"],
-            prepTime: "2-4 weeks",
-            cost: "$100",
-            priority: "Recommended",
-            url: "#"
+            prepTime:"2-4 weeks",
+            cost:"$100",
+            priority:"Recommended",
+            url:"#"
           }
         ]
       },
       {
-        category: "Core",
+        category:"Core",
         items: [
           {
-            name: "Meta Back-End Developer Professional Certificate",
-            issuer: "Coursera / Meta",
-            whyItMatters: "Provides a comprehensive overview of backend engineering directly from industry leaders.",
+            name:"Meta Back-End Developer Professional Certificate",
+            issuer:"Coursera / Meta",
+            whyItMatters:"Provides a comprehensive overview of backend engineering directly from industry leaders.",
             prerequisites: ["Basic Programming"],
-            prepTime: "2 months",
-            cost: "$39/mo",
-            priority: "Must Have",
-            url: "#"
+            prepTime:"2 months",
+            cost:"$39/mo",
+            priority:"Must Have",
+            url:"#"
           }
         ]
       }
@@ -331,50 +325,36 @@ export function generateMockRoadmap(request: RoadmapRequest): CareerRoadmap {
       whatToExpect: `The hiring process for a ${request.targetRole} typically involves 3-4 rounds. It starts with an initial recruiter screen, followed by a coding/DSA round (either automated or live). The core round is the Technical/System Design interview focusing on architecture and problem-solving, concluding with a Behavioral/HR round.`,
       questionBank: [
         {
-          topic: "System Design",
+          topic:"System Design",
           questions: [
-            { question: "Design a URL shortener like Bitly.", difficulty: "Medium" },
-            { question: "How would you design Twitter's news feed?", difficulty: "Hard" }
+            { question:"Design a URL shortener like Bitly.", difficulty:"Medium" },
+            { question:"How would you design Twitter's news feed?", difficulty:"Hard" }
           ]
         },
         {
-          topic: "Core Languages & Frameworks",
+          topic:"Core Languages & Frameworks",
           questions: [
-            { question: "Explain the event loop in Node.js.", difficulty: "Medium" },
-            { question: "What is the difference between SQL and NoSQL databases?", difficulty: "Easy" }
+            { question:"Explain the event loop in Node.js.", difficulty:"Medium" },
+            { question:"What is the difference between SQL and NoSQL databases?", difficulty:"Easy" }
           ]
         }
       ],
-      resumeKeywords: [
-        "Microservices", "RESTful APIs", "CI/CD", "Docker", "Kubernetes", "PostgreSQL", 
-        "Redis", "Scalability", "System Design", "Agile", "TypeScript", "Node.js"
+      resumeKeywords: ["Microservices","RESTful APIs","CI/CD","Docker","Kubernetes","PostgreSQL","Redis","Scalability","System Design","Agile","TypeScript","Node.js"
       ],
       salaryInsights: {
-        entry: "₹6,00,000 - ₹10,00,000",
-        mid: "₹12,00,000 - ₹22,00,000",
-        senior: "₹25,00,000 - ₹50,00,000+",
-        topCompanies: ["Amazon", "Google", "Microsoft", "Uber", "Flipkart", "Swiggy", "Zomato", "Atlassian"],
-        negotiationTips: [
-          "Always negotiate on the base salary first before discussing bonuses.",
-          "Highlight any competing offers to drive up the compensation package.",
-          "If base salary is capped, ask for a higher joining bonus or more RSUs."
+        entry:"₹6,00,000 - ₹10,00,000",
+        mid:"₹12,00,000 - ₹22,00,000",
+        senior:"₹25,00,000 - ₹50,00,000+",
+        topCompanies: ["Amazon","Google","Microsoft","Uber","Flipkart","Swiggy","Zomato","Atlassian"],
+        negotiationTips: ["Always negotiate on the base salary first before discussing bonuses.","Highlight any competing offers to drive up the compensation package.","If base salary is capped, ask for a higher joining bonus or more RSUs."
         ]
       },
       actionPlan: {
-        days30: [
-          "Meet key stakeholders and understand the team structure.",
-          "Set up local development environment and run the core services.",
-          "Push your first small bug fix or feature to production."
+        days30: ["Meet key stakeholders and understand the team structure.","Set up local development environment and run the core services.","Push your first small bug fix or feature to production."
         ],
-        days60: [
-          "Take ownership of a minor feature from design to deployment.",
-          "Participate actively in code reviews.",
-          "Understand the CI/CD pipeline and monitoring tools."
+        days60: ["Take ownership of a minor feature from design to deployment.","Participate actively in code reviews.","Understand the CI/CD pipeline and monitoring tools."
         ],
-        days90: [
-          "Lead the design and implementation of a medium-sized feature.",
-          "Identify and fix a tech debt or performance bottleneck.",
-          "Present your work or a technical learning at a team knowledge-sharing session."
+        days90: ["Lead the design and implementation of a medium-sized feature.","Identify and fix a tech debt or performance bottleneck.","Present your work or a technical learning at a team knowledge-sharing session."
         ]
       }
     }

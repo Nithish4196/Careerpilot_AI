@@ -11,7 +11,7 @@ export default function LandingPage({ onStartQuick, onStartCustom }: LandingPage
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [level, setLevel] = useState("Fresher");
-  const [difficulty, setDifficulty] = useState<"Easy" | "Medium" | "Hard">("Medium");
+  const [difficulty, setDifficulty] = useState<"Easy" |"Medium" |"Hard">("Medium");
   const [duration, setDuration] = useState("30 min");
 
   const handleQuickStart = () => {
@@ -22,13 +22,13 @@ export default function LandingPage({ onStartQuick, onStartCustom }: LandingPage
       level,
       difficulty,
       duration,
-      rounds: ["Technical", "HR", "Aptitude"], // Mixed round defaults for quick start
-      sessionType: "quick"
+      rounds: ["Technical","HR","Aptitude"], // Mixed round defaults for quick start
+      sessionType:"quick"
     });
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 animate-in fade-in duration-500 pb-10">
+    <div className="max-w-5xl mx-auto space-y-8 pb-10">
       <div className="text-center space-y-3 mb-10">
         <h1 className="text-4xl font-extrabold tracking-tight">Mock Interviews</h1>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -87,12 +87,12 @@ export default function LandingPage({ onStartQuick, onStartCustom }: LandingPage
               <div>
                 <label className="text-sm font-bold mb-1.5 block">Duration</label>
                 <div className="flex gap-2">
-                  {["15 min", "30 min", "45 min"].map(d => (
+                  {["15 min","30 min","45 min"].map(d => (
                     <button 
                       key={d}
                       onClick={() => setDuration(d)}
                       className={`flex-1 py-2 text-xs font-bold rounded-lg border transition-colors ${
-                        duration === d ? "bg-foreground text-background border-foreground" : "bg-background text-muted-foreground border-muted hover:border-foreground/30"
+                        duration === d ?"bg-foreground text-background border-foreground" :"bg-background text-muted-foreground border-muted hover:border-foreground/30"
                       }`}
                     >
                       {d.split(' ')[0]}
@@ -105,12 +105,12 @@ export default function LandingPage({ onStartQuick, onStartCustom }: LandingPage
             <div>
               <label className="text-sm font-bold mb-1.5 block">Difficulty</label>
               <div className="flex gap-2">
-                {(["Easy", "Medium", "Hard"] as const).map(d => (
+                {(["Easy","Medium","Hard"] as const).map(d => (
                   <button 
                     key={d}
                     onClick={() => setDifficulty(d)}
                     className={`flex-1 py-2 text-xs font-bold rounded-lg border transition-colors ${
-                      difficulty === d ? "bg-foreground text-background border-foreground" : "bg-background text-muted-foreground border-muted hover:border-foreground/30"
+                      difficulty === d ?"bg-foreground text-background border-foreground" :"bg-background text-muted-foreground border-muted hover:border-foreground/30"
                     }`}
                   >
                     {d}
@@ -123,7 +123,7 @@ export default function LandingPage({ onStartQuick, onStartCustom }: LandingPage
           <button 
             onClick={handleQuickStart}
             disabled={!name || !role}
-            className="w-full mt-8 bg-foreground text-background font-bold py-3.5 rounded-xl hover:bg-foreground/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full mt-8 bg-foreground text-background font-bold py-3.5 rounded-xl hover:bg-foreground/90 transition-colors duration-150 ease-out disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Start AI Interview →
           </button>
@@ -150,7 +150,7 @@ export default function LandingPage({ onStartQuick, onStartCustom }: LandingPage
 
           <button 
             onClick={onStartCustom}
-            className="w-full bg-background border-2 border-foreground text-foreground font-bold py-3.5 rounded-xl hover:bg-foreground hover:text-background transition-all"
+            className="w-full bg-background border-2 border-foreground text-foreground font-bold py-3.5 rounded-xl hover:bg-foreground transition-colors duration-150 ease-out hover:text-background"
           >
             Configure Interview →
           </button>
