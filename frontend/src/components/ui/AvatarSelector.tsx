@@ -22,7 +22,13 @@ export default function AvatarSelector({ currentType, currentValue, onSelect, on
     "/avatars/male/male5.png"
   ];
 
-  const FEMALE_AVATARS: string[] = []; // Waiting for female images
+  const FEMALE_AVATARS = [
+    "/avatars/female/female1.jpg",
+    "/avatars/female/female2.jpg",
+    "/avatars/female/female3.jpg",
+    "/avatars/female/female4.jpg",
+    "/avatars/female/female5.jpg"
+  ];
 
   const currentList = activeTab === "male" ? MALE_AVATARS : FEMALE_AVATARS;
 

@@ -27,35 +27,35 @@ export default function JobSearchHeader({ onSearch, onChipSelect }: JobSearchHea
 
   return (
     <div className="space-y-6">
-      <div className="bg-background rounded-2xl border border-muted p-2 shadow-sm flex flex-col md:flex-row items-center gap-2">
-        <div className="flex-1 flex items-center gap-3 px-4 py-2 border-b md:border-b-0 md:border-r border-muted w-full">
-          <Search className="w-5 h-5 text-muted-foreground shrink-0" />
+      <div className="bg-white rounded-2xl border border-gray-200 p-2 shadow-sm flex flex-col md:flex-row items-center gap-2">
+        <div className="flex-1 flex items-center gap-3 px-4 py-2 border-b md:border-b-0 md:border-r border-gray-200 w-full">
+          <Search className="w-5 h-5 text-gray-400 shrink-0" />
           <input 
             type="text" 
             value={role}
             onChange={(e) => setRole(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             placeholder="Search for roles (Data Analyst, Software Engineer...)"
-            className="w-full bg-transparent border-none outline-none text-sm focus:ring-0"
+            className="w-full bg-transparent border-none outline-none text-sm text-black focus:ring-0 placeholder:text-gray-400"
           />
         </div>
-        <div className="flex-1 flex items-center gap-3 px-4 py-2 border-b md:border-b-0 md:border-r border-muted w-full">
-          <MapPin className="w-5 h-5 text-muted-foreground shrink-0" />
+        <div className="flex-1 flex items-center gap-3 px-4 py-2 border-b md:border-b-0 md:border-r border-gray-200 w-full">
+          <MapPin className="w-5 h-5 text-gray-400 shrink-0" />
           <input 
             type="text" 
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             placeholder="Location (e.g. Bangalore, Remote)"
-            className="w-full bg-transparent border-none outline-none text-sm focus:ring-0"
+            className="w-full bg-transparent border-none outline-none text-sm text-black focus:ring-0 placeholder:text-gray-400"
           />
         </div>
-        <div className="w-full md:w-auto flex items-center gap-3 px-4 py-2 border-b md:border-b-0 md:border-r border-muted">
-          <Briefcase className="w-5 h-5 text-muted-foreground shrink-0" />
+        <div className="w-full md:w-auto flex items-center gap-3 px-4 py-2 border-b md:border-b-0 md:border-r border-gray-200">
+          <Briefcase className="w-5 h-5 text-gray-400 shrink-0" />
           <select 
             value={experience}
             onChange={(e) => setExperience(e.target.value)}
-            className="bg-transparent border-none outline-none text-sm cursor-pointer text-muted-foreground focus:ring-0 w-full md:w-32"
+            className="bg-transparent border-none outline-none text-sm cursor-pointer text-gray-600 focus:ring-0 w-full md:w-32"
           >
             <option value="">Experience</option>
             <option value="Fresher">Fresher</option>
@@ -65,11 +65,11 @@ export default function JobSearchHeader({ onSearch, onChipSelect }: JobSearchHea
           </select>
         </div>
         <div className="w-full md:w-auto flex items-center gap-3 px-4 py-2">
-          <IndianRupee className="w-5 h-5 text-muted-foreground shrink-0" />
+          <IndianRupee className="w-5 h-5 text-gray-400 shrink-0" />
           <select 
             value={salary}
             onChange={(e) => setSalary(e.target.value)}
-            className="bg-transparent border-none outline-none text-sm cursor-pointer text-muted-foreground focus:ring-0 w-full md:w-32"
+            className="bg-transparent border-none outline-none text-sm cursor-pointer text-gray-600 focus:ring-0 w-full md:w-32"
           >
             <option value="">Salary</option>
             <option value="3">₹3 LPA+</option>
@@ -80,7 +80,7 @@ export default function JobSearchHeader({ onSearch, onChipSelect }: JobSearchHea
         </div>
         <button 
           onClick={handleSearch}
-          className="w-full md:w-auto bg-foreground text-background px-8 py-3 rounded-xl font-bold text-sm hover:bg-foreground/90 transition-colors duration-150 ease-out shrink-0 mt-2 md:mt-0"
+          className="w-full md:w-auto bg-blue-600 text-white px-8 py-3 rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors duration-150 ease-out shrink-0 mt-2 md:mt-0"
         >
           Find Jobs
         </button>
@@ -91,7 +91,7 @@ export default function JobSearchHeader({ onSearch, onChipSelect }: JobSearchHea
           <button 
             key={idx}
             onClick={() => onChipSelect(chip)}
-            className="whitespace-nowrap px-4 py-1.5 rounded-full border border-muted bg-background text-xs font-medium text-muted-foreground hover:border-foreground hover:text-foreground transition-colors"
+            className="whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 bg-white text-xs font-medium text-gray-600 hover:border-blue-600 hover:text-blue-600 transition-colors"
           >
             {chip}
           </button>
